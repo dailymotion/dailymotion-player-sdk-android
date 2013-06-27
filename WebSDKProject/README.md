@@ -16,6 +16,12 @@ How to use
 ### Add the SDK to your project
 You can either import the SDK using your IDE or integrate DMWebVideoView.java in your project.
 
+### Edit your AndroidManifest.xml file
+Add
+        android:hardwareAccelerated="true"
+
+to the application tag.
+
 ### Use in your Activity or Fragment
 First, add the DMWebVideoView in your layout in place of the regular WebView.
 
@@ -58,14 +64,10 @@ If you have the id of a video on Dailymotion, then you can set it directly :
 ### Handling back button
 Your activity must take care of the back button so as to leave fullscreen and not the current Activity :
 
-		@Override
-	    public void onBackPressed() {
-	        if(mVideoView.isFullscreen()){
-	            mVideoView.hideVideoView();
-	        } else {
-	            super.onBackPressed();
-	        }
-	    }
+		 @Override
+            public void onBackPressed() {
+                mVideoView.handleBackPress(this);
+            }
 
 
 ### Handle screen rotation
@@ -75,3 +77,27 @@ For the screen rotation to be handled correctly, you need to add
 
 to any activity using DMWebVideoView, in your AndroidManifest.xml
 
+### Handling automatic fullscreen
+You can prevent the application to automatically switch to native fullscreen with setAllowAutomaticNativeFullscreen(boolean) method
+Please note that this only effect Android 3.x and superior
+
+### Lifecycle
+On Android 3.0+, you have to call onPause and onResume when these events occur in your lifecycle :
+
+    @Override
+        protected void onPause() {
+            super.onPause();
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+                mVideoView.onPause();
+            }
+        }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            mVideoView.onResume();
+        }
+    }

@@ -2,6 +2,9 @@
   <library name="DailymotionWebSDK.aar">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/SampleApp/build/exploded-bundles/DailymotionWebSDK.aar/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/SampleApp/build/exploded-bundles/DailymotionWebSDK.aar/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/SampleApp/build/exploded-bundles/DailymotionWebSDK.aar/classes.jar!/" />
+      <root url="jar://$PROJECT_DIR$/SampleApp/build/exploded-bundles/DailymotionWebSDK.aar/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

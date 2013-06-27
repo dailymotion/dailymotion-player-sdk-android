@@ -1,5 +1,6 @@
 package com.dailymotion.websdksample;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -39,10 +40,24 @@ public class SampleActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if(mVideoView.isFullscreen()){
-            mVideoView.hideVideoView();
-        } else {
-            super.onBackPressed();
+        mVideoView.handleBackPress(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            mVideoView.onPause();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            mVideoView.onResume();
         }
     }
 }

@@ -30,12 +30,12 @@ public class DMWebVideoView extends WebView {
     private VideoView                           mCustomVideoView;
     private WebChromeClient.CustomViewCallback  mViewCallback;
 
-    private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1";
+    private final String                        mEmbedUrl = "http://stage-17.dailymotion.com/embed/video/%s?html=1&fullscreen=%s";
     private final String                        mExtraUA = "; DailymotionEmbedSDK 1.0";
     private FrameLayout                         mVideoLayout;
     private boolean                             mIsFullscreen = false;
-    private AudioManager                        mAudioManager;
     private FrameLayout                         mRootLayout;
+    private boolean                             mAllowAutomaticNativeFullscreen = false;
 
     public DMWebVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -57,8 +57,6 @@ public class DMWebVideoView extends WebView {
         //The topmost layout of the window where the actual VideoView will be added to
         mRootLayout = (FrameLayout) ((Activity) getContext()).getWindow().getDecorView();
 
-        //We want to make sure the user gets the ability to sets the Media volume
-        mAudioManager = (AudioManager) getContext().getSystemService(Context.AUDIO_SERVICE);
         mWebSettings = getSettings();
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setUserAgentString(mWebSettings.getUserAgentString() + mExtraUA);
@@ -67,7 +65,7 @@ public class DMWebVideoView extends WebView {
 
             /**
              * The view to be displayed while the fullscreen VideoView is buffering
-             * @return
+             * @return the progress view
              */
             @Override
             public View getVideoLoadingProgressView() {
@@ -125,7 +123,7 @@ public class DMWebVideoView extends WebView {
     }
 
     public void setVideoId(String videoId){
-        loadUrl(String.format(mEmbedUrl, videoId));
+        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen));
     }
 
     public void setVideoUrl(String url){
@@ -176,4 +174,16 @@ public class DMWebVideoView extends WebView {
         return mIsFullscreen;
     }
 
+    public void handleBackPress(Activity activity) {
+        if(isFullscreen()){
+            hideVideoView();
+        } else {
+            loadUrl("");//Hack to stop video
+            activity.finish();
+        }
+    }
+
+    public void setAllowAutomaticNativeFullscreen(boolean allowAutomaticNativeFullscreen){
+        mAllowAutomaticNativeFullscreen = allowAutomaticNativeFullscreen;
+    }
 }
