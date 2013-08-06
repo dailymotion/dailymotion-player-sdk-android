@@ -30,7 +30,7 @@ public class DMWebVideoView extends WebView {
     private VideoView                           mCustomVideoView;
     private WebChromeClient.CustomViewCallback  mViewCallback;
 
-    private final String                        mEmbedUrl = "http://stage-17.dailymotion.com/embed/video/%s?html=1&fullscreen=%s";
+    private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1&fullscreen=%s";
     private final String                        mExtraUA = "; DailymotionEmbedSDK 1.0";
     private FrameLayout                         mVideoLayout;
     private boolean                             mIsFullscreen = false;
