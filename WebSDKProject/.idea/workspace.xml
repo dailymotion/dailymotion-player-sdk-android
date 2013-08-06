@@ -38,15 +38,16 @@
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c8813217-4652-4c4a-a242-44dd75f3de8c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SampleApp/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/SampleApp/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java" afterPath="$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java" />
+    <list default="true" id="c8813217-4652-4c4a-a242-44dd75f3de8c" name="Default" comment="- 3.0+ fix">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DailymotionWebSDK/DailymotionWebSDK.iml" afterPath="$PROJECT_DIR$/DailymotionWebSDK/DailymotionWebSDK.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/DailymotionWebSDK_aar.xml" afterPath="$PROJECT_DIR$/.idea/libraries/DailymotionWebSDK_aar.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java" afterPath="$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SampleApp/SampleApp.iml" afterPath="$PROJECT_DIR$/SampleApp/SampleApp.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebSDKProject.iml" afterPath="$PROJECT_DIR$/WebSDKProject.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DailymotionWebSDK/build.gradle" afterPath="$PROJECT_DIR$/DailymotionWebSDK/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SampleApp/build.gradle" afterPath="$PROJECT_DIR$/SampleApp/build.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml" afterPath="$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SampleApp/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/SampleApp/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SampleApp.iws" />
@@ -112,10 +113,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="DMWebVideoView.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="DMWebVideoView.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="185" column="16" selection-start="6380" selection-end="6380" vertical-scroll-proportion="5.655738" vertical-offset="0" max-vertical-offset="2550">
+            <state line="35" column="47" selection-start="1291" selection-end="1291" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="2910">
               <folding />
             </state>
           </provider>
@@ -124,19 +125,7 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SampleApp/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="28" selection-start="991" selection-end="991" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
-              <folding>
-                <element signature="e#486#509#0" expanded="true" />
-                <element signature="e#767#785#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="93" column="9" selection-start="2988" selection-end="2988" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1635">
+            <state line="26" column="28" selection-start="991" selection-end="991" vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="570">
               <folding />
             </state>
           </provider>
@@ -154,7 +143,7 @@
       <file leaf-file-name="DailymotionWebSDK.iml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/DailymotionWebSDK.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="730" max-vertical-offset="1170">
+            <state line="3" column="0" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="1215">
               <folding />
             </state>
           </provider>
@@ -163,7 +152,16 @@
       <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="14" selection-start="222" selection-end="222" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="420">
+            <state line="5" column="55" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="420">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/SampleApp/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="7" column="1" selection-start="176" selection-end="176" vertical-scroll-proportion="0.15695067" vertical-offset="0" max-vertical-offset="669">
               <folding />
             </state>
           </provider>
@@ -172,7 +170,7 @@
       <file leaf-file-name="SampleActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="10" selection-start="1415" selection-end="1415" vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="945">
+            <state line="55" column="31" selection-start="1357" selection-end="1357" vertical-scroll-proportion="0.0" vertical-offset="810" max-vertical-offset="1035">
               <folding />
             </state>
           </provider>
@@ -184,7 +182,25 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="0" selection-start="452" selection-end="452" vertical-scroll-proportion="-7.2222223" vertical-offset="0" max-vertical-offset="285">
+            <state line="7" column="28" selection-start="313" selection-end="313" vertical-scroll-proportion="-3.8888888" vertical-offset="0" max-vertical-offset="285">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="105">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="settings.gradle" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/settings.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="105">
               <folding />
             </state>
           </provider>
@@ -217,49 +233,54 @@
           <key>
             <ExternalProjectPojo>
               <option name="name" value="WebSDKProject" />
-              <option name="path" value="$PROJECT_DIR$/build.gradle" />
+              <option name="path" value="$PROJECT_DIR$" />
             </ExternalProjectPojo>
           </key>
           <value>
             <list>
               <ExternalProjectPojo>
                 <option name="name" value="SampleApp" />
-                <option name="path" value="$PROJECT_DIR$/SampleApp/build.gradle" />
+                <option name="path" value="$PROJECT_DIR$/SampleApp" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
                 <option name="name" value="WebSDKProject" />
-                <option name="path" value="$PROJECT_DIR$/build.gradle" />
+                <option name="path" value="$PROJECT_DIR$" />
               </ExternalProjectPojo>
               <ExternalProjectPojo>
                 <option name="name" value="DailymotionWebSDK" />
-                <option name="path" value="$PROJECT_DIR$/DailymotionWebSDK/build.gradle" />
+                <option name="path" value="$PROJECT_DIR$/DailymotionWebSDK" />
               </ExternalProjectPojo>
             </list>
           </value>
         </entry>
       </map>
     </option>
+    <option name="modificationStamps">
+      <map>
+        <entry key="$PROJECT_DIR$" value="1372173007000" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/DailymotionWebSDK/build.gradle" />
-        <option value="$PROJECT_DIR$/SampleApp/build.gradle" />
         <option value="$PROJECT_DIR$/DailymotionWebSDK/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml" />
         <option value="$PROJECT_DIR$/SampleApp/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/MainActivity.java" />
         <option value="$PROJECT_DIR$/SampleApp/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml" />
+        <option value="$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java" />
         <option value="$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java" />
+        <option value="$PROJECT_DIR$/DailymotionWebSDK/build.gradle" />
+        <option value="$PROJECT_DIR$/SampleApp/build.gradle" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="22" />
     <option name="width" value="1440" />
-    <option name="height" value="816" />
+    <option name="height" value="815" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -495,8 +516,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -511,7 +532,7 @@
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../.." />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="0A3C27F51501501E" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="01b379e2d79cb2be" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="DEBUGGABLE_DEVICE" value="0A3C27F51501501E" />
     <property name="DEBUGGABLE_PROCESS" value="com.dailymotion.websdksample" />
@@ -734,13 +755,18 @@
       <workItem from="1370337153715" duration="24907000" />
       <workItem from="1370939483968" duration="26000" />
     </task>
+    <task id="LOCAL-00001" summary="- 3.0+ fix">
+      <created>1372340670144</created>
+      <updated>1372340670144</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="28173000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="816" extended-state="6" />
+    <frame x="0" y="22" width="1440" height="815" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.67118645" order="2" side_tool="false" content_ui="tabs" />
@@ -753,20 +779,20 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.2858757" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3275862" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32614943" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32281205" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.6700565" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24964131" sideWeight="0.67241377" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3275862" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24964131" sideWeight="0.67338127" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3266187" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3299435" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3294964" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3266187" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -832,16 +858,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/android/app/Instrumentation.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="153" column="0" selection-start="7775" selection-end="7775" vertical-scroll-proportion="0.0" vertical-offset="1943" max-vertical-offset="2370" />
-      </provider>
-    </entry>
-    <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/java/lang/reflect/Method.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="0" selection-start="2320" selection-end="2320" vertical-scroll-proportion="0.0" vertical-offset="458" max-vertical-offset="885" />
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-17/android.jar!/android/os/Looper.class">
       <provider selected="true" editor-type-id="text-editor">
         <state line="30" column="0" selection-start="968" selection-end="968" vertical-scroll-proportion="0.9819413" vertical-offset="0" max-vertical-offset="525" />
@@ -857,40 +873,20 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SampleApp/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="0" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="435" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../../../device-2013-06-26-173418.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="452" selection-end="452" vertical-scroll-proportion="-7.2222223" vertical-offset="0" max-vertical-offset="285">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/local.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SampleApp/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="28" selection-start="991" selection-end="991" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
-          <folding>
-            <element signature="e#486#509#0" expanded="true" />
-            <element signature="e#767#785#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -903,28 +899,64 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/DailymotionWebSDK.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="730" max-vertical-offset="1170">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="10" selection-start="1415" selection-end="1415" vertical-scroll-proportion="0.0" vertical-offset="459" max-vertical-offset="945">
+        <state line="3" column="0" selection-start="141" selection-end="141" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="1215">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="93" column="9" selection-start="2988" selection-end="2988" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1635">
+        <state line="77" column="57" selection-start="2426" selection-end="2426" vertical-scroll-proportion="-0.11888112" vertical-offset="1206" max-vertical-offset="1635" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="31" selection-start="1357" selection-end="1357" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="945">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="185" column="16" selection-start="6380" selection-end="6380" vertical-scroll-proportion="5.655738" vertical-offset="0" max-vertical-offset="2550">
+        <state line="35" column="47" selection-start="1291" selection-end="1291" vertical-scroll-proportion="0.0" vertical-offset="210" max-vertical-offset="2550">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="55" selection-start="167" selection-end="167" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="420">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="28" selection-start="313" selection-end="313" vertical-scroll-proportion="-3.8888888" vertical-offset="0" max-vertical-offset="285">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="669">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="669">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="1" selection-start="176" selection-end="176" vertical-scroll-proportion="0.15695067" vertical-offset="0" max-vertical-offset="669">
           <folding />
         </state>
       </provider>
