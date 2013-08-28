@@ -19,7 +19,7 @@ public class SampleActivity extends Activity {
 
         mVideoView = ((DMWebVideoView) findViewById(R.id.dmWebVideoView));
         //mVideoView.loadUrl("http://orange.jobs/jobs/mobi.do?do=getOffer&lang=FR&id=28866");
-        mVideoView.setVideoId("x10iisk");
+        mVideoView.setVideoId("x10iisk", false);
 
 
     }

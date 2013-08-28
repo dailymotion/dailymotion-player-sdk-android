@@ -79,7 +79,11 @@ to any activity using DMWebVideoView, in your AndroidManifest.xml
 
 ### Handling automatic fullscreen
 You can prevent the application to automatically switch to native fullscreen with setAllowAutomaticNativeFullscreen(boolean) method
-Please note that this only effect Android 3.x and superior
+Please note that this only has effect Android 3.x and superior
+
+### Auto play
+You can make the video to start as soon as the player is loaded. To do so, either call setAutoPlay(true) before setting the id of your
+video or call setVideoId(<video_id>, true)
 
 ### Lifecycle
 On Android 3.0+, you have to call onPause and onResume when these events occur in your lifecycle :

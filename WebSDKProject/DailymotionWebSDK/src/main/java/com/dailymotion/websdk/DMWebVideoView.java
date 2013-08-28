@@ -30,12 +30,13 @@ public class DMWebVideoView extends WebView {
     private VideoView                           mCustomVideoView;
     private WebChromeClient.CustomViewCallback  mViewCallback;
 
-    private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1&fullscreen=%s";
+    private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1&fullscreen=%s&autoPlay=%s";
     private final String                        mExtraUA = "; DailymotionEmbedSDK 1.0";
     private FrameLayout                         mVideoLayout;
     private boolean                             mIsFullscreen = false;
     private FrameLayout                         mRootLayout;
     private boolean                             mAllowAutomaticNativeFullscreen = false;
+    private boolean                             mIsAutoPlay = false;
 
     public DMWebVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -123,7 +124,12 @@ public class DMWebVideoView extends WebView {
     }
 
     public void setVideoId(String videoId){
-        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen));
+        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, mIsAutoPlay));
+    }
+
+    public void setVideoId(String videoId, boolean autoPlay){
+        mIsAutoPlay = autoPlay;
+        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, mIsAutoPlay));
     }
 
     public void setVideoUrl(String url){
@@ -185,5 +191,13 @@ public class DMWebVideoView extends WebView {
 
     public void setAllowAutomaticNativeFullscreen(boolean allowAutomaticNativeFullscreen){
         mAllowAutomaticNativeFullscreen = allowAutomaticNativeFullscreen;
+    }
+
+    public boolean isAutoPlaying(){
+        return mIsAutoPlay;
+    }
+
+    public void setAutoPlaying(boolean autoPlay){
+        mIsAutoPlay = autoPlay;
     }
 }
