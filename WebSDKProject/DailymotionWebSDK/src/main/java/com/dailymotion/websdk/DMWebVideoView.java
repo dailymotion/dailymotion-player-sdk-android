@@ -60,6 +60,7 @@ public class DMWebVideoView extends WebView {
 
         mWebSettings = getSettings();
         mWebSettings.setJavaScriptEnabled(true);
+        mWebSettings.setPluginState(WebSettings.PluginState.ON);
         mWebSettings.setUserAgentString(mWebSettings.getUserAgentString() + mExtraUA);
 
         mChromeClient = new WebChromeClient(){
@@ -164,6 +165,7 @@ public class DMWebVideoView extends WebView {
             public boolean dispatchKeyEvent(KeyEvent event) {
                 if(event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP){
                     hideVideoView();
+                    return true;
                 }
 
                 return super.dispatchKeyEvent(event);
@@ -174,6 +176,7 @@ public class DMWebVideoView extends WebView {
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         lp.gravity = Gravity.CENTER;
         mRootLayout.addView(mVideoLayout, lp);
+        mIsFullscreen = true;
     }
 
     public boolean isFullscreen(){

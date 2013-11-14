@@ -18,7 +18,6 @@ public class SampleActivity extends Activity {
         setContentView(R.layout.screen_sample);
 
         mVideoView = ((DMWebVideoView) findViewById(R.id.dmWebVideoView));
-        //mVideoView.loadUrl("http://orange.jobs/jobs/mobi.do?do=getOffer&lang=FR&id=28866");
         mVideoView.setVideoId("x10iisk", false);
 
 
