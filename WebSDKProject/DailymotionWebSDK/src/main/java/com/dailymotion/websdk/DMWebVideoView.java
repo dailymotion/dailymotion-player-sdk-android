@@ -30,7 +30,7 @@ public class DMWebVideoView extends WebView {
     private VideoView                           mCustomVideoView;
     private WebChromeClient.CustomViewCallback  mViewCallback;
 
-    private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1&fullscreen=%s&autoPlay=%s";
+    private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1&fullscreen=%s&autoPlay=%s&app=%s";
     private final String                        mExtraUA = "; DailymotionEmbedSDK 1.0";
     private FrameLayout                         mVideoLayout;
     private boolean                             mIsFullscreen = false;
@@ -125,12 +125,12 @@ public class DMWebVideoView extends WebView {
     }
 
     public void setVideoId(String videoId){
-        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, mIsAutoPlay));
+        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, mIsAutoPlay, getContext().getPackageName()));
     }
 
     public void setVideoId(String videoId, boolean autoPlay){
         mIsAutoPlay = autoPlay;
-        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, mIsAutoPlay));
+        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, mIsAutoPlay, getContext().getPackageName()));
     }
 
     public void setVideoUrl(String url){

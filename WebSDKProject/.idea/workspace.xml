@@ -36,19 +36,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c8813217-4652-4c4a-a242-44dd75f3de8c" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/DailymotionWebSDK_aar.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/android_support_v4.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java" afterPath="$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DailymotionWebSDK/DailymotionWebSDK.iml" afterPath="$PROJECT_DIR$/DailymotionWebSDK/DailymotionWebSDK.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java" afterPath="$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SampleApp/SampleApp.iml" afterPath="$PROJECT_DIR$/SampleApp/SampleApp.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/WebSDKProject.iml" afterPath="$PROJECT_DIR$/WebSDKProject.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/DailymotionWebSDK/build.gradle" afterPath="$PROJECT_DIR$/DailymotionWebSDK/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SampleApp/build.gradle" afterPath="$PROJECT_DIR$/SampleApp/build.gradle" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="SampleApp.iws" />
@@ -180,7 +173,22 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java" line="148" class="com.dailymotion.websdk.DMWebVideoView" package="com.dailymotion.websdk">
+      <breakpoint url="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java" line="97" class="com.dailymotion.websdk.DMWebVideoView$1$1" package="com.dailymotion.websdk">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="REMOVE_AFTER_HIT" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java" line="140" class="com.dailymotion.websdk.DMWebVideoView" package="com.dailymotion.websdk">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -205,6 +213,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+      <file leaf-file-name="DMWebVideoView.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="38" column="68" selection-start="1547" selection-end="1547" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="2685">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/build.gradle">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="0" selection-start="177" selection-end="177" vertical-scroll-proportion="-4.8" vertical-offset="0" max-vertical-offset="420">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
@@ -214,19 +240,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="25" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0" vertical-offset="23" max-vertical-offset="420">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="local.properties" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="local.properties" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/local.properties">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
+            <state line="7" column="62" selection-start="364" selection-end="364" vertical-scroll-proportion="0.27061856" vertical-offset="0" max-vertical-offset="388">
               <folding />
             </state>
           </provider>
@@ -235,7 +252,7 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SampleApp/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="46" selection-start="728" selection-end="728" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
+            <state line="20" column="46" selection-start="728" selection-end="728" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="570">
               <folding />
             </state>
           </provider>
@@ -244,7 +261,7 @@
       <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SampleApp/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="25" selection-start="322" selection-end="322" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
+            <state line="5" column="53" selection-start="165" selection-end="165" vertical-scroll-proportion="-3.0" vertical-offset="0" max-vertical-offset="435">
               <folding />
             </state>
           </provider>
@@ -253,19 +270,10 @@
       <file leaf-file-name="SampleActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="930">
+            <state line="20" column="8" selection-start="558" selection-end="558" vertical-scroll-proportion="0.0" vertical-offset="3" max-vertical-offset="930">
               <folding>
-                <marker date="1384470854000" expanded="true" signature="550:598" placeholder="//..." />
+                <marker date="1388703551000" expanded="true" signature="550:598" placeholder="//..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gradle-wrapper.properties" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="64" selection-end="64" vertical-scroll-proportion="0.06772009" vertical-offset="0" max-vertical-offset="443">
-              <folding />
             </state>
           </provider>
         </entry>
@@ -273,7 +281,7 @@
       <file leaf-file-name="screen_sample.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="28" selection-start="313" selection-end="313" vertical-scroll-proportion="-3.8888888" vertical-offset="0" max-vertical-offset="285">
+            <state line="7" column="28" selection-start="313" selection-end="313" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="285">
               <folding />
             </state>
           </provider>
@@ -294,7 +302,7 @@
       <file leaf-file-name="SampleApp.iml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/SampleApp/SampleApp.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1215">
+            <state line="1" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1230">
               <folding />
             </state>
           </provider>
@@ -744,14 +752,14 @@
                 <option name="name" value="assembleDebug" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Assembles the Test build for the Debug build" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="assembleDebugTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Assembles all Release builds" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="assembleRelease" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles the Test build for the Debug build" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="assembleTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project." />
@@ -790,11 +798,15 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="compileDebug" />
+                <option name="name" value="compileDebugAidl" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="compileDebugAidl" />
+                <option name="name" value="compileDebugJava" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="compileDebugNdk" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
@@ -802,11 +814,23 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="compileLint" />
+                <option name="name" value="compileDebugTestAidl" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="compileRelease" />
+                <option name="name" value="compileDebugTestJava" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="compileDebugTestNdk" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="compileDebugTestRenderscript" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="compileLint" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
@@ -814,19 +838,15 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="compileReleaseJava" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="compileReleaseNdk" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="compileReleaseRenderscript" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="compileTest" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="compileTestAidl" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="compileTestRenderscript" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Runs all device checks on currently connected devices." />
@@ -834,7 +854,7 @@
                 <option name="name" value="connectedCheck" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Installs and runs the tests for Build 'Debug' on connected devices." />
+                <option name="description" value="Installs and runs the tests for Build 'debug' on connected devices." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="connectedInstrumentTest" />
               </ExternalTaskPojo>
@@ -853,7 +873,7 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="dexTest" />
+                <option name="name" value="dexDebugTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
@@ -865,6 +885,14 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="generateDebugTestBuildConfig" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="generateDebugTestSources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="generateReleaseBuildConfig" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -872,17 +900,9 @@
                 <option name="name" value="generateReleaseSources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="generateTestBuildConfig" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="generateTestSources" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
                 <option name="description" value="Installs the Test build for the Debug build" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="installTest" />
+                <option name="name" value="installDebugTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Runs lint on all variants." />
@@ -890,16 +910,14 @@
                 <option name="name" value="lint" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Runs lint on the Debug build" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="lintDebug" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Runs lint on the Release build" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="lintRelease" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="lintTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
@@ -915,6 +933,14 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="mergeDebugTestAssets" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="mergeDebugTestResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="mergeReleaseAssets" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -924,14 +950,6 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="mergeReleaseResources" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="mergeTestAssets" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="mergeTestResources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
@@ -955,6 +973,10 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="packageDebugTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="packageReleaseAidl" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -975,10 +997,6 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="packageTest" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="preBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -987,11 +1005,15 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="preReleaseBuild" />
+                <option name="name" value="preDebugTestBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="preTestBuild" />
+                <option name="name" value="preDexDebugTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="preReleaseBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
@@ -999,11 +1021,11 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="prepareReleaseDependencies" />
+                <option name="name" value="prepareDebugTestDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="prepareTestDependencies" />
+                <option name="name" value="prepareReleaseDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
@@ -1019,6 +1041,18 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="processDebugTestJavaRes" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="processDebugTestManifest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
+                <option name="name" value="processDebugTestResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="processReleaseJavaRes" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -1028,18 +1062,6 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
                 <option name="name" value="processReleaseResources" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="processTestJavaRes" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="processTestResources" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="processTestTestManifest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Displays the signing info for each variant" />
@@ -1054,7 +1076,7 @@
               <ExternalTaskPojo>
                 <option name="description" value="Uninstalls the Test build for the Debug build" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
-                <option name="name" value="uninstallTest" />
+                <option name="name" value="uninstallDebugTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/DailymotionWebSDK" />
@@ -1082,14 +1104,14 @@
                 <option name="name" value="assembleDebug" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Assembles the Test build for the Debug build" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="assembleDebugTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Assembles all Release builds" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="assembleRelease" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles the Test build for the Debug build" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="assembleTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Assembles and tests this project." />
@@ -1118,11 +1140,15 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="compileDebug" />
+                <option name="name" value="compileDebugAidl" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="compileDebugAidl" />
+                <option name="name" value="compileDebugJava" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="compileDebugNdk" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
@@ -1130,11 +1156,23 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="compileLint" />
+                <option name="name" value="compileDebugTestAidl" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="compileRelease" />
+                <option name="name" value="compileDebugTestJava" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="compileDebugTestNdk" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="compileDebugTestRenderscript" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="compileLint" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
@@ -1142,19 +1180,15 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="compileReleaseJava" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="compileReleaseNdk" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="compileReleaseRenderscript" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="compileTest" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="compileTestAidl" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="compileTestRenderscript" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Runs all device checks on currently connected devices." />
@@ -1162,7 +1196,7 @@
                 <option name="name" value="connectedCheck" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
-                <option name="description" value="Installs and runs the tests for Build 'Debug' on connected devices." />
+                <option name="description" value="Installs and runs the tests for Build 'debug' on connected devices." />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="connectedInstrumentTest" />
               </ExternalTaskPojo>
@@ -1177,11 +1211,11 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="dexRelease" />
+                <option name="name" value="dexDebugTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="dexTest" />
+                <option name="name" value="dexRelease" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
@@ -1193,19 +1227,19 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="generateDebugTestBuildConfig" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="generateDebugTestSources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="generateReleaseBuildConfig" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="generateReleaseSources" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="generateTestBuildConfig" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="generateTestSources" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Installs the Debug build" />
@@ -1215,7 +1249,7 @@
               <ExternalTaskPojo>
                 <option name="description" value="Installs the Test build for the Debug build" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="installTest" />
+                <option name="name" value="installDebugTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Runs lint on all variants." />
@@ -1223,16 +1257,14 @@
                 <option name="name" value="lint" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Runs lint on the Debug build" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="lintDebug" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Runs lint on the Release build" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="lintRelease" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="lintTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
@@ -1244,6 +1276,14 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="mergeDebugTestAssets" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="mergeDebugTestResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="mergeReleaseAssets" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -1252,23 +1292,15 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="mergeTestAssets" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="mergeTestResources" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="packageDebug" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="packageRelease" />
+                <option name="name" value="packageDebugTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="packageTest" />
+                <option name="name" value="packageRelease" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
@@ -1280,11 +1312,23 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="preReleaseBuild" />
+                <option name="name" value="preDebugTestBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="preTestBuild" />
+                <option name="name" value="preDexDebug" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="preDexDebugTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="preDexRelease" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="preReleaseBuild" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
@@ -1292,11 +1336,11 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="prepareReleaseDependencies" />
+                <option name="name" value="prepareDebugTestDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="prepareTestDependencies" />
+                <option name="name" value="prepareReleaseDependencies" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Prepare WebSDKProject:DailymotionWebSDK:unspecified" />
@@ -1317,6 +1361,18 @@
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="processDebugTestJavaRes" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="processDebugTestManifest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="processDebugTestResources" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="processReleaseJavaRes" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
@@ -1326,18 +1382,6 @@
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="processReleaseResources" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="processTestJavaRes" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="processTestResources" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="processTestTestManifest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="description" value="Displays the signing info for each variant" />
@@ -1355,14 +1399,14 @@
                 <option name="name" value="uninstallDebug" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
+                <option name="description" value="Uninstalls the Test build for the Debug build" />
+                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
+                <option name="name" value="uninstallDebugTest" />
+              </ExternalTaskPojo>
+              <ExternalTaskPojo>
                 <option name="description" value="Uninstalls the Release build" />
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
                 <option name="name" value="uninstallRelease" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Uninstalls the Test build for the Debug build" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
-                <option name="name" value="uninstallTest" />
               </ExternalTaskPojo>
               <ExternalTaskPojo>
                 <option name="linkedExternalProjectPath" value="$PROJECT_DIR$/SampleApp" />
@@ -1388,17 +1432,17 @@
         <option value="$PROJECT_DIR$/SampleApp/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml" />
         <option value="$PROJECT_DIR$/README.md" />
-        <option value="$PROJECT_DIR$/SampleApp/build.gradle" />
-        <option value="$PROJECT_DIR$/DailymotionWebSDK/build.gradle" />
-        <option value="$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java" />
         <option value="$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java" />
+        <option value="$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java" />
+        <option value="$PROJECT_DIR$/DailymotionWebSDK/build.gradle" />
+        <option value="$PROJECT_DIR$/SampleApp/build.gradle" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="22" />
     <option name="width" value="1440" />
-    <option name="height" value="815" />
+    <option name="height" value="817" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -1654,9 +1698,9 @@
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/android-2.3.6_r1-sources/frameworks/base/core/java" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="015d0bc2ac100604" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="32304bce93218073" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="DEBUGGABLE_DEVICE" value="030b761008e45e58" />
+    <property name="DEBUGGABLE_DEVICE" value="01b379e2d79cb2be" />
     <property name="DEBUGGABLE_PROCESS" value="com.dailymotion.websdksample" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="10" />
@@ -1926,43 +1970,48 @@
       <created>1377707386479</created>
       <updated>1377707386479</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="- Added autoPlay parameter&#10;">
+      <created>1384472298285</created>
+      <updated>1384472298285</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="28173000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1440" height="815" extended-state="6" />
+    <frame x="0" y="22" width="1440" height="817" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.67118645" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.67118645" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6700565" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294964" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32855093" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32768363" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32137734" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32805756" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32805756" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.2858757" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32424676" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3902439" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32344633" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4048641" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2497332" sideWeight="0.6700565" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="JSON Formatter" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24964131" sideWeight="0.6086331" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32424676" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32331902" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.6700565" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3294964" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1983,20 +2032,123 @@
     <MESSAGE value="- Fixed sample" />
     <MESSAGE value="- Added autoPlay parameter" />
     <MESSAGE value=" - Updated to compile against API 19&#10; - Supports Chromium-based WebView from Android 4.4 KitKat&#10; - Cleaned sample application" />
-    <option name="LAST_COMMIT_MESSAGE" value=" - Updated to compile against API 19&#10; - Supports Chromium-based WebView from Android 4.4 KitKat&#10; - Cleaned sample application" />
+    <MESSAGE value="- Added autoPlay parameter&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Added autoPlay parameter&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="28" selection-start="313" selection-end="313" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="285">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="100" selection-end="100" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/SampleApp.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1215">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="178" column="18" selection-start="6469" selection-end="6469" vertical-scroll-proportion="0.0" vertical-offset="2670" max-vertical-offset="2895">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/local.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="225">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="46" selection-start="728" selection-end="728" vertical-scroll-proportion="0.0" vertical-offset="300" max-vertical-offset="570">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="25" selection-start="322" selection-end="322" vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="435">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="1020">
+          <folding>
+            <marker date="1388703551000" expanded="true" signature="550:598" placeholder="//..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="180">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="28" selection-start="313" selection-end="313" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="285">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="100" selection-end="100" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="105">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/SampleApp.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="15" max-vertical-offset="1215">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="76" column="13" selection-start="2770" selection-end="2770" vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="3135">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6521#6522#0" expanded="true" />
-            <element signature="e#6557#6558#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2016,16 +2168,12 @@
     </entry>
     <entry file="file://$USER_HOME$/Downloads/android-2.3.6_r1-sources/frameworks/base/core/java/android/webkit/HTML5VideoViewProxy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="292" column="0" selection-start="11355" selection-end="11355" vertical-scroll-proportion="0.0" vertical-offset="4380" max-vertical-offset="9360">
-          <folding />
-        </state>
+        <state line="292" column="0" selection-start="11355" selection-end="11355" vertical-scroll-proportion="0.0" vertical-offset="4380" max-vertical-offset="9360" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Downloads/android-2.3.6_r1-sources/frameworks/base/core/java/android/os/Looper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="0" selection-start="4602" selection-end="4602" vertical-scroll-proportion="0.0" vertical-offset="1935" max-vertical-offset="3810">
-          <folding />
-        </state>
+        <state line="129" column="0" selection-start="4602" selection-end="4602" vertical-scroll-proportion="0.0" vertical-offset="1935" max-vertical-offset="3810" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SampleApp/build.gradle">
@@ -2037,16 +2185,14 @@
     </entry>
     <entry file="file://$USER_HOME$/Downloads/android-2.3.6_r1-sources/frameworks/base/core/java/android/webkit/JWebCoreJavaBridge.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="30" selection-start="823" selection-end="841" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="4350">
-          <folding />
-        </state>
+        <state line="26" column="30" selection-start="823" selection-end="841" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="4350" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="17" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="1035">
           <folding>
-            <marker date="1384470854000" expanded="true" signature="550:598" placeholder="//..." />
+            <marker date="1388703551000" expanded="true" signature="550:598" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -2068,11 +2214,7 @@
     <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="76" column="13" selection-start="2770" selection-end="2770" vertical-scroll-proportion="0.0" vertical-offset="1140" max-vertical-offset="3135">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6521#6522#0" expanded="true" />
-            <element signature="e#6557#6558#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2092,16 +2234,12 @@
     </entry>
     <entry file="file://$USER_HOME$/Downloads/android-2.3.6_r1-sources/frameworks/base/core/java/android/webkit/HTML5VideoViewProxy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="292" column="0" selection-start="11355" selection-end="11355" vertical-scroll-proportion="0.0" vertical-offset="4380" max-vertical-offset="9360">
-          <folding />
-        </state>
+        <state line="292" column="0" selection-start="11355" selection-end="11355" vertical-scroll-proportion="0.0" vertical-offset="4380" max-vertical-offset="9360" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Downloads/android-2.3.6_r1-sources/frameworks/base/core/java/android/os/Looper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="0" selection-start="4602" selection-end="4602" vertical-scroll-proportion="0.0" vertical-offset="1935" max-vertical-offset="3810">
-          <folding />
-        </state>
+        <state line="129" column="0" selection-start="4602" selection-end="4602" vertical-scroll-proportion="0.0" vertical-offset="1935" max-vertical-offset="3810" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SampleApp/build.gradle">
@@ -2113,16 +2251,14 @@
     </entry>
     <entry file="file://$USER_HOME$/Downloads/android-2.3.6_r1-sources/frameworks/base/core/java/android/webkit/JWebCoreJavaBridge.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="30" selection-start="823" selection-end="841" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="4350">
-          <folding />
-        </state>
+        <state line="26" column="30" selection-start="823" selection-end="841" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="4350" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="17" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="1035">
           <folding>
-            <marker date="1384470854000" expanded="true" signature="550:598" placeholder="//..." />
+            <marker date="1388703551000" expanded="true" signature="550:598" placeholder="//..." />
           </folding>
         </state>
       </provider>
@@ -2158,35 +2294,53 @@
     </entry>
     <entry file="file://$USER_HOME$/Downloads/android-2.3.6_r1-sources/frameworks/base/core/java/android/os/Looper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="129" column="0" selection-start="4602" selection-end="4602" vertical-scroll-proportion="0.0" vertical-offset="1548" max-vertical-offset="3570">
-          <folding />
-        </state>
+        <state line="129" column="0" selection-start="4602" selection-end="4602" vertical-scroll-proportion="0.0" vertical-offset="1548" max-vertical-offset="3570" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Downloads/android-2.3.6_r1-sources/frameworks/base/core/java/android/webkit/JWebCoreJavaBridge.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="30" selection-start="823" selection-end="841" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="4050">
+        <state line="26" column="30" selection-start="823" selection-end="841" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="4050" />
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/android-2.3.6_r1-sources/frameworks/base/core/java/android/webkit/HTML5VideoViewProxy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="292" column="0" selection-start="11355" selection-end="11355" vertical-scroll-proportion="-1.5914221" vertical-offset="4380" max-vertical-offset="8580" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="397">
           <folding />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="46" selection-start="728" selection-end="728" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="64" selection-end="64" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="180">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="28" selection-start="313" selection-end="313" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="285">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="0" selection-start="100" selection-end="100" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="105">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/android-2.3.6_r1-sources/frameworks/base/core/java/android/webkit/HTML5VideoViewProxy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="292" column="0" selection-start="11355" selection-end="11355" vertical-scroll-proportion="-1.5914221" vertical-offset="4380" max-vertical-offset="8580">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/local.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="443">
           <folding />
         </state>
       </provider>
@@ -2198,67 +2352,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/build.gradle">
+    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="25" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0" vertical-offset="23" max-vertical-offset="420">
-          <folding />
+        <state line="20" column="8" selection-start="558" selection-end="558" vertical-scroll-proportion="0.0" vertical-offset="3" max-vertical-offset="930">
+          <folding>
+            <marker date="1388703551000" expanded="true" signature="550:598" placeholder="//..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/java/com/dailymotion/websdk/DMWebVideoView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="178" column="18" selection-start="6469" selection-end="6469" vertical-scroll-proportion="0.0" vertical-offset="2541" max-vertical-offset="2925">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#6521#6522#0" expanded="true" />
-            <element signature="e#6557#6558#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="397">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/res/layout/screen_sample.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="28" selection-start="313" selection-end="313" vertical-scroll-proportion="-3.8888888" vertical-offset="0" max-vertical-offset="285">
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="46" selection-start="728" selection-end="728" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="570">
+        <state line="38" column="68" selection-start="1547" selection-end="1547" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="2685">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/SampleApp/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="25" selection-start="322" selection-end="322" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="435">
+        <state line="5" column="53" selection-start="165" selection-end="165" vertical-scroll-proportion="-3.0" vertical-offset="0" max-vertical-offset="435">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SampleApp/src/main/java/com/dailymotion/websdksample/SampleActivity.java">
+    <entry file="file://$PROJECT_DIR$/DailymotionWebSDK/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="1" max-vertical-offset="930">
-          <folding>
-            <marker date="1384470854000" expanded="true" signature="550:598" placeholder="//..." />
-          </folding>
+        <state line="8" column="0" selection-start="177" selection-end="177" vertical-scroll-proportion="-4.8" vertical-offset="0" max-vertical-offset="420">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties">
+    <entry file="file://$PROJECT_DIR$/local.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="64" selection-end="64" vertical-scroll-proportion="0.06772009" vertical-offset="0" max-vertical-offset="443">
+        <state line="7" column="62" selection-start="364" selection-end="364" vertical-scroll-proportion="0.27061856" vertical-offset="0" max-vertical-offset="388">
           <folding />
         </state>
       </provider>
