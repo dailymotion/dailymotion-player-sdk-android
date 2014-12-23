@@ -17,11 +17,13 @@ How to use
 You can either import the SDK using your IDE or integrate DMWebVideoView.java in your project.
 
 ### Edit your AndroidManifest.xml file
-Add
-        android:hardwareAccelerated="true"
-        <uses-permission android:name="android.permission.INTERNET" />
+Add the below to the application tag:
 
-to the application tag.
+```
+android:hardwareAccelerated="true"
+
+<uses-permission android:name="android.permission.INTERNET" />
+```
 
 ### Use in your Activity or Fragment
 First, add the DMWebVideoView in your layout in place of the regular WebView.
