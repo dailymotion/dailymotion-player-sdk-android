@@ -19,6 +19,7 @@ You can either import the SDK using your IDE or integrate DMWebVideoView.java in
 ### Edit your AndroidManifest.xml file
 Add
         android:hardwareAccelerated="true"
+        <uses-permission android:name="android.permission.INTERNET" />
 
 to the application tag.
 
