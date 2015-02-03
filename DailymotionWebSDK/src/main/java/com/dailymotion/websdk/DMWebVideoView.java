@@ -1,10 +1,3 @@
-//
-//  DMWebVideoView.java
-//  Dailymotion
-//
-//  Created by Guillaume Lachaud on 30/05/13.
-//  Copyright (c) 2013 Dailymotion. All rights reserved.
-//
 package com.dailymotion.websdk;
 
 import android.R;
