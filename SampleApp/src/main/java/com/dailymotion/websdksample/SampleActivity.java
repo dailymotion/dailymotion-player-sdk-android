@@ -18,7 +18,7 @@ public class SampleActivity extends Activity {
         setContentView(R.layout.screen_sample);
 
         mVideoView = ((DMWebVideoView) findViewById(R.id.dmWebVideoView));
-        mVideoView.setVideoId("x10iisk", false);
+        mVideoView.setVideoId("x2frsoi", false);
 
 
     }
