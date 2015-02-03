@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DailymotionWebSDK/DailymotionWebSDK.iml" filepath="$PROJECT_DIR$/DailymotionWebSDK/DailymotionWebSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/SampleApp/SampleApp.iml" filepath="$PROJECT_DIR$/SampleApp/SampleApp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/WebSDKProject.iml" filepath="$PROJECT_DIR$/WebSDKProject.iml" />
       <module fileurl="file://$PROJECT_DIR$/dailymotion-sdk-android.iml" filepath="$PROJECT_DIR$/dailymotion-sdk-android.iml" />
     </modules>
   </component>

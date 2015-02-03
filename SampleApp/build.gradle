@@ -3,7 +3,7 @@ buildscript {
         maven { url 'http://repo1.maven.org/maven2' }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.+'
+        classpath 'com.android.tools.build:gradle:1.0.1'
     }
 }
 apply plugin: 'android'
@@ -13,11 +13,10 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19"
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 16
     }
 }
