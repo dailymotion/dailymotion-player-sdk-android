@@ -1,4 +1,6 @@
-local.properties
+/.gradle
+/.idea/workspace.xml
+/local.properties
 /build
 /DailymotionWebSDK/build
 /SampleApp/build
