@@ -19,8 +19,6 @@ public class SampleActivity extends Activity {
 
         mVideoView = ((DMWebVideoView) findViewById(R.id.dmWebVideoView));
         mVideoView.setVideoId("x2frsoi", false);
-
-
     }
 
 
@@ -46,7 +44,7 @@ public class SampleActivity extends Activity {
     protected void onPause() {
         super.onPause();
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             mVideoView.onPause();
         }
     }
@@ -55,7 +53,7 @@ public class SampleActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             mVideoView.onResume();
         }
     }
