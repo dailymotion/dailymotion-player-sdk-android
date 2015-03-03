@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.VideoView;
@@ -23,13 +25,13 @@ public class DMWebVideoView extends WebView {
     private VideoView                           mCustomVideoView;
     private WebChromeClient.CustomViewCallback  mViewCallback;
 
-    private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1&fullscreen=%s&autoPlay=%s&app=%s";
+    private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1&fullscreen=%s&app=%s&api=location";
     private final String                        mExtraUA = "; DailymotionEmbedSDK 1.0";
     private FrameLayout                         mVideoLayout;
     private boolean                             mIsFullscreen = false;
     private FrameLayout                         mRootLayout;
     private boolean                             mAllowAutomaticNativeFullscreen = false;
-    private boolean                             mIsAutoPlay = false;
+    private boolean mAutoPlay = false;
 
     public DMWebVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -111,23 +113,39 @@ public class DMWebVideoView extends WebView {
             public void onHideCustomView() {
                 super.onHideCustomView();
             }
+
         };
 
 
         setWebChromeClient(mChromeClient);
+        setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading (WebView view, String url) {
+                Uri uri= Uri.parse(url);
+                if (uri.getScheme().equals("dmevent")) {
+                    String event = uri.getQueryParameter("event");
+                    if (event.equals("apiready")) {
+                        if (mAutoPlay) {
+                            callPlayerMethod("play");
+                        }
+                    }
+                    return true;
+                } else {
+                    return super.shouldOverrideUrlLoading(view, url);
+                }
+            }
+        });
     }
 
+    private void callPlayerMethod(String method) {
+        loadUrl("javascript:player.api(\"" + method + "\")");
+    }
     public void setVideoId(String videoId){
-        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, mIsAutoPlay, getContext().getPackageName()));
+        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, getContext().getPackageName()));
     }
 
     public void setVideoId(String videoId, boolean autoPlay){
-        mIsAutoPlay = autoPlay;
-        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, mIsAutoPlay, getContext().getPackageName()));
-    }
-
-    public void setVideoUrl(String url){
-        loadUrl(url);
+        mAutoPlay = autoPlay;
+        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, getContext().getPackageName()));
     }
 
     public void hideVideoView(){
@@ -190,10 +208,10 @@ public class DMWebVideoView extends WebView {
     }
 
     public boolean isAutoPlaying(){
-        return mIsAutoPlay;
+        return mAutoPlay;
     }
 
-    public void setAutoPlaying(boolean autoPlay){
-        mIsAutoPlay = autoPlay;
+    public void setAutoPlay(boolean autoPlay){
+        mAutoPlay = autoPlay;
     }
 }

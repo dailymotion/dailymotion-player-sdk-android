@@ -19,6 +19,8 @@ public class SampleActivity extends Activity {
 
         mVideoView = ((DMWebVideoView) findViewById(R.id.dmWebVideoView));
         mVideoView.setVideoId("x2frsoi", false);
+        // Uncomment if you need autoplay
+        // mVideoView.setAutoPlay(true);
     }
 
 
