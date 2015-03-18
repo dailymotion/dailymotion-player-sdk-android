@@ -1,4 +1,4 @@
-package com.dailymotion.websdk;
+package com.dailymotion.sdk.player;
 
 import android.R;
 import android.app.Activity;

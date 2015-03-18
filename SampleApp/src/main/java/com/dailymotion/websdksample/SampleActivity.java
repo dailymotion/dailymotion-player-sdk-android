@@ -6,7 +6,7 @@ import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.dailymotion.websdk.DMWebVideoView;
+import com.dailymotion.sdk.player.DMWebVideoView;
 
 public class SampleActivity extends Activity {
 

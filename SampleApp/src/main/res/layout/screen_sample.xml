@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context=".SampleActivity">
 
-    <com.dailymotion.websdk.DMWebVideoView
+    <com.dailymotion.sdk.player.DMWebVideoView
             android:layout_width="fill_parent"
             android:layout_height="400dip"
             android:id="@+id/dmWebVideoView"
