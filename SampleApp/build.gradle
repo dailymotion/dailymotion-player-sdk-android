@@ -13,7 +13,6 @@ repositories {
 }
 
 dependencies {
-    compile project(':DailymotionWebSDK')
     compile project(':SDK')
     compile 'com.mcxiaoke.volley:library:1.0.+'
     compile 'com.google.code.gson:gson:2.3'

@@ -1,2 +1,2 @@
-include ':SampleApp', ':DailymotionWebSDK', ':SDK'
+include ':SampleApp', ':SDK'
 

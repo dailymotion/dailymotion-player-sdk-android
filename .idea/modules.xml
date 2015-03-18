@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/DailymotionWebSDK/DailymotionWebSDK.iml" filepath="$PROJECT_DIR$/DailymotionWebSDK/DailymotionWebSDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/SDK/SDK.iml" filepath="$PROJECT_DIR$/SDK/SDK.iml" />
       <module fileurl="file://$PROJECT_DIR$/SampleApp/SampleApp.iml" filepath="$PROJECT_DIR$/SampleApp/SampleApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/dailymotion-sdk-android.iml" filepath="$PROJECT_DIR$/dailymotion-sdk-android.iml" />
