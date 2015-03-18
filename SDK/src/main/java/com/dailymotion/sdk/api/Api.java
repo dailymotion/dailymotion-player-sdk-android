@@ -220,6 +220,12 @@ public class Api {
     }
 
     public static ApiRequest queue(ApiRequest request, final HttpRequest.RequestListener listener, final String tag) {
+        if (!request.requiresOAuth) {
+            // no need for Oauth, just queue the request
+            RequestQueue.add(request, listener, tag);
+            return request;
+        }
+
         if (!isTokenValid(sToken)) {
             // the token is not valid anymore...
             refreshTokenFor(request, listener, tag);

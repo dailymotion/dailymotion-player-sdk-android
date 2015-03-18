@@ -12,7 +12,7 @@ public class Video {
     public String thumbnail_720_url;
     public String title;
     public String owner;
-    public String owner$screen_name;
+    public String owner$screenname;
     public String owner$username;
     public int owner$videos_total;
     public int owner$views_total;
@@ -30,7 +30,7 @@ public class Video {
     public String stream_h264_hd_url;
     public String stream_h264_ld_url;
     public String channel;
-    public String channel_name;
+    public String channel$name;
     public String owner$avatar_60_url;
     public String owner$avatar_120_url;
     public String owner$avatar_240_url;

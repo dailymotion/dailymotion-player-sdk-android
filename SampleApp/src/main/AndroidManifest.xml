@@ -15,9 +15,10 @@
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name=".SampleApplication">
         <activity
-            android:name="com.dailymotion.websdksample.SampleActivity"
+            android:name="com.dailymotion.websdksample.ListActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/app_name" >
             <intent-filter>

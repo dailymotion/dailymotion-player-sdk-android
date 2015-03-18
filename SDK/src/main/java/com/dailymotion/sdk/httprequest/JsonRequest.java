@@ -25,17 +25,7 @@ public abstract class JsonRequest<T> extends HttpRequest<T> {
          */
         @Override
         public String translateName(Field f) {
-            String name = f.getName();
-            StringBuilder translation = new StringBuilder();
-            for (int i = 0; i < name.length(); i++) {
-                char character = name.charAt(i);
-                if (character == '$') {
-                    character = '.';
-                }
-                translation.append(character);
-            }
-
-            return translation.toString().toLowerCase();
+            return javaToJson(f.getName());
         }
     };
 
@@ -53,4 +43,16 @@ public abstract class JsonRequest<T> extends HttpRequest<T> {
         return (T)result;
     }
 
+    public static String javaToJson(String name) {
+        StringBuilder translation = new StringBuilder();
+        for (int i = 0; i < name.length(); i++) {
+            char character = name.charAt(i);
+            if (character == '$') {
+                character = '.';
+            }
+            translation.append(character);
+        }
+
+        return translation.toString().toLowerCase();
+    }
 }
