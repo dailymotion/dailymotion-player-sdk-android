@@ -14,6 +14,7 @@ import com.dailymotion.sdk.api.model.PagedList;
 import com.dailymotion.sdk.api.model.Video;
 import com.dailymotion.sdk.httprequest.HttpRequest;
 import com.dailymotion.sdk.httprequest.RequestQueue;
+import com.dailymotion.websdksample.R;
 
 public class VideoListAdapter implements ListAdapter {
     private final Context mContext;

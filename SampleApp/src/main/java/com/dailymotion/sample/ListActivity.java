@@ -2,6 +2,8 @@ package com.dailymotion.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -12,6 +14,7 @@ import com.dailymotion.sdk.api.model.PagedList;
 import com.dailymotion.sdk.api.model.Video;
 import com.dailymotion.sdk.httprequest.HttpRequest;
 import com.dailymotion.sdk.httprequest.JsonRequest;
+import com.dailymotion.websdksample.R;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Field;
@@ -37,6 +40,13 @@ public class ListActivity extends Activity {
         setContentView(R.layout.list_activity);
 
         Api.queue(new VideoListRequest(), mListener);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
     }
 
     static class VideoListRequest extends ApiRequest<PagedList<Video>> {
