@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.dailymotion.sdk.player.DMWebVideoView;
 import com.dailymotion.websdksample.R;
 
-public class SampleActivity extends Activity {
+public class PlayerActivity extends Activity {
 
     private DMWebVideoView mVideoView;
 

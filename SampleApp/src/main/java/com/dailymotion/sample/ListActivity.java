@@ -1,9 +1,11 @@
 package com.dailymotion.sample;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -40,6 +42,19 @@ public class ListActivity extends Activity {
         setContentView(R.layout.list_activity);
 
         Api.queue(new VideoListRequest(), mListener);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.action_about:
+                Intent intent = new Intent();
+                intent.setClass(this, AboutActivity.class);
+                startActivity(intent);
+                return true;
+        }
+
+        return false;
     }
 
     @Override
