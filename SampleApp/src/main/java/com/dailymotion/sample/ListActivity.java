@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
@@ -24,7 +25,19 @@ import java.util.Map;
 
 public class ListActivity extends Activity {
 
-    HttpRequest.RequestListener<PagedList<Video>> mListener = new HttpRequest.RequestListener<PagedList<Video>>() {
+
+    private AdapterView.OnItemClickListener mOnClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Intent intent = new Intent();
+            Video video = (Video)parent.getAdapter().getItem(position);
+            intent.putExtra(PlayerActivity.EXTRA_ID, video.id);
+            intent.setClass(ListActivity.this, PlayerActivity.class);
+            startActivity(intent);
+        }
+    };
+
+    private HttpRequest.RequestListener<PagedList<Video>> mRequestListener = new HttpRequest.RequestListener<PagedList<Video>>() {
         @Override
         public void onRequestCompleted(HttpRequest<PagedList<Video>> request, PagedList<Video> response, HttpRequest.Error error) {
             ListView listView = (ListView)findViewById(R.id.listView);
@@ -32,6 +45,7 @@ public class ListActivity extends Activity {
             progressBar.setVisibility(View.GONE);
 
             listView.setAdapter(new VideoListAdapter(ListActivity.this, response));
+            listView.setOnItemClickListener(mOnClickListener);
         }
     };
 
@@ -41,7 +55,7 @@ public class ListActivity extends Activity {
 
         setContentView(R.layout.list_activity);
 
-        Api.queue(new VideoListRequest(), mListener);
+        Api.queue(new VideoListRequest(), mRequestListener);
     }
 
     @Override

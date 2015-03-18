@@ -1,5 +1,6 @@
 package com.dailymotion.sample;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
@@ -10,6 +11,7 @@ import com.dailymotion.sdk.player.DMWebVideoView;
 import com.dailymotion.websdksample.R;
 
 public class PlayerActivity extends Activity {
+    public final static String EXTRA_ID = "com.dailymotion.sample.EXTRA_ID";
 
     private DMWebVideoView mVideoView;
 
@@ -19,7 +21,12 @@ public class PlayerActivity extends Activity {
         setContentView(R.layout.screen_sample);
 
         mVideoView = ((DMWebVideoView) findViewById(R.id.dmWebVideoView));
-        mVideoView.setVideoId("x2frsoi", false);
+        Intent intent = getIntent();
+        String id = intent.getStringExtra(EXTRA_ID);
+        if (id == null) {
+            id = "x2frsoi";
+        }
+        mVideoView.setVideoId(id, false);
         // Uncomment if you need autoplay
         // mVideoView.setAutoPlay(true);
     }
