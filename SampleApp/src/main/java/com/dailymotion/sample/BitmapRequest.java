@@ -1,4 +1,4 @@
-package com.dailymotion.websdksample;
+package com.dailymotion.sample;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

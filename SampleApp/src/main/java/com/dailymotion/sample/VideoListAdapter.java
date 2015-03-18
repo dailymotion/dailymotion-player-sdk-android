@@ -1,4 +1,4 @@
-package com.dailymotion.websdksample;
+package com.dailymotion.sample;
 
 import android.content.Context;
 import android.database.DataSetObserver;
