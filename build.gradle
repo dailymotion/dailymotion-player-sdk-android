@@ -1,1 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+repositories {
+    mavenCentral()
+    maven { url 'http://repo1.maven.org/maven2' }
+    maven { url 'https://mint.splunk.com/gradle/' }
+    maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
+}
