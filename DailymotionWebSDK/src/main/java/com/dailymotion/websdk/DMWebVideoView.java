@@ -111,7 +111,7 @@ public class DMWebVideoView extends WebView {
 
             @Override
             public void onHideCustomView() {
-                super.onHideCustomView();
+                hideVideoView();
             }
 
         };
@@ -155,7 +155,6 @@ public class DMWebVideoView extends WebView {
             }
             mRootLayout.removeView(mVideoLayout);
             mViewCallback.onCustomViewHidden();
-            mChromeClient.onHideCustomView();
             ((Activity) getContext()).setVolumeControlStream(AudioManager.USE_DEFAULT_STREAM_TYPE);
             mIsFullscreen = false;
         }
