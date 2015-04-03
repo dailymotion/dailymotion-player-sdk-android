@@ -1,7 +1,9 @@
 Dailymotion Android SDK
 =======================
 
-This SDK aims at easily access the API and embedding Dailymotion videos on your Android application.
+The dailymotion Android SDK aims at easily access the API and embedding Dailymotion videos on your Android application. 
+
+**Disclaimer**: This branch is the development branch. It is still under development and **is not considered stable**. Feel free to mess with the code and sample app and tell us what you think. We welcome suggestions and pull requests :).
 
 Features
 --------
