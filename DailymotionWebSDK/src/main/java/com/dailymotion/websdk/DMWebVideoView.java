@@ -6,6 +6,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -57,7 +58,9 @@ public class DMWebVideoView extends WebView {
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setPluginState(WebSettings.PluginState.ON);
         mWebSettings.setUserAgentString(mWebSettings.getUserAgentString() + mExtraUA);
-        mWebSettings.setMediaPlaybackRequiresUserGesture(false);
+        if (Build.VERSION.SDK_INT >= 17) {
+            mWebSettings.setMediaPlaybackRequiresUserGesture(false);
+        }
 
         mChromeClient = new WebChromeClient(){
 
