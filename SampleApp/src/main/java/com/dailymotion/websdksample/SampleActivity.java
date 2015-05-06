@@ -18,9 +18,8 @@ public class SampleActivity extends Activity {
         setContentView(R.layout.screen_sample);
 
         mVideoView = ((DMWebVideoView) findViewById(R.id.dmWebVideoView));
-        mVideoView.setVideoId("x26hv6c", false);
-        // Uncomment if you need autoplay
-        // mVideoView.setAutoPlay(true);
+        mVideoView.setVideoId("x26hv6c");
+        mVideoView.setAutoPlay(true);
     }
 
 
