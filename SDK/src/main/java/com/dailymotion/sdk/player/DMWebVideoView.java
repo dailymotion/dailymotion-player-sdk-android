@@ -57,6 +57,7 @@ public class DMWebVideoView extends WebView {
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setPluginState(WebSettings.PluginState.ON);
         mWebSettings.setUserAgentString(mWebSettings.getUserAgentString() + mExtraUA);
+        mWebSettings.setMediaPlaybackRequiresUserGesture(false);
 
         mChromeClient = new WebChromeClient(){
 

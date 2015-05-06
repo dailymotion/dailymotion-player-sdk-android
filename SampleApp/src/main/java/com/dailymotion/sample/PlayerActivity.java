@@ -24,11 +24,10 @@ public class PlayerActivity extends Activity {
         Intent intent = getIntent();
         String id = intent.getStringExtra(EXTRA_ID);
         if (id == null) {
-            id = "x2frsoi";
+            id = "x26hv6c";
         }
-        mVideoView.setVideoId(id, false);
-        // Uncomment if you need autoplay
-        // mVideoView.setAutoPlay(true);
+        mVideoView.setVideoId(id);
+        mVideoView.setAutoPlay(true);
     }
 
 
