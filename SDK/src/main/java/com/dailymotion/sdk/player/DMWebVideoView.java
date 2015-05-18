@@ -32,7 +32,7 @@ public class DMWebVideoView extends WebView {
     private boolean                             mIsFullscreen = false;
     private FrameLayout                         mRootLayout;
     private boolean                             mAllowAutomaticNativeFullscreen = false;
-    private boolean mAutoPlay = false;
+    private boolean mAutoPlay = true;
 
     public DMWebVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -216,5 +216,9 @@ public class DMWebVideoView extends WebView {
 
     public void setAutoPlay(boolean autoPlay){
         mAutoPlay = autoPlay;
+    }
+
+    public void seek(double time) {
+        loadUrl("javascript:player.api(\"seek\"," + time + ")");
     }
 }

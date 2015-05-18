@@ -61,7 +61,7 @@ public class ListActivity extends Activity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()) {
-            case R.id.action_about:
+            case R.id.action_restart:
                 Intent intent = new Intent();
                 intent.setClass(this, AboutActivity.class);
                 startActivity(intent);

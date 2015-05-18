@@ -3,5 +3,6 @@
 
     <string name="app_name">Dailymotion SDK Sample (beta)</string>
     <string name="action_about">About</string>
+    <string name="action_restart">Restart</string>
 
 </resources>
