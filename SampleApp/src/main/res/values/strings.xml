@@ -4,5 +4,11 @@
     <string name="app_name">Dailymotion SDK Sample (beta)</string>
     <string name="action_about">About</string>
     <string name="action_restart">Restart</string>
+    <string name="playerBaseUrl">Base Player Url</string>
+    <string name="forceVideoId">Force Video Id</string>
+    <string name="videoId">Video ID</string>
+    <string name="extraParameters">Extra Parameters</string>
+    <string name="action_settings">Settings</string>
+
 
 </resources>

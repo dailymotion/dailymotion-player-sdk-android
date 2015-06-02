@@ -19,20 +19,24 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.VideoView;
 
+import com.dailymotion.sdk.util.DMLog;
+
 public class DMWebVideoView extends WebView {
 
-    private WebSettings                         mWebSettings;
-    private WebChromeClient                     mChromeClient;
-    private VideoView                           mCustomVideoView;
-    private WebChromeClient.CustomViewCallback  mViewCallback;
+    private WebSettings mWebSettings;
+    private WebChromeClient mChromeClient;
+    private VideoView mCustomVideoView;
+    private WebChromeClient.CustomViewCallback mViewCallback;
 
-    private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1&fullscreen=%s&app=%s&api=location&GK_PV5=1";
-    private final String                        mExtraUA = "; DailymotionEmbedSDK 1.0";
-    private FrameLayout                         mVideoLayout;
-    private boolean                             mIsFullscreen = false;
-    private FrameLayout                         mRootLayout;
-    private boolean                             mAllowAutomaticNativeFullscreen = false;
+    private String mBaseUrl = "http://www.dailymotion.com/embed/video/";
+    private final String mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?app=&api=location";
+    private final String mExtraUA = "; DailymotionEmbedSDK 1.0";
+    private FrameLayout mVideoLayout;
+    private boolean mIsFullscreen = false;
+    private FrameLayout mRootLayout;
     private boolean mAutoPlay = true;
+    private String mExtraParameters;
+    private String mVideoId;
 
     public DMWebVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -49,7 +53,16 @@ public class DMWebVideoView extends WebView {
         init();
     }
 
-    private void init(){
+    public void setBaseUrl(String baseUrl) {
+        mBaseUrl = baseUrl;
+    }
+
+    public void setExtraParameters(String extraParameters) {
+        mExtraParameters = extraParameters;
+    }
+
+
+    private void init() {
 
         //The topmost layout of the window where the actual VideoView will be added to
         mRootLayout = (FrameLayout) ((Activity) getContext()).getWindow().getDecorView();
@@ -62,7 +75,7 @@ public class DMWebVideoView extends WebView {
             mWebSettings.setMediaPlaybackRequiresUserGesture(false);
         }
 
-        mChromeClient = new WebChromeClient(){
+        mChromeClient = new WebChromeClient() {
 
             /**
              * The view to be displayed while the fullscreen VideoView is buffering
@@ -81,9 +94,9 @@ public class DMWebVideoView extends WebView {
                 ((Activity) getContext()).setVolumeControlStream(AudioManager.STREAM_MUSIC);
                 mIsFullscreen = true;
                 mViewCallback = callback;
-                if (view instanceof FrameLayout){
+                if (view instanceof FrameLayout) {
                     FrameLayout frame = (FrameLayout) view;
-                    if (frame.getFocusedChild() instanceof VideoView){//We are in 2.3
+                    if (frame.getFocusedChild() instanceof VideoView) {//We are in 2.3
                         VideoView video = (VideoView) frame.getFocusedChild();
                         frame.removeView(video);
 
@@ -94,7 +107,7 @@ public class DMWebVideoView extends WebView {
 
                             @Override
                             public void onCompletion(MediaPlayer mediaPlayer) {
-                            hideVideoView();
+                                hideVideoView();
                             }
                         });
 
@@ -123,8 +136,8 @@ public class DMWebVideoView extends WebView {
 
         setWebChromeClient(mChromeClient);
         setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading (WebView view, String url) {
-                Uri uri= Uri.parse(url);
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Uri uri = Uri.parse(url);
                 if (uri.getScheme().equals("dmevent")) {
                     String event = uri.getQueryParameter("event");
                     if (event.equals("apiready")) {
@@ -143,18 +156,24 @@ public class DMWebVideoView extends WebView {
     private void callPlayerMethod(String method) {
         loadUrl("javascript:player.api(\"" + method + "\")");
     }
-    public void setVideoId(String videoId){
-        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, getContext().getPackageName()));
+
+    public void setVideoId(String videoId) {
+        mVideoId = videoId;
     }
 
-    public void setVideoId(String videoId, boolean autoPlay){
-        mAutoPlay = autoPlay;
-        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, getContext().getPackageName()));
+    public void load() {
+        String url = mBaseUrl + mVideoId + "?app=" + getContext().getPackageName() + "&api=location";
+        if (mExtraParameters != null && !mExtraParameters.equals("")) {
+            url += "&" + mExtraParameters;
+        }
+
+        DMLog.d(DMLog.STUFF, "loading " + url);
+        loadUrl(url);
     }
 
-    public void hideVideoView(){
-        if(isFullscreen()){
-            if(mCustomVideoView != null){
+    public void hideVideoView() {
+        if (isFullscreen()) {
+            if (mCustomVideoView != null) {
                 mCustomVideoView.stopPlayback();
             }
             mRootLayout.removeView(mVideoLayout);
@@ -166,24 +185,25 @@ public class DMWebVideoView extends WebView {
 
     }
 
-    private void setupVideoLayout(View video){
+    private void setupVideoLayout(View video) {
 
         /**
          * As we don't want the touch events to be processed by the underlying WebView, we do not set the WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE flag
          * But then we have to handle directly back press in our View to exit fullscreen.
          * Otherwise the back button will be handled by the topmost Window, id-est the player controller
          */
-        mVideoLayout = new FrameLayout(getContext()){
+        mVideoLayout = new FrameLayout(getContext()) {
 
             @Override
             public boolean dispatchKeyEvent(KeyEvent event) {
-                if(event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP){
+                if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
                     hideVideoView();
                     return true;
                 }
 
                 return super.dispatchKeyEvent(event);
-            }};
+            }
+        };
 
         mVideoLayout.setBackgroundResource(R.color.black);
         mVideoLayout.addView(video);
@@ -193,12 +213,12 @@ public class DMWebVideoView extends WebView {
         mIsFullscreen = true;
     }
 
-    public boolean isFullscreen(){
+    public boolean isFullscreen() {
         return mIsFullscreen;
     }
 
     public void handleBackPress(Activity activity) {
-        if(isFullscreen()){
+        if (isFullscreen()) {
             hideVideoView();
         } else {
             loadUrl("");//Hack to stop video
@@ -206,15 +226,11 @@ public class DMWebVideoView extends WebView {
         }
     }
 
-    public void setAllowAutomaticNativeFullscreen(boolean allowAutomaticNativeFullscreen){
-        mAllowAutomaticNativeFullscreen = allowAutomaticNativeFullscreen;
-    }
-
-    public boolean isAutoPlaying(){
+    public boolean isAutoPlaying() {
         return mAutoPlay;
     }
 
-    public void setAutoPlay(boolean autoPlay){
+    public void setAutoPlay(boolean autoPlay) {
         mAutoPlay = autoPlay;
     }
 
