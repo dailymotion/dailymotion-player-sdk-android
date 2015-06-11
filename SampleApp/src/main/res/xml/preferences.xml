@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="preferences">
+
+        <EditTextPreference
+            android:key="@string/keyPlayerBaseUrl"
+            android:title="@string/playerBaseUrl"
+            android:defaultValue="@string/defaultPlayerBaseUrl"/>
+        <CheckBoxPreference
+            android:key="@string/keyForceVideoId"
+            android:title="@string/forceVideoId" />
+        <EditTextPreference
+            android:key="@string/keyVideoId"
+            android:title="@string/videoId" />
+        <EditTextPreference
+            android:key="@string/keyExtraParameters"
+            android:title="@string/extraParameters" />
+    </PreferenceCategory>
+</PreferenceScreen>
