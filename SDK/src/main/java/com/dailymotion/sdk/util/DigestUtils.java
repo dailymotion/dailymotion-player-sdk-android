@@ -37,4 +37,19 @@ public class DigestUtils {
         return getMd5Hash(str, false);
     }
 
+    /**
+     * Get MD5 hash of a string
+     * @return a string which contains hex character
+     */
+    public static byte[] getMd5Hash(byte [] bytes) {
+        try {
+            byte hash[] = java.security.MessageDigest.getInstance("MD5").digest(bytes);
+
+            return hash;
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

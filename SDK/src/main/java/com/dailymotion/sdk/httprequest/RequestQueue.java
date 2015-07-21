@@ -74,6 +74,8 @@ public class RequestQueue {
                 if (error.networkResponse != null) {
                     httpError.httpError = error.networkResponse.statusCode;
                     DMLog.d(DMLog.REQUEST, new String(error.networkResponse.data));
+                } else if (error.getCause() != null) {
+                    error.printStackTrace();
                 }
 
                 if (requestListener != null) {

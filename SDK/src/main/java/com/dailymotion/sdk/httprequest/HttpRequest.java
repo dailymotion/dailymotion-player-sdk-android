@@ -19,7 +19,7 @@ public abstract class HttpRequest<T> {
     public static final int TRACE = 6;
     public static final int PATCH = 7;
 
-    private static final String DEFAULT_ENCODING = "UTF-8";
+    private static final String DEFAULT_ENCODING = "utf-8";
 
     private final String mEndpoint;
     private int mMethod;
@@ -60,7 +60,7 @@ public abstract class HttpRequest<T> {
     }
     protected abstract String getBaseUrl();
     protected String getBodyContentType() {
-        return "application/x-www-form-urlencoded; charset=";
+        return "application/x-www-form-urlencoded; charset=" + DEFAULT_ENCODING;
     }
     public byte[] getBody() {
         Map<String, String> params = getPostParams();
@@ -76,11 +76,17 @@ public abstract class HttpRequest<T> {
     private byte[] encodeParameters(Map<String, String> params, String paramsEncoding) {
         StringBuilder encodedParams = new StringBuilder();
         try {
+            boolean first = true;
             for (Map.Entry<String, String> entry : params.entrySet()) {
+                if (!first) {
+                    encodedParams.append('&');
+                } else {
+                    first = false;
+                }
                 encodedParams.append(URLEncoder.encode(entry.getKey(), paramsEncoding));
                 encodedParams.append('=');
                 encodedParams.append(URLEncoder.encode(entry.getValue(), paramsEncoding));
-                encodedParams.append('&');
+
             }
             return encodedParams.toString().getBytes(paramsEncoding);
         } catch (UnsupportedEncodingException uee) {

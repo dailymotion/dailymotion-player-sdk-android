@@ -34,7 +34,7 @@ public class Api {
         public void onRequestCompleted(HttpRequest request, Object response, HttpRequest.Error error) {
             if (error == null || error.httpError != 401) {
                 DMLog.d(DMLog.REQUEST, "unexpected response while reading nonce");
-                // XXX: what should we do ?
+                tokenError();
                 return;
             }
 
@@ -72,26 +72,23 @@ public class Api {
             String authorization = authorizationBuilder.toString();
 
             HashMap<String, String> parameters = new HashMap<String, String>();
-            if (sToken == null || sToken.refresh_token == null) {
-                if (sPassword != null) {
-                    // get token for the saved password
-                    parameters.put("grant_type", "password");
-                    parameters.put("token_type", "Bearer");
-                    // permissions // manage_tiles
-                    parameters.put("scope", "manage_favorites userinfo manage_videos manage_comments manage_playlists manage_tiles manage_subscriptions manage_friends manage_groups feed");
-                    parameters.put("username", TextUtils.htmlEncode(sLogin));
-                    parameters.put("password", TextUtils.htmlEncode(sPassword));
-                } else {
-                    // get token without password
-                    parameters.put("grant_type", "client_credentials");
-                    parameters.put("token_type", "Bearer");
-                    parameters.put("scope", "");
-                }
-            } else {
+            if (sPassword != null) {
+                // get token for the given password
+                parameters.put("grant_type", "password");
+                parameters.put("token_type", "Bearer");
+                parameters.put("scope", "manage_favorites userinfo manage_videos manage_comments manage_playlists manage_tiles manage_subscriptions manage_friends manage_groups feed");
+                parameters.put("username", TextUtils.htmlEncode(sLogin));
+                parameters.put("password", TextUtils.htmlEncode(sPassword));
+            } else if (sToken != null && sToken.refresh_token != null) {
                 // try to refresh this token
                 parameters.put("grant_type", "refresh_token");
                 parameters.put("token_type", "Bearer");
                 parameters.put("refresh_token", sToken.refresh_token);
+            } else {
+                // get token without password
+                parameters.put("grant_type", "client_credentials");
+                parameters.put("token_type", "Bearer");
+                parameters.put("scope", "");
             }
 
             parameters.put("client_id", sClientId);
@@ -107,18 +104,18 @@ public class Api {
     private static HttpRequest.RequestListener<Token> sTokenListener2 = new HttpRequest.RequestListener<Token>() {
         @Override
         public void onRequestCompleted(HttpRequest request, Token response, HttpRequest.Error error) {
-            response.fetch_date = System.currentTimeMillis();
+            if (response != null) {
+                response.fetch_date = System.currentTimeMillis();
+            }
+            sTokenPending = false;
 
             if (!isTokenValid(response)) {
-                // XXX: what now ?
-                DMLog.e(DMLog.REQUEST, "Cannot get a valid token");
-
+                tokenError();
                 return;
             }
 
             sToken = response;
             ApiRequest.setAccessToken(sToken.access_token);
-            sTokenPending = false;
 
             DMLog.d(DMLog.REQUEST, "got token: " + sToken.access_token);
 
@@ -132,6 +129,20 @@ public class Api {
         }
     };
 
+    private static void tokenError() {
+        DMLog.e(DMLog.REQUEST, "Cannot get a valid token");
+
+        sTokenPending = false;
+
+        while (sPendingRequests.peek() != null) {
+            ApiRequest pendingRequest = sPendingRequests.remove();
+            HttpRequest.RequestListener pendingListener = sPendingListeners.remove();
+
+            HttpRequest.Error error = new HttpRequest.Error();
+            pendingListener.onRequestCompleted(pendingRequest, null, error);
+        }
+    }
+
     private static boolean isTokenValid(Token sToken) {
         if (sToken == null) {
             return false;
@@ -139,22 +150,32 @@ public class Api {
         if (sToken.error != null) {
             return false;
         }
-        if (System.currentTimeMillis() - sToken.fetch_date > sToken.expires_in) {
+        if ((System.currentTimeMillis() - sToken.fetch_date)/1000 > sToken.expires_in) {
             return  false;
         }
         return true;
     }
 
-    public static Token getOAuthToken() {
+    public static Token getToken() {
         return sToken;
     }
 
-    public static void resetToken() {
-
+    public static void setToken(Token token) {
+        sToken = token;
+        if (sToken != null) {
+            ApiRequest.setAccessToken(sToken.access_token);
+        } else {
+            ApiRequest.setAccessToken(null);
+        }
     }
 
     public static String getBaseUrl() {
         return sBaseUrl;
+    }
+
+    public static void setLogin(String login, String password) {
+        sPassword = password;
+        sLogin = login;
     }
 
     static class TokenRequest extends JsonRequest<Token> {
@@ -238,7 +259,9 @@ public class Api {
                 if (error != null && error.httpError == 401) {
                     refreshTokenFor((ApiRequest)request, listener, tag);
                 } else {
-                    listener.onRequestCompleted(request, response, error);
+                    if (listener != null) {
+                        listener.onRequestCompleted(request, response, error);
+                    }
                 }
             }
         };

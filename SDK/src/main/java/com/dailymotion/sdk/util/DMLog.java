@@ -23,9 +23,12 @@ public final class DMLog {
     public static final String LIFECYCLE = "Lifecycle";
     public static final String INTERSTITIAL = "Interstitial";
     public static final String REQUEST = "Request";
+    public static final String DATABASE = "Database";
+    public static final String EXOPLAYER = "Exoplayer";
+    public static final String BROADCAST = "Broadcast";
 
     static {
-        sEnabledLogs.put(SYNC, false);
+        sEnabledLogs.put(SYNC, true);
     }
 
     private DMLog() {

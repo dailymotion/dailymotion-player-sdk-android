@@ -10,14 +10,14 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 public abstract class JsonRequest<T> extends HttpRequest<T> {
-    protected final Gson mGson;
+    protected Gson mGson;
     private final Type mClazz;
     /**
      * Translate from java identifier to json identifier
      *
      *   tile$event --> tile.event
      */
-    static final FieldNamingStrategy sPolicy = new FieldNamingStrategy() {
+    public static final FieldNamingStrategy sNamingStrategy = new FieldNamingStrategy() {
         /**
          * A custom field naming policy because sometimes API will return fields with a '.' inside
          *
@@ -31,8 +31,8 @@ public abstract class JsonRequest<T> extends HttpRequest<T> {
 
     public JsonRequest(int method, String endpoint, Type clazz) {
         super(method, endpoint);
-        mGson = new GsonBuilder().setFieldNamingStrategy(sPolicy).create();
         mClazz = clazz;
+        mGson = new GsonBuilder().setFieldNamingStrategy(sNamingStrategy).create();
     }
 
     @Override

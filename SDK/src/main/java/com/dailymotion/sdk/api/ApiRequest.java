@@ -17,7 +17,6 @@ import java.util.Map;
 public class ApiRequest<T> extends JsonRequest<T> {
     protected boolean requiresOAuth = false;
     protected boolean forceFamilyFilter = false;
-    protected String password;
 
     private static String sAccessToken;
     private static String sLocalization;

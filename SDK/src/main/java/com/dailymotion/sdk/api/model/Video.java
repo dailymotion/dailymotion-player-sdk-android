@@ -37,9 +37,11 @@ public class Video {
     public String owner$avatar_360_url;
     public String owner$avatar_480_url;
     public String owner$avatar_720_url;
+    public boolean owner$verified;
     public boolean ads = true;
     public boolean onair = false;
     public boolean sync_allowed = true;
     public String updated_time;
     public ArrayList<String> sources;
+    public String live_publish_url;
 }

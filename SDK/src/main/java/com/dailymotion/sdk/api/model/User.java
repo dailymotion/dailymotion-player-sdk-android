@@ -15,4 +15,6 @@ public class User {
     public String avatar_480_url;
     public String avatar_720_url;
     public String videostar$thumbnail_480_url;
+    public boolean partner;
+    public boolean verified;
 }
