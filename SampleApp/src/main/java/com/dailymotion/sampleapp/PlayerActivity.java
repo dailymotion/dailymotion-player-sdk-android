@@ -31,7 +31,7 @@ public class PlayerActivity extends Activity {
             id = "x26hv6c";
         }
 
-        mVideoView.setBaseUrl(prefs.getString(getString(R.string.keyPlayerBaseUrl), ""));
+        mVideoView.setBaseUrl(prefs.getString(getString(R.string.keyPlayerBaseUrl), DMWebVideoView.DEFAULT_PLAYER_URL));
         if (prefs.getBoolean(getString(R.string.keyForceVideoId), false)) {
             id = prefs.getString(getString(R.string.keyVideoId), "");
         }

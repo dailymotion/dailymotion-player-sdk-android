@@ -3,6 +3,8 @@ package com.dailymotion.sdk.player;
 import android.R;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -27,9 +29,8 @@ public class DMWebVideoView extends WebView {
     private WebChromeClient mChromeClient;
     private VideoView mCustomVideoView;
     private WebChromeClient.CustomViewCallback mViewCallback;
-
-    private String mBaseUrl = "http://www.dailymotion.com/embed/video/";
-    private final String mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?app=&api=location";
+    public static String DEFAULT_PLAYER_URL = "http://www.dailymotion.com/embed/video/";
+    private String mBaseUrl = DEFAULT_PLAYER_URL;
     private final String mExtraUA = "; DailymotionEmbedSDK 1.0";
     private FrameLayout mVideoLayout;
     private boolean mIsFullscreen = false;
@@ -118,6 +119,14 @@ public class DMWebVideoView extends WebView {
 
                     }
                 }
+            }
+
+            @Override
+            public Bitmap getDefaultVideoPoster() {
+                int colors[] = new int[1];
+                colors[0] = Color.TRANSPARENT;
+                Bitmap bm = Bitmap.createBitmap(colors, 0, 1, 1, 1, Bitmap.Config.ARGB_8888);
+                return bm;
             }
 
             @Override
