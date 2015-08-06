@@ -38,6 +38,7 @@ public class DMWebVideoView extends WebView {
     private boolean mAutoPlay = true;
     private String mExtraParameters;
     private String mVideoId;
+    private long mStartNanos;
 
     public DMWebVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -153,6 +154,7 @@ public class DMWebVideoView extends WebView {
                         if (mAutoPlay) {
                             callPlayerMethod("play");
                         }
+                        DMLog.d(DMLog.STUFF, "apiready took " + ((double)(System.nanoTime() - mStartNanos))/1000000000.0);
                     }
                     return true;
                 } else {
@@ -177,6 +179,8 @@ public class DMWebVideoView extends WebView {
         }
 
         DMLog.d(DMLog.STUFF, "loading " + url);
+
+        mStartNanos = System.nanoTime();
         loadUrl(url);
     }
 
