@@ -1,0 +1,30 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.1'
+    }
+}
+apply plugin: 'com.android.library'
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
+
+    defaultConfig {
+        minSdkVersion 8
+        targetSdkVersion 19
+    }
+}
+
+dependencies {
+    compile 'com.mcxiaoke.volley:library:1.0.+'
+    compile 'com.google.code.gson:gson:2.3'
+    // for io.kickflip.sdk
+    compile 'com.google.guava:guava:16.0'
+}

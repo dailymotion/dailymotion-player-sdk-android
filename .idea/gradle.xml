@@ -9,8 +9,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/SDK" />
-            <option value="$PROJECT_DIR$/SampleApp" />
+            <option value="$PROJECT_DIR$/sampleapp" />
+            <option value="$PROJECT_DIR$/sdk" />
           </set>
         </option>
       </GradleProjectSettings>
