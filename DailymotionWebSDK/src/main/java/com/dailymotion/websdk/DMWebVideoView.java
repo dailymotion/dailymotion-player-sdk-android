@@ -24,21 +24,30 @@ import java.util.List;
 
 public class DMWebVideoView extends WebView {
 
+    public static final String                  THEME_DARK = "dark";
+    public static final String                  THEME_LIGHT = "light";
+    private final String                        BASE_URL = "http://www.dailymotion.com/embed/video/%s?html=1&api=location&";
+
+    private final String mEmbedUrl = BASE_URL + "fullscreen=%s&endscreen-enable=%s&ui-logo=%s&ui-theme=%s&ui-start_screen_info=%s&app=%s";
+
+    private final String                        mExtraUA = "; DailymotionEmbedSDK 1.0";
+    private final List<PreLoadFinishedListener> listeners = new ArrayList<>();
+
     private WebSettings                         mWebSettings;
     private WebChromeClient                     mChromeClient;
     private VideoView                           mCustomVideoView;
     private WebChromeClient.CustomViewCallback  mViewCallback;
 
-    private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1&fullscreen=%s&app=%s&api=location";
-    private final String                        mExtraUA = "; DailymotionEmbedSDK 1.0";
-    private final List<PreLoadFinishedListener> listeners = new ArrayList<>();
-
     private FrameLayout                         mVideoLayout;
     private boolean                             mIsFullscreen = false;
     private FrameLayout                         mRootLayout;
     private boolean                             mAllowAutomaticNativeFullscreen = false;
-    private boolean mAutoPlay = false;
-    private String mVideoId;
+    private boolean                             mAutoPlay = false;
+    private String                              mVideoId;
+    private boolean                             mEndScreenEnabled = true;
+    private boolean                             mUiLogo = true;
+    private boolean                             mUiStartScreenInfo = true;
+    private String                              mTheme = THEME_DARK;
 
     public DMWebVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -176,15 +185,30 @@ public class DMWebVideoView extends WebView {
     private void callPlayerMethod(String method) {
         loadUrl("javascript:player.api(\"" + method + "\")");
     }
+
     public void setVideoId(String videoId){
         mVideoId = videoId;
-        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, getContext().getPackageName()));
+        loadUrl(String.format(mEmbedUrl,
+                videoId,
+                mAllowAutomaticNativeFullscreen,
+                mEndScreenEnabled /*endscreen-enable*/,
+                mUiLogo /*ui-logo*/,
+                mTheme /*ui-theme*/,
+                mUiStartScreenInfo,
+                getContext().getPackageName()));
     }
 
     public void setVideoId(String videoId, boolean autoPlay){
-        mAutoPlay = autoPlay;
         mVideoId = videoId;
-        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, getContext().getPackageName()));
+        mAutoPlay = autoPlay;
+        loadUrl(String.format(mEmbedUrl,
+                videoId,
+                mAllowAutomaticNativeFullscreen,
+                mEndScreenEnabled /*endscreen-enable*/,
+                mUiLogo /*ui-logo*/,
+                mTheme /*ui-theme*/,
+                mUiStartScreenInfo,
+                getContext().getPackageName()));
     }
 
     public void hideVideoView(){
@@ -251,6 +275,22 @@ public class DMWebVideoView extends WebView {
 
     public void setAutoPlay(boolean autoPlay){
         mAutoPlay = autoPlay;
+    }
+
+    public void setUiLogo(boolean mUiLogo) {
+        this.mUiLogo = mUiLogo;
+    }
+
+    public void setEndScreenEnabled(boolean mEndScreenEnabled) {
+        this.mEndScreenEnabled = mEndScreenEnabled;
+    }
+
+    public void setmTheme(String mTheme) {
+        if (mTheme.equals(THEME_DARK) || mTheme.equals(THEME_LIGHT)) this.mTheme = mTheme;
+    }
+
+    public void setUiStartScreenInfo(boolean mUiStartScreenInfo) {
+        this.mUiStartScreenInfo = mUiStartScreenInfo;
     }
 
     public interface PreLoadFinishedListener
