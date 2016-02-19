@@ -38,6 +38,7 @@ public class DMWebVideoView extends WebView {
     private FrameLayout                         mRootLayout;
     private boolean                             mAllowAutomaticNativeFullscreen = false;
     private boolean mAutoPlay = false;
+    private String mVideoId;
 
     public DMWebVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -176,11 +177,13 @@ public class DMWebVideoView extends WebView {
         loadUrl("javascript:player.api(\"" + method + "\")");
     }
     public void setVideoId(String videoId){
+        mVideoId = videoId;
         loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, getContext().getPackageName()));
     }
 
     public void setVideoId(String videoId, boolean autoPlay){
         mAutoPlay = autoPlay;
+        mVideoId = videoId;
         loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, getContext().getPackageName()));
     }
 
@@ -263,4 +266,7 @@ public class DMWebVideoView extends WebView {
         super.onSizeChanged(w, h, ow, oh);
     }
 
+    public String getCurrentVideoId() {
+        return mVideoId;
+    }
 }
