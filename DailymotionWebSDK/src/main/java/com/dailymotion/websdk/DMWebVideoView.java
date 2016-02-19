@@ -19,6 +19,9 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.VideoView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DMWebVideoView extends WebView {
 
     private WebSettings                         mWebSettings;
@@ -28,6 +31,8 @@ public class DMWebVideoView extends WebView {
 
     private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1&fullscreen=%s&app=%s&api=location";
     private final String                        mExtraUA = "; DailymotionEmbedSDK 1.0";
+    private final List<PreLoadFinishedListener> listeners = new ArrayList<>();
+
     private FrameLayout                         mVideoLayout;
     private boolean                             mIsFullscreen = false;
     private FrameLayout                         mRootLayout;
@@ -49,6 +54,10 @@ public class DMWebVideoView extends WebView {
         init();
     }
 
+    public void addOnPreLoadFinishedListener(PreLoadFinishedListener toAdd) {
+        listeners.add(toAdd);
+    }
+
     private void init(){
 
         //The topmost layout of the window where the actual VideoView will be added to
@@ -63,6 +72,20 @@ public class DMWebVideoView extends WebView {
         }
 
         mChromeClient = new WebChromeClient(){
+
+            /**
+             * Allow to know when view has 100% loaded
+             * And call the interface onPreLoadFinished
+             */
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100) {
+                    // Notify everybody that may be interested.
+                    for (PreLoadFinishedListener hl : listeners)
+                        hl.onPreLoadFinished();
+                }
+            }
 
             /**
              * The view to be displayed while the fullscreen VideoView is buffering
@@ -216,5 +239,10 @@ public class DMWebVideoView extends WebView {
 
     public void setAutoPlay(boolean autoPlay){
         mAutoPlay = autoPlay;
+    }
+
+    public interface PreLoadFinishedListener
+    {
+        void onPreLoadFinished();
     }
 }
