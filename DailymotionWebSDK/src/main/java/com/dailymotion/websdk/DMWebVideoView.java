@@ -103,6 +103,15 @@ public class DMWebVideoView extends WebView {
                 super.onShowCustomView(view, callback);
                 ((Activity) getContext()).setVolumeControlStream(AudioManager.STREAM_MUSIC);
                 mIsFullscreen = true;
+                //full immersive sticky behaviour
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    mRootLayout.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                }
                 mViewCallback = callback;
                 if (view instanceof FrameLayout){
                     FrameLayout frame = (FrameLayout) view;
