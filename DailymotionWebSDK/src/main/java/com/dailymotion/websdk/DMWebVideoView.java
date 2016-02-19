@@ -52,25 +52,31 @@ public class DMWebVideoView extends WebView {
 
     public DMWebVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+        init(null);
     }
 
     public DMWebVideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(null);
     }
 
     public DMWebVideoView(Context context) {
         super(context);
-        init();
+        init(null);
     }
+
+    public DMWebVideoView(Context context, WebViewClient mWebViewClient) {
+        super(context);
+        init(mWebViewClient);
+    }
+
+
 
     public void addOnPreLoadFinishedListener(PreLoadFinishedListener toAdd) {
         listeners.add(toAdd);
     }
 
-    private void init(){
-
+    private void init(WebViewClient mWebViewClient){
         //The topmost layout of the window where the actual VideoView will be added to
         mRootLayout = (FrameLayout) ((Activity) getContext()).getWindow().getDecorView();
 
@@ -165,22 +171,24 @@ public class DMWebVideoView extends WebView {
 
 
         setWebChromeClient(mChromeClient);
-        setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading (WebView view, String url) {
-                Uri uri= Uri.parse(url);
-                if (uri.getScheme().equals("dmevent")) {
-                    String event = uri.getQueryParameter("event");
-                    if (event.equals("apiready")) {
-                        if (mAutoPlay) {
-                            callPlayerMethod("play");
+        if (mWebViewClient == null)
+            mWebViewClient = new WebViewClient() {
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    Uri uri = Uri.parse(url);
+                    if (uri.getScheme().equals("dmevent")) {
+                        String event = uri.getQueryParameter("event");
+                        if (event.equals("apiready")) {
+                            if (mAutoPlay) {
+                                callPlayerMethod("play");
+                            }
                         }
+                        return true;
+                    } else {
+                        return !allowURrlLoading;
                     }
-                    return true;
-                } else {
-                    return !allowURrlLoading;
                 }
-            }
-        });
+            };
+        setWebViewClient(mWebViewClient);
     }
 
     private void callPlayerMethod(String method) {
