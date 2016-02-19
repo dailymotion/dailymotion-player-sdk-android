@@ -19,38 +19,64 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.VideoView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DMWebVideoView extends WebView {
+
+    public static final String                  THEME_DARK = "dark";
+    public static final String                  THEME_LIGHT = "light";
+    private final String                        BASE_URL = "http://www.dailymotion.com/embed/video/%s?html=1&api=location&";
+
+    private final String mEmbedUrl = BASE_URL + "fullscreen=%s&endscreen-enable=%s&ui-logo=%s&ui-theme=%s&ui-start_screen_info=%s&app=%s";
+
+    private final String                        mExtraUA = "; DailymotionEmbedSDK 1.0";
+    private final List<PreLoadFinishedListener> listeners = new ArrayList<>();
 
     private WebSettings                         mWebSettings;
     private WebChromeClient                     mChromeClient;
     private VideoView                           mCustomVideoView;
     private WebChromeClient.CustomViewCallback  mViewCallback;
 
-    private final String                        mEmbedUrl = "http://www.dailymotion.com/embed/video/%s?html=1&fullscreen=%s&app=%s&api=location";
-    private final String                        mExtraUA = "; DailymotionEmbedSDK 1.0";
     private FrameLayout                         mVideoLayout;
     private boolean                             mIsFullscreen = false;
     private FrameLayout                         mRootLayout;
     private boolean                             mAllowAutomaticNativeFullscreen = false;
-    private boolean mAutoPlay = false;
+    private boolean                             mAutoPlay = false;
+    private String                              mVideoId;
+    private boolean                             mEndScreenEnabled = true;
+    private boolean                             mUiLogo = true;
+    private boolean                             mUiStartScreenInfo = true;
+    private String                              mTheme = THEME_DARK;
+    private boolean allowURrlLoading = true;
 
     public DMWebVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+        init(null);
     }
 
     public DMWebVideoView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(null);
     }
 
     public DMWebVideoView(Context context) {
         super(context);
-        init();
+        init(null);
     }
 
-    private void init(){
+    public DMWebVideoView(Context context, WebViewClient mWebViewClient) {
+        super(context);
+        init(mWebViewClient);
+    }
 
+
+
+    public void addOnPreLoadFinishedListener(PreLoadFinishedListener toAdd) {
+        listeners.add(toAdd);
+    }
+
+    private void init(WebViewClient mWebViewClient){
         //The topmost layout of the window where the actual VideoView will be added to
         mRootLayout = (FrameLayout) ((Activity) getContext()).getWindow().getDecorView();
 
@@ -63,6 +89,20 @@ public class DMWebVideoView extends WebView {
         }
 
         mChromeClient = new WebChromeClient(){
+
+            /**
+             * Allow to know when view has 100% loaded
+             * And call the interface onPreLoadFinished
+             */
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100) {
+                    // Notify everybody that may be interested.
+                    for (PreLoadFinishedListener hl : listeners)
+                        hl.onPreLoadFinished();
+                }
+            }
 
             /**
              * The view to be displayed while the fullscreen VideoView is buffering
@@ -80,6 +120,15 @@ public class DMWebVideoView extends WebView {
                 super.onShowCustomView(view, callback);
                 ((Activity) getContext()).setVolumeControlStream(AudioManager.STREAM_MUSIC);
                 mIsFullscreen = true;
+                //full immersive sticky behaviour
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    mRootLayout.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+                }
                 mViewCallback = callback;
                 if (view instanceof FrameLayout){
                     FrameLayout frame = (FrameLayout) view;
@@ -122,34 +171,53 @@ public class DMWebVideoView extends WebView {
 
 
         setWebChromeClient(mChromeClient);
-        setWebViewClient(new WebViewClient() {
-            public boolean shouldOverrideUrlLoading (WebView view, String url) {
-                Uri uri= Uri.parse(url);
-                if (uri.getScheme().equals("dmevent")) {
-                    String event = uri.getQueryParameter("event");
-                    if (event.equals("apiready")) {
-                        if (mAutoPlay) {
-                            callPlayerMethod("play");
+        if (mWebViewClient == null)
+            mWebViewClient = new WebViewClient() {
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    Uri uri = Uri.parse(url);
+                    if (uri.getScheme().equals("dmevent")) {
+                        String event = uri.getQueryParameter("event");
+                        if (event.equals("apiready")) {
+                            if (mAutoPlay) {
+                                callPlayerMethod("play");
+                            }
                         }
+                        return true;
+                    } else {
+                        return !allowURrlLoading;
                     }
-                    return true;
-                } else {
-                    return super.shouldOverrideUrlLoading(view, url);
                 }
-            }
-        });
+            };
+        setWebViewClient(mWebViewClient);
     }
 
     private void callPlayerMethod(String method) {
         loadUrl("javascript:player.api(\"" + method + "\")");
     }
+
     public void setVideoId(String videoId){
-        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, getContext().getPackageName()));
+        mVideoId = videoId;
+        loadUrl(String.format(mEmbedUrl,
+                videoId,
+                mAllowAutomaticNativeFullscreen,
+                mEndScreenEnabled /*endscreen-enable*/,
+                mUiLogo /*ui-logo*/,
+                mTheme /*ui-theme*/,
+                mUiStartScreenInfo,
+                getContext().getPackageName()));
     }
 
     public void setVideoId(String videoId, boolean autoPlay){
+        mVideoId = videoId;
         mAutoPlay = autoPlay;
-        loadUrl(String.format(mEmbedUrl, videoId, mAllowAutomaticNativeFullscreen, getContext().getPackageName()));
+        loadUrl(String.format(mEmbedUrl,
+                videoId,
+                mAllowAutomaticNativeFullscreen,
+                mEndScreenEnabled /*endscreen-enable*/,
+                mUiLogo /*ui-logo*/,
+                mTheme /*ui-theme*/,
+                mUiStartScreenInfo,
+                getContext().getPackageName()));
     }
 
     public void hideVideoView(){
@@ -216,5 +284,46 @@ public class DMWebVideoView extends WebView {
 
     public void setAutoPlay(boolean autoPlay){
         mAutoPlay = autoPlay;
+    }
+
+    public void setUiLogo(boolean mUiLogo) {
+        this.mUiLogo = mUiLogo;
+    }
+
+    public void setEndScreenEnabled(boolean mEndScreenEnabled) {
+        this.mEndScreenEnabled = mEndScreenEnabled;
+    }
+
+    public void setmTheme(String mTheme) {
+        if (mTheme.equals(THEME_DARK) || mTheme.equals(THEME_LIGHT)) this.mTheme = mTheme;
+    }
+
+    public void setUiStartScreenInfo(boolean mUiStartScreenInfo) {
+        this.mUiStartScreenInfo = mUiStartScreenInfo;
+    }
+
+    public interface PreLoadFinishedListener
+    {
+        void onPreLoadFinished();
+    }
+
+    /**
+     * Allow to detect SizeChange (such as, upon rotation)
+     */
+    @Override
+    public void onSizeChanged(int w, int h, int ow, int oh) {
+        super.onSizeChanged(w, h, ow, oh);
+    }
+
+    public String getCurrentVideoId() {
+        return mVideoId;
+    }
+
+    /**
+     * This parameter must be true in order to have Dailymotion page
+     * or video suggestion redirection working
+     */
+    public void setAllowURrlLoading(boolean allowURrlLoading) {
+        this.allowURrlLoading = allowURrlLoading;
     }
 }
