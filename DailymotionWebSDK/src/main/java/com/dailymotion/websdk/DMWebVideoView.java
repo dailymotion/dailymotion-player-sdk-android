@@ -48,6 +48,7 @@ public class DMWebVideoView extends WebView {
     private boolean                             mUiLogo = true;
     private boolean                             mUiStartScreenInfo = true;
     private String                              mTheme = THEME_DARK;
+    private boolean allowURrlLoading = true;
 
     public DMWebVideoView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -176,7 +177,7 @@ public class DMWebVideoView extends WebView {
                     }
                     return true;
                 } else {
-                    return super.shouldOverrideUrlLoading(view, url);
+                    return !allowURrlLoading;
                 }
             }
         });
@@ -308,5 +309,13 @@ public class DMWebVideoView extends WebView {
 
     public String getCurrentVideoId() {
         return mVideoId;
+    }
+
+    /**
+     * This parameter must be true in order to have Dailymotion page
+     * or video suggestion redirection working
+     */
+    public void setAllowURrlLoading(boolean allowURrlLoading) {
+        this.allowURrlLoading = allowURrlLoading;
     }
 }
