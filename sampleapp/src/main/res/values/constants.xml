@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="defaultPlayerBaseUrl">http://www.dailymotion.com/embed/video/</string>
+    <string name="defaultParameters">http://www.dailymotion.com/embed/video/</string>
+    <string name="keyPlayerBaseUrl">keyPlayerBaseUrl</string>
+    <string name="keyForceVideoId">keyForceVideoId</string>
+    <string name="keyVideoId">keyVideoId</string>
+    <string name="keyExtraParameters">keyExtraParameters</string>
+</resources>

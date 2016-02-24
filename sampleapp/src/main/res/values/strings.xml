@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Dailymotion SDK (beta)</string>
+    <string name="action_settings">Settings</string>
+    <string name="playerBaseUrl">Player Base Url</string>
+    <string name="forceVideoId">Force Video Id</string>
+    <string name="videoId">Video Id</string>
+    <string name="extraParameters">Extra Parameters</string>
+    <string name="action_about">About</string>
+    <string name="action_restart">Restart</string>
+    <string name="videoList">Video list test</string>
+    <string name="broadcast">Broadcast test</string>
+    <string name="you_need_to_login">You need to login to broadcast a live event</string>
+    <string name="username">Username or email</string>
+    <string name="password">Password</string>
+    <string name="login">login</string>
+    <string name="loading">Loading...</string>
+    <string name="bad_username_or_password">Bad username or password</string>
+    <string name="cannot_create_video">Oops, video creation failed</string>
+    <string name="explanation">Recording has started. Your video (%1$s) should be available in a few seconds at http://www.dailymotion.com/video/%2$s.</string>
+
+</resources>

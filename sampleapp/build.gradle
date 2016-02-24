@@ -1,0 +1,40 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.0.1'
+    }
+}
+apply plugin: 'android'
+
+repositories {
+    mavenCentral()
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '21.1.2'
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 16
+
+        Properties props = new Properties()
+        props.load(new FileInputStream("sampleapp/sampleapp.properties"))
+
+        buildConfigField "String", "apiKey", props.getProperty("apiKey")
+        buildConfigField "String", "apiSecret", props.getProperty("apiSecret")
+        buildConfigField "String", "defaultLogin", props.getProperty("defaultLogin")
+        buildConfigField "String", "defaultPassword", props.getProperty("defaultPassword")
+
+    }
+}
+
+dependencies {
+    compile project(':sdk')
+    compile "com.android.support:appcompat-v7:22.1.0"
+    compile 'com.mcxiaoke.volley:library:1.0.+'
+    compile 'com.google.code.gson:gson:2.3'
+    compile 'com.android.support:design:22.2.1'
+}
