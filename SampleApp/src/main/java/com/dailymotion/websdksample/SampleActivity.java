@@ -46,25 +46,25 @@ public class SampleActivity extends Activity implements View.OnClickListener {
             public void onEvent(String event) {
                 switch (event)
                 {
-                    case "apiready": log("API ready"); break;
+                    case "apiready": log("apiready"); break;
                     case "start": log("start"); break;
-                    case "loadedmetadata": log("start"); break;
-                    case "timeupdate": // no break statement here
-                    case "ad_timeupdate": log(event + " (currentTime: " + mVideoView.currentTime + ")"); break;
+                    case "loadedmetadata": log("loadedmetadata"); break;
                     case "progress": log(event + " (bufferedTime: " + mVideoView.bufferedTime + ")"); break;
                     case "durationchange": log(event + " (duration: " + mVideoView.duration + ")"); break;
-                    case "seeking": log(event + " (currentTime: " + mVideoView.currentTime + ")"); break;
+                    case "timeupdate":
+                    case "ad_timeupdate":
+                    case "seeking":
                     case "seeked": log(event + " (currentTime: " + mVideoView.currentTime + ")"); break;
-                    case "fullscreenchange": log(event + " (fullscreen: " + mVideoView.fullscreen + ")"); break;
                     case "video_start":
                     case "ad_start":
                     case "ad_play":
                     case "playing":
-                    case "play": log(event + " (paused: " + mVideoView.paused + ")"); break;
                     case "end": log(event + " (ended: " + mVideoView.ended + ")"); break;
                     case "ad_pause":
                     case "ad_end":
                     case "video_end":
+                    case "play":
+                    case "fullscreenchange": log(event + " (fullscreen: " + mVideoView.fullscreen + ")"); break;
                     case "pause": log(event + " (paused: " + mVideoView.paused + ")"); break;
                     case "error": log(event + " (error: " + mVideoView.error.toString() + ")"); break;
                     case "rebuffer": log(event + " (rebuffering: " + mVideoView.rebuffering + ")"); break;
