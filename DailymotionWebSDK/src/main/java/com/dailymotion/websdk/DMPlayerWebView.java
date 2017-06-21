@@ -27,6 +27,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -668,6 +669,7 @@ public class DMPlayerWebView extends WebView {
             defaultQueryParameters.put("like-enable", "false");
             defaultQueryParameters.put("collections-enable", "false");
             defaultQueryParameters.put("fullscreen-action", "trigger_event");
+            defaultQueryParameters.put("locale", Locale.getDefault().getLanguage());
 
             initialize("https://www.dailymotion.com/embed/", new HashMap<String, String>(), new HashMap<String, String>());
         }
