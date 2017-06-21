@@ -27,7 +27,6 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 
 import timber.log.Timber;
@@ -104,9 +103,6 @@ public class DMPlayerWebView extends WebView {
     private boolean mHasMetadata;
     private EventListener mEventListener;
     private boolean mIsWebContentsDebuggingEnabled = false;
-    private String mBaseUrl = "https://www.dailymotion.com/embed/";
-    private String mExtraParameters;
-    private Map<String, String> mExtraHeaders = new HashMap<>();
 
     private Runnable mControlsCommandRunnable;
     private Runnable mMuteCommandRunnable;
@@ -118,6 +114,7 @@ public class DMPlayerWebView extends WebView {
     private double mDuration = 0;
     private boolean mIsSeeking = false;
     private boolean mIsEnded = false;
+    private boolean mIsInitialized = false;
 
     public boolean isEnded() {
         return mIsEnded;
@@ -533,22 +530,17 @@ public class DMPlayerWebView extends WebView {
 
     public DMPlayerWebView(Context context) {
         super(context);
-
-        init();
     }
 
     public DMPlayerWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-        init();
     }
 
     public DMPlayerWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
     }
 
-    private void init() {
+    public void initialize(String baseUrl, Map<String, String> queryParameters, Map<String, String> httpHeaders) {
          /*
          * ios does this. It might (or might not) fix some issues
          */
@@ -642,37 +634,22 @@ public class DMPlayerWebView extends WebView {
         });
         setWebChromeClient(mChromeClient);
 
-        String url = mBaseUrl;
+        Map<String, String> parameters = new HashMap<>();
+        // the 2 parameters below are compulsory, make sure they are always defined
+        parameters.put("app", getContext().getPackageName());
+        parameters.put("api", "nativeBridge");
+        parameters.putAll(queryParameters);
 
-        url += "?app=" + getContext().getPackageName();
-
-        if (mExtraParameters != null && !mExtraParameters.isEmpty()) {
-            url += mExtraParameters;
+        StringBuilder builder = new StringBuilder();
+        builder.append(baseUrl);
+        for (Map.Entry<String, String> entry: parameters.entrySet()) {
+            builder.append('&');
+            builder.append(entry.getKey());
+            builder.append('=');
+            builder.append(entry.getValue());
         }
 
-        url += "&api=nativeBridge";
-
-        url += "&endscreen-enable=false";
-
-        url += "&sharing-enable=fullscreen_only";
-        url += "&sharing-action=trigger_event";
-
-        url += "&watchlater-enable=fullscreen_only";
-        url += "&watchlater-action=trigger_event";
-
-        url += "&like-enable=fullscreen_only";
-        url += "&like-action=trigger_event";
-
-        url += "&collections-enable=fullscreen_only";
-        url += "&collections-action=trigger_event";
-
-        url += "&fullscreen-action=trigger_event";
-
-        url += "&autoplay=true";
-        url += "&ui-logo=false";
-        url += "&locale=" + Locale.getDefault().getLanguage();
-
-        loadUrl(url, mExtraHeaders);
+        loadUrl(builder.toString(), httpHeaders);
     }
 
     public interface EventListener {
@@ -684,6 +661,16 @@ public class DMPlayerWebView extends WebView {
     }
 
     public void playVideo(String videoId) {
+        if (!mIsInitialized) {
+            Map<String, String> defaultQueryParameters = new HashMap<>();
+            defaultQueryParameters.put("sharing-enable", "false");
+            defaultQueryParameters.put("watchlater-enable", "false");
+            defaultQueryParameters.put("like-enable", "false");
+            defaultQueryParameters.put("collections-enable", "false");
+            defaultQueryParameters.put("fullscreen-action", "trigger_event");
+
+            initialize("https://www.dailymotion.com/embed/", new HashMap<String, String>(), new HashMap<String, String>());
+        }
         queueCommand(COMMAND_LOAD, videoId);
     }
 
@@ -705,22 +692,6 @@ public class DMPlayerWebView extends WebView {
 
     public void setIsWebContentsDebuggingEnabled(boolean isWebContentsDebuggingEnabled) {
         mIsWebContentsDebuggingEnabled = isWebContentsDebuggingEnabled;
-    }
-
-    public void setBaseUrl(String url) {
-        mBaseUrl = url;
-    }
-
-    public void setExtrasParameters(String extrasParameters) {
-        mExtraParameters = extrasParameters;
-    }
-
-    public void setExtraHeaders(Map<String, String> extraHeaders) {
-        if (extraHeaders == null) {
-            mExtraHeaders = new HashMap<>();
-        } else {
-            mExtraHeaders = extraHeaders;
-        }
     }
 
     @Override

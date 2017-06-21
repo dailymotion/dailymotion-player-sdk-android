@@ -14,6 +14,8 @@ import com.dailymotion.websdk.DMPlayerWebView;
 
 import java.util.HashMap;
 
+import timber.log.Timber;
+
 public class NewSampleActivity extends Activity implements View.OnClickListener, FullScreenListener {
 
     private DMPlayerWebView mVideoView;
@@ -39,6 +41,8 @@ public class NewSampleActivity extends Activity implements View.OnClickListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Timber.plant(new Timber.DebugTree());
         setContentView(R.layout.new_screen_sample);
 
         mVideoView = (DMPlayerWebView) findViewById(R.id.dm_player_web_view);
