@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewSampleActivity">
+    tools:context=".SampleActivity">
 
-    <com.dailymotion.websdk.DMPlayerWebView
+    <com.dailymotion.sdkandroid.DMPlayerWebView
         android:id="@+id/dm_player_web_view"
         android:layout_width="match_parent"
         android:layout_height="215dp">
-    </com.dailymotion.websdk.DMPlayerWebView>
+    </com.dailymotion.sdkandroid.DMPlayerWebView>
 
     <Button
         android:id="@+id/btnHideControls"

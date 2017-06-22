@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 dependencies {
-    compile project(':DailymotionWebSDK')
+    compile project(':DailymotionSDKAndroid')
 }
 
 android {
