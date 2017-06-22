@@ -671,7 +671,7 @@ public class DMPlayerWebView extends WebView {
             defaultQueryParameters.put("fullscreen-action", "trigger_event");
             defaultQueryParameters.put("locale", Locale.getDefault().getLanguage());
 
-            initialize("https://www.dailymotion.com/embed/", new HashMap<String, String>(), new HashMap<String, String>());
+            initialize("https://www.dailymotion.com/embed/", defaultQueryParameters, new HashMap<String, String>());
         }
         queueCommand(COMMAND_LOAD, videoId);
     }
