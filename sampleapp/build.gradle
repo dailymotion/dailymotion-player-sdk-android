@@ -1,0 +1,14 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile project(':sdk')
+}
+
+android {
+    compileSdkVersion 21
+    buildToolsVersion '25.0.0'
+
+    defaultConfig {
+        minSdkVersion 11
+    }
+}

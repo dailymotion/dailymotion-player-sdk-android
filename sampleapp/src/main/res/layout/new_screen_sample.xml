@@ -1,0 +1,112 @@
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SampleActivity">
+
+    <com.dailymotion.sdkandroid.PlayerWebView
+        android:id="@+id/dm_player_web_view"
+        android:layout_width="match_parent"
+        android:layout_height="215dp">
+    </com.dailymotion.sdkandroid.PlayerWebView>
+
+    <Button
+        android:id="@+id/btnHideControls"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="100dp"
+        android:text="Hide controls"/>
+
+    <Button
+        android:id="@+id/btnToggleControls"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="100dp"
+        android:text="Toggle controls"/>
+
+    <Button
+        android:id="@+id/btnShowControls"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:layout_marginBottom="100dp"
+        android:text="Show controls"/>
+
+    <Button
+        android:id="@+id/btnPlay"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:layout_marginBottom="150dp"
+        android:text="Play"/>
+
+    <Button
+        android:id="@+id/btnTogglePlay"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="150dp"
+        android:text="Toggle play"/>
+
+    <Button
+        android:id="@+id/btnPause"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="150dp"
+        android:text="Pause"/>
+
+    <Button
+        android:id="@+id/btnSeek"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:layout_marginBottom="200dp"
+        android:text="Seek to 30s"/>
+
+    <Button
+        android:id="@+id/btnSetSubtitle"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="200dp"
+        android:text="Subtitles to EN"/>
+
+    <TextView
+        android:id="@+id/logText"
+        android:layout_width="fill_parent"
+        android:layout_height="90dp"
+        android:layout_gravity="left|bottom"
+        android:background="#efefef"
+        android:text="Events trace"/>
+
+    <Button
+        android:id="@+id/btnSetQuality"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="200dp"
+        android:text="Quality to 240p"/>
+
+    <Button
+        android:id="@+id/btnLoadVideo"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="125dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="250dp"
+        android:text="Load video"/>
+
+</FrameLayout>

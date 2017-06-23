@@ -1,1 +1,1 @@
-include ':SampleApp', ':DailymotionSDKAndroid'
+include ':sampleapp', ':sdk'
