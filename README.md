@@ -79,3 +79,14 @@ On Android 3.0+, you have to call onPause and onResume when these events occur i
             mVideoView.onResume();
         }
     }
+
+### Publish your own sdk on Bintray
+
+Update your local.properties files with this lines and replace <user> and <api.key> values`
+
+```
+bintray.user=<user>
+bintray.apikey=<api.key>
+```
+
+In your terminal call `gradlew install` then `gradlew bintrayUpload` 
