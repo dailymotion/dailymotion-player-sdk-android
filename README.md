@@ -30,11 +30,11 @@ android:hardwareAccelerated="true"
 ### Use in your Activity or Fragment
 First, add the DMWebVideoView in your layout in place of the regular WebView.
 
-	   <com.dailymotion.websdk.DMWebVideoView
-            android:layout_width="300dip"
-            android:layout_height="200dip"
-            android:id="@+id/dmWebVideoView"
-        />
+	   <com.dailymotion.sdkandroid.PlayerWebView
+               android:id="@+id/dm_player_web_view"
+               android:layout_width="match_parent"
+               android:layout_height="215dp">
+       </com.dailymotion.sdkandroid.PlayerWebView>
 
 Then in your Activity code just launch your content.
 Get your PlayerWebView then call playVideo("id").
