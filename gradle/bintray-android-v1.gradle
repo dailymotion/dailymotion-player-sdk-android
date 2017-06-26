@@ -50,6 +50,7 @@ bintray {
     pkg {
         repo = bintrayRepo
         name = bintrayName
+        userOrg = 'dailymotion'
         desc = libraryDescription
         websiteUrl = siteUrl
         vcsUrl = gitUrl
