@@ -1,19 +1,19 @@
 apply plugin: 'com.android.library'
 
 ext {
-    bintrayRepo = 'dailymotion-sdk-android'
-    bintrayName = 'dailymotion-sdk-android'
+    bintrayRepo = 'com.dailymotion'
+    bintrayName = 'sdk'
 
-    publishedGroupId = 'com.dailymotion-sdk-android'
+    publishedGroupId = 'com.dailymotion'
     libraryName = 'DailymotionSDKAndroid'
-    artifact = 'dailymotion-sdk-android'
+    artifact = 'sdk'
 
     libraryDescription = 'This SDK aims at easily embedding Dailymotion videos on your Android application using WebView.'
 
     siteUrl = 'https://github.com/dailymotion/dailymotion-sdk-android'
     gitUrl = 'https://github.com/dailymotion/dailymotion-sdk-android.git'
 
-    libraryVersion = '0.1.1'
+    libraryVersion = '0.1.2'
 
     developerId = 'dmandroid'
     developerName = 'Dailymotion'
