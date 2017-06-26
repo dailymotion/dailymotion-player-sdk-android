@@ -1,10 +1,10 @@
 apply plugin: 'com.android.library'
 
 ext {
-    bintrayRepo = 'com.dailymotion'
+    bintrayRepo = 'com.dailymotion.dailymotion-sdk-android'
     bintrayName = 'sdk'
 
-    publishedGroupId = 'com.dailymotion'
+    publishedGroupId = 'com.dailymotion.dailymotion-sdk-android'
     libraryName = 'DailymotionSDKAndroid'
     artifact = 'sdk'
 
