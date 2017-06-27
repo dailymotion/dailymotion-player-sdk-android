@@ -1,14 +1,20 @@
 /.gradle
+/.idea
 /.idea/workspace.xml
 .idea/encodings.xml
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
-DailymotionWebSDK/DailymotionWebSDK.iml
+/DailymotionSDKAndroid/DailymotionSDKAndroid.iml
+/sdk/sdk.iml
 SampleApp/SampleApp.iml
+sampleapp/sampleapp.iml
 dailymotion-sdk-android.iml
 
 /local.properties
 /build
-/DailymotionWebSDK/build
+/DailymotionSDKAndroid/build/*
+/sdk/build/*
+sdl/build/
 /SampleApp/build
+/sampleapp/build

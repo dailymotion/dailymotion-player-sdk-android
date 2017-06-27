@@ -10,8 +10,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/DailymotionWebSDK" />
-            <option value="$PROJECT_DIR$/SampleApp" />
+            <option value="$PROJECT_DIR$/sampleapp" />
+            <option value="$PROJECT_DIR$/sdk" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
