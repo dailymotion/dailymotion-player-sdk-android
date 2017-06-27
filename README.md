@@ -1,14 +1,14 @@
 Dailymotion Android Web-SDK
 ===========================
 
-This SDK aims at easily embedding Dailymotion videos on your Android application using WebView. It supports Android 3.0.x and superior. Although it is Android Studio and Gradle based, it can easily be used in Android Studio.
+This SDK aims at easily embedding Dailymotion videos on your Android application using WebView. It supports Android 3.0.x and superior.
 The SDK is bundled with a sample application
 
 Features
 --------
 
 - Dead simple to use. No need to specify a layout container for the VideoView
-- Supports Android 2.3 and superior
+- Supports Android 3.0.x and superior
 
 How to use
 ----------
