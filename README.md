@@ -28,7 +28,7 @@ android:hardwareAccelerated="true"
 ```
 
 ### Use in your Activity or Fragment
-First, add the DMWebVideoView in your layout in place of the regular WebView.
+First, add the PlayerWebView in your layout in place of the regular WebView.
 
 	   <com.dailymotion.sdkandroid.PlayerWebView
                android:id="@+id/dm_player_web_view"
