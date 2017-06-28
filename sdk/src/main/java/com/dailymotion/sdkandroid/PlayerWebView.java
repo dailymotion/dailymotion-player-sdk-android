@@ -547,6 +547,7 @@ public class PlayerWebView extends WebView {
          */
         clearCache(true);
 
+        mIsInitialized = true;
         mGson = new Gson();
         WebSettings mWebSettings = getSettings();
         mWebSettings.setJavaScriptEnabled(true);
