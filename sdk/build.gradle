@@ -5,13 +5,13 @@ ext {
     bintrayName = 'sdk'
 
     publishedGroupId = 'com.dailymotion.dailymotion-sdk-android'
-    libraryName = 'DailymotionSDKAndroid'
+    libraryName = 'DailymotionPlayerSDKAndroid'
     artifact = 'sdk'
 
     libraryDescription = 'This SDK aims at easily embedding Dailymotion videos on your Android application using WebView.'
 
-    siteUrl = 'https://github.com/dailymotion/dailymotion-sdk-android'
-    gitUrl = 'https://github.com/dailymotion/dailymotion-sdk-android.git'
+    siteUrl = 'https://github.com/dailymotion/dailymotion-player-sdk-android'
+    gitUrl = 'https://github.com/dailymotion/dailymotion-player-sdk-android.git'
 
     libraryVersion = '0.1.5'
 
@@ -20,7 +20,7 @@ ext {
     developerEmail = 'apps@dailymotion.com'
 
     licenseName = 'MIT License'
-    licenseUrl = 'https://github.com/dailymotion/dailymotion-sdk-android/blob/master/LICENSE'
+    licenseUrl = 'https://github.com/dailymotion/dailymotion-player-sdk-android/blob/master/LICENSE'
     allLicenses = ["MIT"]
 }
 
