@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.dailymotion.sdkandroid.FullScreenListener;
 import com.dailymotion.sdkandroid.PlayerWebView;
 import com.dailymotion.websdksample.R;
 
@@ -21,21 +24,33 @@ public class SampleActivity extends Activity implements View.OnClickListener, Fu
 
     private PlayerWebView mVideoView;
     private TextView mLogText;
+    private FrameLayout mActionLayout;
     private boolean mFullscreen = false;
 
     @Override
     public void onFullScreen(boolean fullscreen) {
         setFullScreenInternal(!mFullscreen);
-
+        FrameLayout.LayoutParams params;
         if (mFullscreen) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+            params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
+            params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (215 * getResources().getDisplayMetrics().density));
         }
+        mVideoView.setLayoutParams(params);
     }
 
     private void setFullScreenInternal(boolean fullScreen) {
         mFullscreen = fullScreen;
+        if (mActionLayout != null) {
+            if (mFullscreen) {
+                mActionLayout.setVisibility(View.GONE);
+            } else {
+                mActionLayout.setVisibility(View.VISIBLE);
+            }
+        }
+
         mVideoView.setFullscreenButton(mFullscreen);
     }
 
@@ -46,7 +61,10 @@ public class SampleActivity extends Activity implements View.OnClickListener, Fu
         Timber.plant(new Timber.DebugTree());
         setContentView(R.layout.new_screen_sample);
 
+        mActionLayout = (FrameLayout) findViewById(R.id.action_layout);
         mVideoView = (PlayerWebView) findViewById(R.id.dm_player_web_view);
+        mVideoView.setFullScreenListener(this);
+
         mVideoView.playVideo("x26hv6c");
 
         mVideoView.setEventListener(new PlayerWebView.EventListener() {
@@ -185,6 +203,10 @@ public class SampleActivity extends Activity implements View.OnClickListener, Fu
     }
 
     private void log(String text) {
+        if (mActionLayout == null || mActionLayout.getVisibility() == View.GONE) {
+            return;
+        }
+
         mLogText.append("\n" + text);
         final int scroll = mLogText.getLayout().getLineTop(mLogText.getLineCount()) - mLogText.getHeight();
         if (scroll > 0) {

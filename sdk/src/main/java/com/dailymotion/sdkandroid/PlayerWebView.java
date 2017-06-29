@@ -116,6 +116,8 @@ public class PlayerWebView extends WebView {
     private boolean mIsSeeking = false;
     private boolean mIsEnded = false;
     private boolean mIsInitialized = false;
+    private boolean mIsFullScreen = false;
+    private FullScreenListener mFullScreenListener;
 
     public boolean isEnded() {
         return mIsEnded;
@@ -143,6 +145,10 @@ public class PlayerWebView extends WebView {
 
     public String getVideoId() {
         return mVideoId;
+    }
+
+    public void setFullScreenListener(FullScreenListener fullScreenListener) {
+        mFullScreenListener = fullScreenListener;
     }
 
     public void setVisible(boolean visible) {
@@ -341,6 +347,13 @@ public class PlayerWebView extends WebView {
             case EVENT_SEEKING: {
                 mIsSeeking = true;
                 mPosition = Float.parseFloat(map.get("time"));
+                break;
+            }
+            case EVENT_FULLSCREEN_TOGGLE_REQUESTED: {
+                mIsFullScreen = !mIsFullScreen;
+                if (mFullScreenListener != null) {
+                    mFullScreenListener.onFullScreen(mIsFullScreen);
+                }
                 break;
             }
         }
