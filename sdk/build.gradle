@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/dailymotion/dailymotion-sdk-android'
     gitUrl = 'https://github.com/dailymotion/dailymotion-sdk-android.git'
 
-    libraryVersion = '0.1.4'
+    libraryVersion = '0.1.5'
 
     developerId = 'dmandroid'
     developerName = 'Dailymotion'
