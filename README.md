@@ -1,4 +1,4 @@
-Dailymotion Android Web-SDK
+Dailymotion Player SDK Android
 ===========================
 
 This SDK aims at easily embedding Dailymotion videos on your Android application using WebView. It supports Android 3.0.x and superior.
