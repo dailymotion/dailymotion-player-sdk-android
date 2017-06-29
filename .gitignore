@@ -5,10 +5,10 @@
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
-/DailymotionSDKAndroid/DailymotionSDKAndroid.iml
 /sdk/sdk.iml
 SampleApp/SampleApp.iml
 sampleapp/sampleapp.iml
+dailymotion-player-sdk-android.iml
 dailymotion-sdk-android.iml
 
 /local.properties
