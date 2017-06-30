@@ -688,7 +688,6 @@ public class PlayerWebView extends WebView {
             defaultQueryParameters.put("collections-enable", "false");
             defaultQueryParameters.put("fullscreen-action", "trigger_event");
             defaultQueryParameters.put("locale", Locale.getDefault().getLanguage());
-            defaultQueryParameters.put("logger", "1");
 
             initialize("https://www.dailymotion.com/embed/", defaultQueryParameters, new HashMap<String, String>());
         }
