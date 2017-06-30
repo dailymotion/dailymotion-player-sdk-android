@@ -657,8 +657,15 @@ public class PlayerWebView extends WebView {
 
         StringBuilder builder = new StringBuilder();
         builder.append(baseUrl);
-        for (Map.Entry<String, String> entry: parameters.entrySet()) {
-            builder.append('&');
+        boolean isFirstParameter = true;
+        for (Map.Entry<String, String> entry : parameters.entrySet()) {
+            if (isFirstParameter) {
+                isFirstParameter = false;
+                builder.append('?');
+            } else {
+                builder.append('&');
+            }
+
             builder.append(entry.getKey());
             builder.append('=');
             builder.append(entry.getValue());
