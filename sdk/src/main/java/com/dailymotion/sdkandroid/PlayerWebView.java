@@ -555,14 +555,11 @@ public class PlayerWebView extends WebView {
     }
 
     public void initialize(String baseUrl, Map<String, String> queryParameters, Map<String, String> httpHeaders) {
-         /*
-         * ios does this. It might (or might not) fix some issues
-         */
-        clearCache(true);
 
         mIsInitialized = true;
         mGson = new Gson();
         WebSettings mWebSettings = getSettings();
+        mWebSettings.setDomStorageEnabled(true);
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setPluginState(WebSettings.PluginState.ON);
 
@@ -657,8 +654,15 @@ public class PlayerWebView extends WebView {
 
         StringBuilder builder = new StringBuilder();
         builder.append(baseUrl);
-        for (Map.Entry<String, String> entry: parameters.entrySet()) {
-            builder.append('&');
+        boolean isFirstParameter = true;
+        for (Map.Entry<String, String> entry : parameters.entrySet()) {
+            if (isFirstParameter) {
+                isFirstParameter = false;
+                builder.append('?');
+            } else {
+                builder.append('&');
+            }
+
             builder.append(entry.getKey());
             builder.append('=');
             builder.append(entry.getValue());
