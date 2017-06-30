@@ -555,14 +555,11 @@ public class PlayerWebView extends WebView {
     }
 
     public void initialize(String baseUrl, Map<String, String> queryParameters, Map<String, String> httpHeaders) {
-         /*
-         * ios does this. It might (or might not) fix some issues
-         */
-        clearCache(true);
 
         mIsInitialized = true;
         mGson = new Gson();
         WebSettings mWebSettings = getSettings();
+        mWebSettings.setDomStorageEnabled(true);
         mWebSettings.setJavaScriptEnabled(true);
         mWebSettings.setPluginState(WebSettings.PluginState.ON);
 
@@ -691,6 +688,7 @@ public class PlayerWebView extends WebView {
             defaultQueryParameters.put("collections-enable", "false");
             defaultQueryParameters.put("fullscreen-action", "trigger_event");
             defaultQueryParameters.put("locale", Locale.getDefault().getLanguage());
+            defaultQueryParameters.put("logger", "1");
 
             initialize("https://www.dailymotion.com/embed/", defaultQueryParameters, new HashMap<String, String>());
         }

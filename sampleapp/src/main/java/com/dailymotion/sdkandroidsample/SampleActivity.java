@@ -2,6 +2,7 @@ package com.dailymotion.sdkandroidsample;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -63,6 +64,10 @@ public class SampleActivity extends Activity implements View.OnClickListener, Fu
 
         mActionLayout = (FrameLayout) findViewById(R.id.action_layout);
         mVideoView = (PlayerWebView) findViewById(R.id.dm_player_web_view);
+
+        if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+            mVideoView.setIsWebContentsDebuggingEnabled(true);
+        }
         mVideoView.setFullScreenListener(this);
 
         mVideoView.playVideo("x26hv6c");
