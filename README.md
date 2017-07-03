@@ -18,7 +18,7 @@ You can either import the SDK using your IDE or integrate PlayerWebView.java in 
 
 You can import the sdk with :
 ```
-compile 'com.dailymotion.dailymotion-sdk-android:sdk:0.1.5'
+compile 'com.dailymotion.dailymotion-sdk-android:sdk:0.1.6'
 ```
 
 ```
@@ -30,11 +30,11 @@ android:hardwareAccelerated="true"
 ### Use in your Activity or Fragment
 First, add the PlayerWebView in your layout in place of the regular WebView.
 
-	   <com.dailymotion.sdkandroid.PlayerWebView
+	   <com.dailymotion.android.player.sdk.PlayerWebView
                android:id="@+id/dm_player_web_view"
                android:layout_width="match_parent"
                android:layout_height="215dp">
-       </com.dailymotion.sdkandroid.PlayerWebView>
+       </com.dailymotion.android.player.sdk.PlayerWebView>
 
 Then in your Activity code just launch your content.
 Get your PlayerWebView then call playVideo("id").

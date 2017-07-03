@@ -1,4 +1,4 @@
-package com.dailymotion.sdkandroid;
+package com.dailymotion.android.player.sdk;
 
 /**
  * Created by hugo

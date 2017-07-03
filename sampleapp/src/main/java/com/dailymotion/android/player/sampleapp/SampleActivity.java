@@ -1,4 +1,4 @@
-package com.dailymotion.sdkandroidsample;
+package com.dailymotion.android.player.sampleapp;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -13,8 +13,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.dailymotion.sdkandroid.FullScreenListener;
-import com.dailymotion.sdkandroid.PlayerWebView;
+import com.dailymotion.android.player.sdk.FullScreenListener;
+import com.dailymotion.android.player.sdk.PlayerWebView;
 import com.dailymotion.websdksample.R;
 
 import java.util.HashMap;
