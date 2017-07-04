@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.dailymotion.android.player.sdk.FullScreenListener;
 import com.dailymotion.android.player.sdk.PlayerWebView;
 import com.dailymotion.websdksample.R;
 
@@ -21,15 +20,14 @@ import java.util.HashMap;
 
 import timber.log.Timber;
 
-public class SampleActivity extends Activity implements View.OnClickListener, FullScreenListener {
+public class SampleActivity extends Activity implements View.OnClickListener {
 
     private PlayerWebView mVideoView;
     private TextView mLogText;
     private FrameLayout mActionLayout;
     private boolean mFullscreen = false;
 
-    @Override
-    public void onFullScreen(boolean fullscreen) {
+    public void onFullScreenToggleRequested() {
         setFullScreenInternal(!mFullscreen);
         FrameLayout.LayoutParams params;
         if (mFullscreen) {
@@ -68,7 +66,6 @@ public class SampleActivity extends Activity implements View.OnClickListener, Fu
         if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
             mVideoView.setIsWebContentsDebuggingEnabled(true);
         }
-        mVideoView.setFullScreenListener(this);
 
         mVideoView.playVideo("x26hv6c");
 
@@ -113,6 +110,9 @@ public class SampleActivity extends Activity implements View.OnClickListener, Fu
                         break;
                     case "qualitychange":
                         log(event + " (quality: " + mVideoView.getQuality() + ")");
+                        break;
+                    case PlayerWebView.EVENT_FULLSCREEN_TOGGLE_REQUESTED:
+                        onFullScreenToggleRequested();
                         break;
                     default:
                         break;

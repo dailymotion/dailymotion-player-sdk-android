@@ -117,7 +117,10 @@ public class PlayerWebView extends WebView {
     private boolean mIsEnded = false;
     private boolean mIsInitialized = false;
     private boolean mIsFullScreen = false;
-    private FullScreenListener mFullScreenListener;
+
+    private long mControlsLastTime;
+    private long mMuteLastTime;
+    private long mLoadLastTime;
 
     public boolean isEnded() {
         return mIsEnded;
@@ -145,10 +148,6 @@ public class PlayerWebView extends WebView {
 
     public String getVideoId() {
         return mVideoId;
-    }
-
-    public void setFullScreenListener(FullScreenListener fullScreenListener) {
-        mFullScreenListener = fullScreenListener;
     }
 
     public void setVisible(boolean visible) {
@@ -350,10 +349,6 @@ public class PlayerWebView extends WebView {
                 break;
             }
             case EVENT_FULLSCREEN_TOGGLE_REQUESTED: {
-                mIsFullScreen = !mIsFullScreen;
-                if (mFullScreenListener != null) {
-                    mFullScreenListener.onFullScreen(mIsFullScreen);
-                }
                 break;
             }
         }
@@ -386,40 +381,22 @@ public class PlayerWebView extends WebView {
                     }
                     break;
                 case COMMAND_MUTE:
-                    if (mMuteCommandRunnable != null) {
+                    if (System.currentTimeMillis() - mMuteLastTime < 1000) {
                         continue;
                     }
-                    mMuteCommandRunnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            sendCommand(command);
-                        }
-                    };
-                    mHandler.postDelayed(mMuteCommandRunnable, 10 * 1000);
+                    mMuteLastTime = System.currentTimeMillis();
                     break;
                 case COMMAND_LOAD:
-                    if (mLoadCommandRunnable != null) {
+                    if (System.currentTimeMillis() - mLoadLastTime < 1000) {
                         continue;
                     }
-                    mLoadCommandRunnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            sendCommand(command);
-                        }
-                    };
-                    mHandler.postDelayed(mLoadCommandRunnable, 60 * 1000);
+                    mLoadLastTime = System.currentTimeMillis();
                     break;
                 case COMMAND_CONTROLS:
-                    if (mControlsCommandRunnable != null) {
+                    if (System.currentTimeMillis() - mControlsLastTime < 1000) {
                         continue;
                     }
-                    mControlsCommandRunnable = new Runnable() {
-                        @Override
-                        public void run() {
-                            sendCommand(command);
-                        }
-                    };
-                    mHandler.postDelayed(mControlsCommandRunnable, 10 * 1000);
+                    mControlsLastTime = System.currentTimeMillis();
                     break;
             }
 
@@ -464,6 +441,7 @@ public class PlayerWebView extends WebView {
                 switch (iterator.next().methodName) {
                     case COMMAND_NOTIFY_LIKECHANGED:
                     case COMMAND_NOTIFY_WATCHLATERCHANGED:
+                    case COMMAND_SEEK:
                     case COMMAND_PAUSE:
                     case COMMAND_PLAY:
                         iterator.remove();
@@ -539,7 +517,10 @@ public class PlayerWebView extends WebView {
     }
 
     public void setFullscreenButton(boolean fullScreen) {
-        queueCommand(COMMAND_NOTIFYFULLSCREENCHANGED, fullScreen);
+        if (fullScreen != mIsFullScreen) {
+            mIsFullScreen = fullScreen;
+            queueCommand(COMMAND_NOTIFYFULLSCREENCHANGED);
+        }
     }
 
     public PlayerWebView(Context context) {
@@ -677,6 +658,11 @@ public class PlayerWebView extends WebView {
 
     public void setEventListener(EventListener listener) {
         mEventListener = listener;
+    }
+
+    public void release() {
+        loadUrl("about:blank");
+        onPause();
     }
 
     public void playVideo(String videoId) {
