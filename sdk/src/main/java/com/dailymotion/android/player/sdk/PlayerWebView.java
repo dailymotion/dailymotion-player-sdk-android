@@ -1,4 +1,4 @@
-package com.dailymotion.sdkandroid;
+package com.dailymotion.android.player.sdk;
 
 import android.content.Context;
 import android.content.Intent;
