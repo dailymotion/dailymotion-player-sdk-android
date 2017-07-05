@@ -295,6 +295,7 @@ public class PlayerWebView extends WebView {
             }
             case EVENT_DURATION_CHANGE: {
                 mDuration = Float.parseFloat(map.get("duration"));
+                break;
             }
             case EVENT_GESTURE_START:
             case EVENT_MENU_DID_SHOW: {
