@@ -95,7 +95,7 @@ public class PlayerWebView extends WebView {
 
     private Handler mHandler;
     private Gson mGson;
-    private boolean mDisallowIntercept;
+    private boolean mDisallowIntercept = false;
     private String mVideoId;
     private boolean mApiReady;
     private float mPosition;
@@ -666,7 +666,7 @@ public class PlayerWebView extends WebView {
         onPause();
     }
 
-    public void playVideo(String videoId) {
+    public void load(String videoId) {
         if (!mIsInitialized) {
             Map<String, String> defaultQueryParameters = new HashMap<>();
             defaultQueryParameters.put("sharing-enable", "false");

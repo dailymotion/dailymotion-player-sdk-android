@@ -37,7 +37,7 @@ First, add the PlayerWebView in your layout in place of the regular WebView.
        </com.dailymotion.android.player.sdk.PlayerWebView>
 
 Then in your Activity code just launch your content.
-Get your PlayerWebView then call playVideo("id").
+Get your PlayerWebView then call load("id").
 
 		private PlayerWebView mVideoView;
 
@@ -47,7 +47,7 @@ Get your PlayerWebView then call playVideo("id").
 	        setContentView(R.layout.screen_sample);
 
 	        mVideoView = (PlayerWebView) findViewById(R.id.dm_player_web_view);
-            mVideoView.playVideo("x26hv6c");
+            mVideoView.load("x26hv6c");
 
 
 	    }

@@ -67,7 +67,7 @@ public class SampleActivity extends Activity implements View.OnClickListener {
             mVideoView.setIsWebContentsDebuggingEnabled(true);
         }
 
-        mVideoView.playVideo("x26hv6c");
+        mVideoView.load("x26hv6c");
 
         mVideoView.setEventListener(new PlayerWebView.EventListener() {
             @Override
@@ -157,7 +157,7 @@ public class SampleActivity extends Activity implements View.OnClickListener {
         } else if (v.getId() == R.id.btnSeek) {
             mVideoView.seek(30);
         } else if (v.getId() == R.id.btnLoadVideo) {
-            mVideoView.playVideo("x19b6ui");
+            mVideoView.load("x19b6ui");
         } else if (v.getId() == R.id.btnSetQuality) {
             mVideoView.setQuality("240");
         } else if (v.getId() == R.id.btnSetSubtitle) {
