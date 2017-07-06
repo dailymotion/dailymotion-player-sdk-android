@@ -1,10 +1,13 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:soundEffectsEnabled">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowActionModeOverlay">true</item>
+        <item name="colorAccent">@android:color/white</item>
+        <item name="colorPrimary">@android:color/darker_gray</item>
+        <item name="colorPrimaryDark">@android:color/background_dark</item>
     </style>
 
     <style name="ToolBarStyle" parent="">

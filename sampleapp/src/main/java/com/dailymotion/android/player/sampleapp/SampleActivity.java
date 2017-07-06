@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,7 +26,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
 
     private PlayerWebView mVideoView;
     private TextView mLogText;
-    private FrameLayout mActionLayout;
+    private LinearLayout mActionLayout;
     private boolean mFullscreen = false;
     private Toolbar mToolbar;
 
@@ -72,6 +71,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
 
         if (mToolbar != null) {
             mToolbar.setVisibility(View.VISIBLE);
+            mToolbar.setBackgroundColor(getResources().getColor(android.R.color.background_dark));
             mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
 
             ActionBar actionBar = getSupportActionBar();
@@ -80,7 +80,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
             }
         }
 
-        mActionLayout = (FrameLayout) findViewById(R.id.action_layout);
+        mActionLayout = (LinearLayout) findViewById(R.id.action_layout);
         mVideoView = (PlayerWebView) findViewById(R.id.dm_player_web_view);
 
         if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
