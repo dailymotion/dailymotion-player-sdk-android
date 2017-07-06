@@ -30,15 +30,19 @@ android:hardwareAccelerated="true"
 ### Use in your Activity or Fragment
 First, add the PlayerWebView in your layout in place of the regular WebView.
 
-	   <com.dailymotion.android.player.sdk.PlayerWebView
+```xml
+        <com.dailymotion.android.player.sdk.PlayerWebView
                android:id="@+id/dm_player_web_view"
                android:layout_width="match_parent"
                android:layout_height="215dp">
        </com.dailymotion.android.player.sdk.PlayerWebView>
+```
 
 Then in your Activity code just launch your content.
 Get your PlayerWebView then call load("id").
 
+
+```java
 		private PlayerWebView mVideoView;
 
 	    @Override
@@ -48,28 +52,31 @@ Get your PlayerWebView then call load("id").
 
 	        mVideoView = (PlayerWebView) findViewById(R.id.dm_player_web_view);
             mVideoView.load("x26hv6c");
-
-
 	    }
+```
 
 ### Handle screen rotation
 For the screen rotation to be handled correctly, you need to add
 
-	android:configChanges="orientation|screenSize"
+```xml
+        android:configChanges="orientation|screenSize"
+```
 
 to any activity using PlayerWebView, in your AndroidManifest.xml
 
 ### Lifecycle
 On Android 3.0+, you have to call onPause and onResume when these events occur in your lifecycle :
 
+```java
     @Override
-        protected void onPause() {
-            super.onPause();
+    protected void onPause() {
+        super.onPause();
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-                mVideoView.onPause();
-            }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            mVideoView.onPause();
         }
+    }
+        
 
     @Override
     protected void onResume() {
@@ -79,6 +86,7 @@ On Android 3.0+, you have to call onPause and onResume when these events occur i
             mVideoView.onResume();
         }
     }
+```
 
 ### Publish your own sdk on Bintray
 
