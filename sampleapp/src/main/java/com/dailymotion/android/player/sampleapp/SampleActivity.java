@@ -1,16 +1,19 @@
 package com.dailymotion.android.player.sampleapp;
 
-import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dailymotion.android.player.sdk.PlayerWebView;
@@ -20,22 +23,26 @@ import java.util.HashMap;
 
 import timber.log.Timber;
 
-public class SampleActivity extends Activity implements View.OnClickListener {
+public class SampleActivity extends AppCompatActivity implements View.OnClickListener {
 
     private PlayerWebView mVideoView;
     private TextView mLogText;
     private FrameLayout mActionLayout;
     private boolean mFullscreen = false;
+    private Toolbar mToolbar;
 
     public void onFullScreenToggleRequested() {
         setFullScreenInternal(!mFullscreen);
-        FrameLayout.LayoutParams params;
+        LinearLayout.LayoutParams params;
+
         if (mFullscreen) {
+            mToolbar.setVisibility(View.GONE);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
-            params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         } else {
+            mToolbar.setVisibility(View.VISIBLE);
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
-            params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (215 * getResources().getDisplayMetrics().density));
+            params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (int) (215 * getResources().getDisplayMetrics().density));
         }
         mVideoView.setLayoutParams(params);
     }
@@ -59,6 +66,19 @@ public class SampleActivity extends Activity implements View.OnClickListener {
 
         Timber.plant(new Timber.DebugTree());
         setContentView(R.layout.new_screen_sample);
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+
+        if (mToolbar != null) {
+            mToolbar.setVisibility(View.VISIBLE);
+            mToolbar.setTitleTextColor(getResources().getColor(android.R.color.white));
+
+            ActionBar actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setTitle(getString(R.string.app_name));
+            }
+        }
 
         mActionLayout = (FrameLayout) findViewById(R.id.action_layout);
         mVideoView = (PlayerWebView) findViewById(R.id.dm_player_web_view);
