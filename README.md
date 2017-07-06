@@ -43,16 +43,16 @@ Get your PlayerWebView then call load("id").
 
 
 ```java
-		private PlayerWebView mVideoView;
+    private PlayerWebView mVideoView;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.screen_sample);
 
-	    @Override
-	    protected void onCreate(Bundle savedInstanceState) {
-	        super.onCreate(savedInstanceState);
-	        setContentView(R.layout.screen_sample);
-
-	        mVideoView = (PlayerWebView) findViewById(R.id.dm_player_web_view);
-            mVideoView.load("x26hv6c");
-	    }
+        mVideoView = (PlayerWebView) findViewById(R.id.dm_player_web_view);
+        mVideoView.load("x26hv6c");
+    }
 ```
 
 ### Handle screen rotation
