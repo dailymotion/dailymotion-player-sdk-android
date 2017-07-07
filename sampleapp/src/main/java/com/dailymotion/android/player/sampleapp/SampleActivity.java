@@ -87,7 +87,8 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
             mVideoView.setIsWebContentsDebuggingEnabled(true);
         }
 
-        mVideoView.load("x26hv6c");
+        PlayerWebView.PlayerParams playerParams = new PlayerWebView.PlayerParams();
+        mVideoView.load("x26hv6c", playerParams);
 
         mVideoView.setEventListener(new PlayerWebView.EventListener() {
             @Override
