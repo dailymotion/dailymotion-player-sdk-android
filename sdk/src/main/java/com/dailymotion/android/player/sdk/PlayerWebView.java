@@ -666,17 +666,11 @@ public class PlayerWebView extends WebView {
         onPause();
     }
 
-    public static class PlayerParams {
-        public String quality;
-        public Boolean mute;
-        public Double start;
-    }
-
     public void load(String videoId) {
         load(videoId, null);
     }
 
-    public void load(String videoId, PlayerParams params) {
+    public void load(String videoId, Map<String, String> params) {
         if (!mIsInitialized) {
             Map<String, String> defaultQueryParameters = new HashMap<>();
             defaultQueryParameters.put("sharing-enable", "false");
