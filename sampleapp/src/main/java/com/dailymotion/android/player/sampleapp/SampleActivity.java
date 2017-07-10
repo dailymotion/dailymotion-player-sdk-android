@@ -19,6 +19,7 @@ import com.dailymotion.android.player.sdk.PlayerWebView;
 import com.dailymotion.websdksample.R;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import timber.log.Timber;
 
@@ -87,7 +88,7 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
             mVideoView.setIsWebContentsDebuggingEnabled(true);
         }
 
-        PlayerWebView.PlayerParams playerParams = new PlayerWebView.PlayerParams();
+        Map<String, String> playerParams = new HashMap<>();
         mVideoView.load("x26hv6c", playerParams);
 
         mVideoView.setEventListener(new PlayerWebView.EventListener() {
