@@ -55,6 +55,22 @@ Get your PlayerWebView then call load("id").
     }
 ```
 
+You can load the video with your parameters.
+```java
+    private PlayerWebView mVideoView;
+    
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.screen_sample);
+
+        mVideoView = (PlayerWebView) findViewById(R.id.dm_player_web_view);
+        Map<String, String> playerParams = new HashMap<>();
+        playerParams.put("key", "value");
+        mVideoView.load("x26hv6c", playerParams);
+    }
+```
+
 ### Handle screen rotation
 For the screen rotation to be handled correctly, you need to add
 
