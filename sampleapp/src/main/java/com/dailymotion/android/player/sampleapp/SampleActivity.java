@@ -21,8 +21,6 @@ import com.dailymotion.websdksample.R;
 import java.util.HashMap;
 import java.util.Map;
 
-import timber.log.Timber;
-
 public class SampleActivity extends AppCompatActivity implements View.OnClickListener {
 
     private PlayerWebView mVideoView;
@@ -64,7 +62,6 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Timber.plant(new Timber.DebugTree());
         setContentView(R.layout.new_screen_sample);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
