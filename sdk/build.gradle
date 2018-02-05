@@ -32,16 +32,6 @@ android {
         minSdkVersion 11
         targetSdkVersion 25
     }
-
-    buildTypes {
-        debug {
-            buildConfigField "String", "LIBRARY_VERSION", "\"$libraryVersion\""
-        }
-
-        release {
-            buildConfigField "String", "LIBRARY_VERSION", "\"$libraryVersion\""
-        }
-    }
 }
 
 dependencies {
