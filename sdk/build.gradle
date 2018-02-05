@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/dailymotion/dailymotion-player-sdk-android'
     gitUrl = 'https://github.com/dailymotion/dailymotion-player-sdk-android.git'
 
-    libraryVersion = '0.1.12'
+    libraryVersion = '0.1.13'
 
     developerId = 'dmandroid'
     developerName = 'Dailymotion'
@@ -31,6 +31,16 @@ android {
     defaultConfig {
         minSdkVersion 11
         targetSdkVersion 25
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField "String", "LIBRARY_VERSION", "\"$libraryVersion\""
+        }
+
+        release {
+            buildConfigField "String", "LIBRARY_VERSION", "\"$libraryVersion\""
+        }
     }
 }
 

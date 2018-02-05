@@ -19,6 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.dailymotion.android.BuildConfig;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -87,6 +88,7 @@ public class PlayerWebView extends WebView {
 
     private ArrayList<Command> mCommandList = new ArrayList<>();
 
+    private final String mExtraUA = ";dailymotion-player-sdk-android " + BuildConfig.LIBRARY_VERSION;
 
     static class Command {
         public String methodName;
@@ -543,6 +545,7 @@ public class PlayerWebView extends WebView {
         WebSettings mWebSettings = getSettings();
         mWebSettings.setDomStorageEnabled(true);
         mWebSettings.setJavaScriptEnabled(true);
+        mWebSettings.setUserAgentString(mWebSettings.getUserAgentString() + mExtraUA );
         mWebSettings.setPluginState(WebSettings.PluginState.ON);
 
         setBackgroundColor(Color.BLACK);
