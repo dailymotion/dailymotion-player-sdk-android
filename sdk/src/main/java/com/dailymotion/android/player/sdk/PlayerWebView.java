@@ -19,6 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -634,6 +635,12 @@ public class PlayerWebView extends WebView {
         // the 2 parameters below are compulsory, make sure they are always defined
         parameters.put("app", getContext().getPackageName());
         parameters.put("api", "nativeBridge");
+        try {
+            parameters.put("ads_device_id", AdvertisingIdClient.getAdvertisingIdInfo(getContext()).getId());
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
         parameters.putAll(queryParameters);
 
         StringBuilder builder = new StringBuilder();
