@@ -37,7 +37,7 @@ import timber.log.Timber;
  * on 6/13/17.
  */
 
-public class PlayerWebView extends WebView implements AdIdTask.AdIdTaskListener {
+public class PlayerWebView extends WebView {
 
     public static final String EVENT_APIREADY = "apiready";
     public static final String EVENT_TIMEUPDATE = "timeupdate";
@@ -122,13 +122,6 @@ public class PlayerWebView extends WebView implements AdIdTask.AdIdTaskListener 
     private long mControlsLastTime;
     private long mMuteLastTime;
     private long mLoadLastTime;
-
-    private String mAdId = null;
-    private boolean mHasAdId = false;
-    private Handler handler = new Handler();
-    private String mBaseUrl;
-    private Map<String, String> mQueryParameters;
-    private Map<String, String> mHttpHeaders;
 
     public boolean isEnded() {
         return mIsEnded;
@@ -534,49 +527,27 @@ public class PlayerWebView extends WebView implements AdIdTask.AdIdTaskListener 
 
     public PlayerWebView(Context context) {
         super(context);
-        new AdIdTask(context, this).execute();
     }
 
     public PlayerWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        new AdIdTask(context, this).execute();
     }
 
     public PlayerWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        new AdIdTask(context, this).execute();
     }
 
-    private void continueInitialize() {
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (mHasAdId) {
-                    initialize(mBaseUrl, mQueryParameters, mHttpHeaders);
-                } else {
-                    continueInitialize();
-                }
-            }
-        },500);
-    }
-
-    @Override
-    public void onResult(String result) {
-        mAdId = result;
-        mHasAdId = true;
-    }
-
-    public void initialize(String baseUrl, Map<String, String> queryParameters, Map<String, String> httpHeaders) {
-
-        if (!mHasAdId) {
-            mBaseUrl = baseUrl;
-            mQueryParameters = queryParameters;
-            mHttpHeaders = httpHeaders;
-            continueInitialize();
-            return;
-        }
-
+    public void initialize(final String baseUrl, final Map<String, String> queryParameters, final Map<String, String> httpHeaders) {
         mIsInitialized = true;
+        new AdIdTask(getContext(), new AdIdTask.AdIdTaskListener() {
+            @Override
+            public void onResult(String adId) {
+                finishInitialization(baseUrl, queryParameters, httpHeaders, adId);
+            }
+        }).execute();
+    }
+
+    public void finishInitialization(final String baseUrl, final Map<String, String> queryParameters, final Map<String, String> httpHeaders, final String adId) {
         mGson = new Gson();
         WebSettings mWebSettings = getSettings();
         mWebSettings.setDomStorageEnabled(true);
@@ -673,8 +644,8 @@ public class PlayerWebView extends WebView implements AdIdTask.AdIdTaskListener 
         parameters.put("api", "nativeBridge");
 
         try {
-            if (mAdId != null && !mAdId.isEmpty()) {
-                parameters.put("ads_device_id", mAdId);
+            if (adId != null && !adId.isEmpty()) {
+                parameters.put("ads_device_id", adId);
                 parameters.put("ads_device_tracking", "true");
             }
         } catch (Exception e) {
