@@ -19,7 +19,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -38,7 +37,7 @@ import timber.log.Timber;
  * on 6/13/17.
  */
 
-public class PlayerWebView extends WebView {
+public class PlayerWebView extends WebView implements AdIdTask.AdIdTaskListener {
 
     public static final String EVENT_APIREADY = "apiready";
     public static final String EVENT_TIMEUPDATE = "timeupdate";
@@ -88,7 +87,7 @@ public class PlayerWebView extends WebView {
 
     private ArrayList<Command> mCommandList = new ArrayList<>();
 
-    private final String mExtraUA = ";dailymotion-player-sdk-android 0.1.13"; // TODO update the version here for each release
+    private final String mExtraUA = ";dailymotion-player-sdk-android 0.1.14"; // TODO update the version here for each release
 
     static class Command {
         public String methodName;
@@ -123,6 +122,13 @@ public class PlayerWebView extends WebView {
     private long mControlsLastTime;
     private long mMuteLastTime;
     private long mLoadLastTime;
+
+    private String mAdId = null;
+    private boolean mHasAdId = false;
+    private Handler handler = new Handler();
+    private String mBaseUrl;
+    private Map<String, String> mQueryParameters;
+    private Map<String, String> mHttpHeaders;
 
     public boolean isEnded() {
         return mIsEnded;
@@ -528,24 +534,54 @@ public class PlayerWebView extends WebView {
 
     public PlayerWebView(Context context) {
         super(context);
+        new AdIdTask(context, this).execute();
     }
 
     public PlayerWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        new AdIdTask(context, this).execute();
     }
 
     public PlayerWebView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        new AdIdTask(context, this).execute();
+    }
+
+    private void continueInitialize() {
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mHasAdId) {
+                    initialize(mBaseUrl, mQueryParameters, mHttpHeaders);
+                } else {
+                    continueInitialize();
+                }
+            }
+        },500);
+    }
+
+    @Override
+    public void onResult(String result) {
+        mAdId = result;
+        mHasAdId = true;
     }
 
     public void initialize(String baseUrl, Map<String, String> queryParameters, Map<String, String> httpHeaders) {
+
+        if (!mHasAdId) {
+            mBaseUrl = baseUrl;
+            mQueryParameters = queryParameters;
+            mHttpHeaders = httpHeaders;
+            continueInitialize();
+            return;
+        }
 
         mIsInitialized = true;
         mGson = new Gson();
         WebSettings mWebSettings = getSettings();
         mWebSettings.setDomStorageEnabled(true);
         mWebSettings.setJavaScriptEnabled(true);
-        mWebSettings.setUserAgentString(mWebSettings.getUserAgentString() + mExtraUA );
+        mWebSettings.setUserAgentString(mWebSettings.getUserAgentString() + mExtraUA);
         mWebSettings.setPluginState(WebSettings.PluginState.ON);
 
         setBackgroundColor(Color.BLACK);
@@ -635,8 +671,12 @@ public class PlayerWebView extends WebView {
         // the 2 parameters below are compulsory, make sure they are always defined
         parameters.put("app", getContext().getPackageName());
         parameters.put("api", "nativeBridge");
+
         try {
-            parameters.put("ads_device_id", AdvertisingIdClient.getAdvertisingIdInfo(getContext()).getId());
+            if (mAdId != null && !mAdId.isEmpty()) {
+                parameters.put("ads_device_id", mAdId);
+                parameters.put("ads_device_tracking", "true");
+            }
         } catch (Exception e) {
             Timber.e(e);
         }
