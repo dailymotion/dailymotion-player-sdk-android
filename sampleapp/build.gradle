@@ -9,6 +9,6 @@ android {
     buildToolsVersion '25.0.0'
 
     defaultConfig {
-        minSdkVersion 11
+        minSdkVersion 14
     }
 }

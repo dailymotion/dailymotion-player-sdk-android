@@ -87,7 +87,7 @@ public class PlayerWebView extends WebView {
 
     private ArrayList<Command> mCommandList = new ArrayList<>();
 
-    private final String mExtraUA = ";dailymotion-player-sdk-android 0.1.14"; // TODO update the version here for each release
+    private final String mExtraUA = ";dailymotion-player-sdk-android 0.1.15"; // TODO update the version here for each release
 
     static class Command {
         public String methodName;
