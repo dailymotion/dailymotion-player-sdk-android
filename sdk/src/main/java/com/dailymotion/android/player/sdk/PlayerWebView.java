@@ -87,7 +87,7 @@ public class PlayerWebView extends WebView {
 
     private ArrayList<Command> mCommandList = new ArrayList<>();
 
-    private final String mExtraUA = ";dailymotion-player-sdk-android 0.1.13"; // TODO update the version here for each release
+    private final String mExtraUA = ";dailymotion-player-sdk-android 0.1.14"; // TODO update the version here for each release
 
     static class Command {
         public String methodName;
@@ -537,14 +537,22 @@ public class PlayerWebView extends WebView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void initialize(String baseUrl, Map<String, String> queryParameters, Map<String, String> httpHeaders) {
-
+    public void initialize(final String baseUrl, final Map<String, String> queryParameters, final Map<String, String> httpHeaders) {
         mIsInitialized = true;
+        new AdIdTask(getContext(), new AdIdTask.AdIdTaskListener() {
+            @Override
+            public void onResult(String adId) {
+                finishInitialization(baseUrl, queryParameters, httpHeaders, adId);
+            }
+        }).execute();
+    }
+
+    public void finishInitialization(final String baseUrl, final Map<String, String> queryParameters, final Map<String, String> httpHeaders, final String adId) {
         mGson = new Gson();
         WebSettings mWebSettings = getSettings();
         mWebSettings.setDomStorageEnabled(true);
         mWebSettings.setJavaScriptEnabled(true);
-        mWebSettings.setUserAgentString(mWebSettings.getUserAgentString() + mExtraUA );
+        mWebSettings.setUserAgentString(mWebSettings.getUserAgentString() + mExtraUA);
         mWebSettings.setPluginState(WebSettings.PluginState.ON);
 
         setBackgroundColor(Color.BLACK);
@@ -634,6 +642,16 @@ public class PlayerWebView extends WebView {
         // the 2 parameters below are compulsory, make sure they are always defined
         parameters.put("app", getContext().getPackageName());
         parameters.put("api", "nativeBridge");
+
+        try {
+            if (adId != null && !adId.isEmpty()) {
+                parameters.put("ads_device_id", adId);
+                parameters.put("ads_device_tracking", "true");
+            }
+        } catch (Exception e) {
+            Timber.e(e);
+        }
+
         parameters.putAll(queryParameters);
 
         StringBuilder builder = new StringBuilder();
