@@ -19,6 +19,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.dailymotion.android.BuildConfig;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -87,7 +88,7 @@ public class PlayerWebView extends WebView {
 
     private ArrayList<Command> mCommandList = new ArrayList<>();
 
-    private final String mExtraUA = ";dailymotion-player-sdk-android 0.1.15"; // TODO update the version here for each release
+    private final String mExtraUA = ";dailymotion-player-sdk-android " + BuildConfig.SDK_VERSION;
 
     static class Command {
         public String methodName;

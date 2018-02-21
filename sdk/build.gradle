@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/dailymotion/dailymotion-player-sdk-android'
     gitUrl = 'https://github.com/dailymotion/dailymotion-player-sdk-android.git'
 
-    libraryVersion = '0.1.15'
+    libraryVersion = '0.1.16'
 
     developerId = 'dmandroid'
     developerName = 'Dailymotion'
@@ -25,21 +25,23 @@ ext {
 }
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.3'
+    compileSdkVersion 27
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 27
+        buildConfigField("String", "SDK_VERSION", "\"${libraryVersion}\"")
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.google.code.gson:gson:2.8.1'
-    compile 'com.jakewharton.timber:timber:4.5.1'
-    compile 'com.android.support:appcompat-v7:25.3.0'
-    compile 'com.google.android.gms:play-services-ads:11.6.0'
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api 'com.google.code.gson:gson:2.8.1'
+    api 'com.jakewharton.timber:timber:4.5.1'
+    api 'com.android.support:appcompat-v7:27.0.2'
+    api 'com.android.support:support-v4:27.0.2'
+    api 'com.google.android.gms:play-services-ads:11.8.0'
 }
 
 apply from: rootProject.file('gradle/install-v1.gradle')
