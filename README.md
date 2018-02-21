@@ -82,7 +82,7 @@ For the screen rotation to be handled correctly, you need to add
 to any activity using PlayerWebView, in your AndroidManifest.xml
 
 ### Lifecycle
-On Android 3.0+, you have to call onPause and onResume when these events occur in your lifecycle :
+You have to call onPause and onResume when these events occur in your lifecycle :
 
 ```java
     @Override
@@ -103,6 +103,16 @@ On Android 3.0+, you have to call onPause and onResume when these events occur i
             mVideoView.onResume();
         }
     }
+```
+
+### Play Services
+The SDK uses Google Play Services to get the [Advertising Id](http://www.androiddocs.com/google/play-services/id.html)
+If your app also uses play services, you may want to override the `play-services-ads` version to avoid conflicting with other play services artifacts.
+
+```java
+dependencies {
+    implementation "com.google.android.gms:play-services-ads:[your_play_services_version]"
+}
 ```
 
 ### Publish your own sdk on Bintray
