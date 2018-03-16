@@ -640,9 +640,17 @@ public class PlayerWebView extends WebView {
         setWebChromeClient(mChromeClient);
 
         Map<String, String> parameters = new HashMap<>();
-        // the 2 parameters below are compulsory, make sure they are always defined
+        // the 3 parameters below are compulsory, make sure they are always defined
         parameters.put("app", getContext().getPackageName());
         parameters.put("api", "nativeBridge");
+
+        if (Utils.hasFireTV(getContext())) {
+            parameters.put("client_type", "firetv");
+        } else if (Utils.hasLeanback(getContext())) {
+            parameters.put("client_type", "androidtv");
+        } else {
+            parameters.put("client_type", "androidapp");
+        }
 
         try {
             if (adId != null && !adId.isEmpty()) {
