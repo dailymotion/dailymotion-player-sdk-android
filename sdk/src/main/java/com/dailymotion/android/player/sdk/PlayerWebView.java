@@ -85,6 +85,7 @@ public class PlayerWebView extends WebView {
     public static final String COMMAND_SUBTITLE = "subtitle";
     public static final String COMMAND_TOGGLE_CONTROLS = "toggle-controls";
     public static final String COMMAND_TOGGLE_PLAY = "toggle-play";
+    public static final String COMMAND_VOLUME = "volume";
 
     private ArrayList<Command> mCommandList = new ArrayList<>();
 
@@ -119,6 +120,7 @@ public class PlayerWebView extends WebView {
     private boolean mIsEnded = false;
     private boolean mIsInitialized = false;
     private boolean mIsFullScreen = false;
+    private float mVolume = 1f;
 
     private long mControlsLastTime;
     private long mMuteLastTime;
@@ -235,6 +237,9 @@ public class PlayerWebView extends WebView {
             case COMMAND_TOGGLE_PLAY:
                 callPlayerMethod("api", "toggle-play", command.params);
                 break;
+            case COMMAND_VOLUME:
+                callPlayerMethod("api", "volume", command.params);
+                break;
             default:
                 callPlayerMethod(command.methodName, command.params);
                 break;
@@ -328,6 +333,7 @@ public class PlayerWebView extends WebView {
                 break;
             }
             case EVENT_VOLUMECHANGE: {
+                mVolume = Float.parseFloat(map.get("volume"));
                 mHandler.removeCallbacks(mMuteCommandRunnable);
                 mMuteCommandRunnable = null;
                 break;
@@ -729,6 +735,16 @@ public class PlayerWebView extends WebView {
 
     public long getPosition() {
         return (long) (mPosition * 1000);
+    }
+
+    public void setVolume(float volume) {
+        if (volume >= 0f && volume <= 1f) {
+            queueCommand(COMMAND_VOLUME, volume);
+        }
+    }
+
+    public float getVolume() {
+        return mVolume;
     }
 
     public void setIsWebContentsDebuggingEnabled(boolean isWebContentsDebuggingEnabled) {

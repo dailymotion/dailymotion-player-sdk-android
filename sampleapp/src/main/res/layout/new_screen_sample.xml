@@ -128,9 +128,33 @@
                 style="?android:attr/buttonStyleSmall"
                 android:layout_width="125dp"
                 android:layout_height="56dp"
+                android:maxWidth="125dp"
+                android:layout_weight="1"
+                android:text="Quality to 240p"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnSetVolume"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="125dp"
+                android:layout_height="56dp"
                 android:layout_weight="1"
                 android:maxWidth="125dp"
-                android:text="Quality to 240p"/>
+                android:text="Set volume to (float value between 0f and 1f)" />
+
+            <EditText
+                android:id="@+id/editTextVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="numberDecimal" />
 
         </LinearLayout>
 

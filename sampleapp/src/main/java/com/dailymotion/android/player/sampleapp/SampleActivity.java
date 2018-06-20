@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -130,6 +131,9 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
                     case "qualitychange":
                         log(event + " (quality: " + mVideoView.getQuality() + ")");
                         break;
+                    case PlayerWebView.EVENT_VOLUMECHANGE:
+                        log(event + " (volume: " + mVideoView.getVolume() + ")");
+                        break;
                     case PlayerWebView.EVENT_FULLSCREEN_TOGGLE_REQUESTED:
                         onFullScreenToggleRequested();
                         break;
@@ -161,6 +165,8 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
         showControlsButton.setOnClickListener(SampleActivity.this);
         Button hideControlsButton = ((Button) findViewById(R.id.btnHideControls));
         hideControlsButton.setOnClickListener(SampleActivity.this);
+        Button setVolumeButton = findViewById(R.id.btnSetVolume);
+        setVolumeButton.setOnClickListener(SampleActivity.this);
 
         mLogText = ((TextView) findViewById(R.id.logText));
     }
@@ -187,6 +193,10 @@ public class SampleActivity extends AppCompatActivity implements View.OnClickLis
             mVideoView.showControls(true);
         } else if (v.getId() == R.id.btnHideControls) {
             mVideoView.showControls(false);
+        } else if (v.getId() == R.id.btnSetVolume) {
+            String text = ((EditText) findViewById(R.id.editTextVolume)).getText().toString();
+            float volume = Float.parseFloat(text);
+            mVideoView.setVolume(volume);
         }
     }
 
