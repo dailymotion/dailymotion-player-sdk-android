@@ -706,7 +706,7 @@ public class PlayerWebView extends WebView {
         load(videoId, null);
     }
 
-    public void load(String videoId, Map<String, String> params) {
+    public void load(String videoId, Map<String, Object> loadParams) {
         if (!mIsInitialized) {
             Map<String, String> defaultQueryParameters = new HashMap<>();
             defaultQueryParameters.put("sharing-enable", "false");
@@ -718,7 +718,7 @@ public class PlayerWebView extends WebView {
 
             initialize("https://www.dailymotion.com/embed/", defaultQueryParameters, new HashMap<String, String>());
         }
-        queueCommand(COMMAND_LOAD, videoId, params);
+        queueCommand(COMMAND_LOAD, videoId, loadParams);
     }
 
     public void setSubtitle(String language_code) {
