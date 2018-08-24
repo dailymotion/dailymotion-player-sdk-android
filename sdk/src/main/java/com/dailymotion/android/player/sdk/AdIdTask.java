@@ -12,10 +12,10 @@ import timber.log.Timber;
  * on 05/02/2018.
  */
 
-public class AdIdTask extends AsyncTask<Void, Void, String> {
+public class AdIdTask extends AsyncTask<Void, Void, AdvertisingIdClient.Info > {
 
     public interface AdIdTaskListener {
-        void onResult(String result);
+        void onResult(AdvertisingIdClient.Info  result);
     }
 
     private Context mContext;
@@ -28,20 +28,21 @@ public class AdIdTask extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Void... voids) {
-        String result = null;
+    protected AdvertisingIdClient.Info  doInBackground(Void... voids) {
+        AdvertisingIdClient.Info info = null;
 
         try {
-            result = AdvertisingIdClient.getAdvertisingIdInfo(mContext).getId();
+            info = AdvertisingIdClient.getAdvertisingIdInfo(mContext);
+
         } catch (Exception e) {
             Timber.e(e);
         }
 
-        return result;
+        return info;
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(AdvertisingIdClient.Info  result) {
         super.onPostExecute(result);
 
         mAdIdTaskListener.onResult(result);
