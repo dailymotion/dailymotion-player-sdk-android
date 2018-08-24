@@ -20,6 +20,7 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.dailymotion.android.BuildConfig;
+import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -548,13 +549,13 @@ public class PlayerWebView extends WebView {
         mIsInitialized = true;
         new AdIdTask(getContext(), new AdIdTask.AdIdTaskListener() {
             @Override
-            public void onResult(String adId) {
-                finishInitialization(baseUrl, queryParameters, httpHeaders, adId);
+            public void onResult(AdvertisingIdClient.Info  info) {
+                finishInitialization(baseUrl, queryParameters, httpHeaders, info);
             }
         }).execute();
     }
 
-    public void finishInitialization(final String baseUrl, final Map<String, String> queryParameters, final Map<String, String> httpHeaders, final String adId) {
+    public void finishInitialization(final String baseUrl, final Map<String, String> queryParameters, final Map<String, String> httpHeaders, final AdvertisingIdClient.Info adInfo) {
         mGson = new Gson();
         WebSettings mWebSettings = getSettings();
         mWebSettings.setDomStorageEnabled(true);
@@ -660,9 +661,9 @@ public class PlayerWebView extends WebView {
         }
 
         try {
-            if (adId != null && !adId.isEmpty()) {
-                parameters.put("ads_device_id", adId);
-                parameters.put("ads_device_tracking", "1");
+            if (adInfo != null && adInfo.getId() != null && !adInfo.getId().isEmpty()) {
+                parameters.put("ads_device_id", adInfo.getId());
+                parameters.put("ads_device_tracking", adInfo.isLimitAdTrackingEnabled() ? "0" : "1");
             }
         } catch (Exception e) {
             Timber.e(e);
