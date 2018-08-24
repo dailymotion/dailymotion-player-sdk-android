@@ -662,7 +662,7 @@ public class PlayerWebView extends WebView {
         try {
             if (adId != null && !adId.isEmpty()) {
                 parameters.put("ads_device_id", adId);
-                parameters.put("ads_device_tracking", "true");
+                parameters.put("ads_device_tracking", "1");
             }
         } catch (Exception e) {
             Timber.e(e);
