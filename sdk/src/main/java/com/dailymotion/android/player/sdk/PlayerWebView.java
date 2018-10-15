@@ -69,6 +69,7 @@ public class PlayerWebView extends WebView {
     public static final String EVENT_CONTROLSCHANGE = "controlschange";
     public static final String EVENT_VOLUMECHANGE = "volumechange";
     public static final String EVENT_QUALITY = "qualitychange";
+    public static final String EVENT_PLAYBACK_READY = "playback_ready";
 
     private static final java.lang.String ASSETS_SCHEME = "asset://";
 
