@@ -69,6 +69,7 @@ public class PlayerWebView extends WebView {
     public static final String EVENT_CONTROLSCHANGE = "controlschange";
     public static final String EVENT_VOLUMECHANGE = "volumechange";
     public static final String EVENT_QUALITY = "qualitychange";
+    public static final String EVENT_QUALITIES_AVAILABLE = "qualitiesavailable";
     public static final String EVENT_PLAYBACK_READY = "playback_ready";
 
     private static final java.lang.String ASSETS_SCHEME = "asset://";
@@ -263,7 +264,15 @@ public class PlayerWebView extends WebView {
             if (s2.length == 1) {
                 map.put(s2[0], null);
             } else if (s2.length == 2) {
-                map.put(s2[0], s2[1]);
+                String paramKey = s2[0];
+                String paramValue = s2[1];
+
+                if (!map.containsKey(paramKey)) {
+                    map.put(paramKey, paramValue);
+                } else {
+                    String value = map.get(paramKey) + ";" + paramValue;
+                    map.put(paramKey, value);
+                }
             } else {
                 Timber.e("bad param: " + s);
             }
