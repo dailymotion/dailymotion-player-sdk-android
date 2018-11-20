@@ -54,6 +54,8 @@ public class PlayerWebView extends WebView {
     public static final String EVENT_VIDEO_START = "video_start";
     public static final String EVENT_VIDEO_END = "video_end";
     public static final String EVENT_AD_START = "ad_start";
+    public static final String EVENT_AD_PLAY = "ad_play";
+    public static final String EVENT_AD_PAUSE = "ad_pause";
     public static final String EVENT_AD_END = "ad_end";
     public static final String EVENT_ADD_TO_COLLECTION_REQUESTED = "add_to_collection_requested";
     public static final String EVENT_LIKE_REQUESTED = "like_requested";
@@ -326,6 +328,14 @@ public class PlayerWebView extends WebView {
             }
             case EVENT_PAUSE: {
                 mVideoPaused = true;
+                mPlayWhenReady = false;
+                break;
+            }
+            case EVENT_AD_PLAY: {
+                mPlayWhenReady = true;
+                break;
+            }
+            case EVENT_AD_PAUSE: {
                 mPlayWhenReady = false;
                 break;
             }
