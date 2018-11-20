@@ -26,7 +26,6 @@ ext {
 
 android {
     compileSdkVersion Version.compileSdkVersion
-    buildToolsVersion Version.buildToolsVersion
 
     defaultConfig {
         minSdkVersion Version.minSdkVersion
