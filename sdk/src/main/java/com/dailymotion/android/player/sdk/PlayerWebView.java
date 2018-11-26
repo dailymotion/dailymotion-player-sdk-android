@@ -310,6 +310,7 @@ public class PlayerWebView extends WebView {
             }
             case EVENT_TIMEUPDATE: {
                 mPosition = Float.parseFloat(map.get("time"));
+                playerEvent = eventFactory.createTimeUpdateEvent(map);
                 break;
             }
             case EVENT_DURATION_CHANGE: {

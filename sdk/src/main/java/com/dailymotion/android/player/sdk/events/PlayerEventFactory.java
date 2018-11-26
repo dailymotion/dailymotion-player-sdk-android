@@ -38,4 +38,8 @@ public class PlayerEventFactory {
 
         return new ApiReadyEvent(visitor, browser, consent, player, device);
     }
+
+    public TimeUpdateEvent createTimeUpdateEvent(Map<String, String> params) {
+        return new TimeUpdateEvent(params.get("time"));
+    }
 }
