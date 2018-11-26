@@ -20,8 +20,12 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.dailymotion.android.BuildConfig;
+import com.dailymotion.android.player.sdk.events.PlayerEvent;
+import com.dailymotion.android.player.sdk.events.PlayerEventFactory;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.gson.Gson;
+
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -110,6 +114,7 @@ public class PlayerWebView extends WebView {
     private boolean mVisible;
     private boolean mHasMetadata;
     private EventListener mEventListener;
+    private PlayerEventListener mPlayerEventListener;
     private boolean mIsWebContentsDebuggingEnabled = false;
 
     private Runnable mControlsCommandRunnable;
@@ -129,6 +134,7 @@ public class PlayerWebView extends WebView {
     private long mControlsLastTime;
     private long mMuteLastTime;
     private long mLoadLastTime;
+    private PlayerEventFactory eventFactory;
 
     public boolean isEnded() {
         return mIsEnded;
@@ -281,9 +287,11 @@ public class PlayerWebView extends WebView {
             Timber.d("[%d] event %s", hashCode(), e);
         }
 
+        PlayerEvent playerEvent = null;
         switch (event) {
             case EVENT_APIREADY: {
                 mApiReady = true;
+                playerEvent = eventFactory.createApiReadyEvent(map);
                 break;
             }
             case EVENT_START: {
@@ -376,6 +384,10 @@ public class PlayerWebView extends WebView {
 
         if (mEventListener != null) {
             mEventListener.onEvent(event, map);
+        }
+
+        if (mPlayerEventListener != null) {
+            mPlayerEventListener.onEvent(playerEvent);
         }
 
         tick();
@@ -558,6 +570,7 @@ public class PlayerWebView extends WebView {
 
     public void initialize(final String baseUrl, final Map<String, String> queryParameters, final Map<String, String> httpHeaders) {
         mIsInitialized = true;
+        eventFactory = new PlayerEventFactory();
         new AdIdTask(getContext(), new AdIdTask.AdIdTaskListener() {
             @Override
             public void onResult(AdvertisingIdClient.Info  info) {
@@ -701,12 +714,22 @@ public class PlayerWebView extends WebView {
         loadUrl(builder.toString(), httpHeaders);
     }
 
+    @Deprecated
     public interface EventListener {
         void onEvent(String event, HashMap<String, String> map);
     }
 
+    @Deprecated
     public void setEventListener(EventListener listener) {
         mEventListener = listener;
+    }
+
+    public interface PlayerEventListener {
+        void onEvent(@Nullable PlayerEvent event);
+    }
+
+    public void setPlayerEventListener(PlayerEventListener listener) {
+        mPlayerEventListener = listener;
     }
 
     public void release() {

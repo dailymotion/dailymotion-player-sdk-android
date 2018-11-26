@@ -91,6 +91,14 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
+        dm_player_web_view.setPlayerEventListener { playerEvent ->
+            playerEvent?.let {
+                when (it.name) {
+                    "apiready" -> log("apiready")
+                }
+            }
+        }
+
         val playButton = findViewById<View>(R.id.btnTogglePlay) as Button
         playButton.setOnClickListener(this@SampleActivity)
         val togglePlayButton = findViewById<View>(R.id.btnPlay) as Button
