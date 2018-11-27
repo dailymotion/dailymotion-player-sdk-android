@@ -302,7 +302,7 @@ public class PlayerWebView extends WebView {
         switch (event) {
             case EVENT_APIREADY: {
                 mApiReady = true;
-                playerEvent = eventFactory.createApiReadyEvent(map);
+                playerEvent = eventFactory.createApiReadyEvent();
                 break;
             }
             case EVENT_START: {
@@ -447,7 +447,7 @@ public class PlayerWebView extends WebView {
             mEventListener.onEvent(event, map);
         }
 
-        /* Expose via POJO only event we are supporting */
+        /* Only expose the POJO events we are supporting */
         if (mPlayerEventListener != null && playerEvent != null) {
             mPlayerEventListener.onEvent(playerEvent);
         }

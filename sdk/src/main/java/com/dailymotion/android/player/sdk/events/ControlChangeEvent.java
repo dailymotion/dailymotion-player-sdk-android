@@ -11,7 +11,7 @@ public class ControlChangeEvent extends PlayerEvent {
         this.controls = controls;
     }
 
-    public boolean isControls() {
+    public boolean getControls() {
         return controls;
     }
 }
