@@ -75,22 +75,18 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         dm_player_web_view.load("x26hv6c", playerParams as Map<String, Any>?)
 
         dm_player_web_view.setPlayerEventListener { playerEvent ->
-            playerEvent?.let {
-                when (it) {
-                    is ApiReadyEvent -> log(it.name)
-                    is StartEvent -> log(it.name)
-                    is LoadedMetaDataEvent -> log(it.name)
-                    is ProgressEvent -> log(it.name + " (bufferedTime: " + dm_player_web_view.bufferedTime + ")")
-                    is DurationChangeEvent -> log(it.name + " (duration: " + dm_player_web_view.duration + ")")
-                    is TimeUpdateEvent, is AdTimeUpdateEvent, is SeekingEvent, is SeekedEvent -> log(it.name + " (currentTime: " + dm_player_web_view.position + ")")
-                    is VideoStartEvent, is AdStartEvent, is AdPlayEvent, is PlayingEvent, is EndEvent -> log(it.name + " (ended: " + dm_player_web_view.isEnded + ")")
-                    is AdPauseEvent, is AdEndEvent, is VideoEndEvent, is PlayEvent, is PauseEvent -> log(it.name + " (paused: " + dm_player_web_view.videoPaused + ")")
-                    is QualityChangeEvent -> log(it.name + " (quality: " + dm_player_web_view.quality + ")")
-                    is VolumeChangeEvent -> log(it.name + " (volume: " + dm_player_web_view.volume + ")")
-                    is FullScreenToggleRequestedEvent -> onFullScreenToggleRequested()
-                    else -> {
-                    }
-                }
+            when (playerEvent) {
+                is ApiReadyEvent -> log(playerEvent.name)
+                is StartEvent -> log(playerEvent.name)
+                is LoadedMetaDataEvent -> log(playerEvent.name)
+                is ProgressEvent -> log(playerEvent.name + " (bufferedTime: " + dm_player_web_view.bufferedTime + ")")
+                is DurationChangeEvent -> log(playerEvent.name + " (duration: " + dm_player_web_view.duration + ")")
+                is TimeUpdateEvent, is AdTimeUpdateEvent, is SeekingEvent, is SeekedEvent -> log(playerEvent.name + " (currentTime: " + dm_player_web_view.position + ")")
+                is VideoStartEvent, is AdStartEvent, is AdPlayEvent, is PlayingEvent, is EndEvent -> log(playerEvent.name + " (ended: " + dm_player_web_view.isEnded + ")")
+                is AdPauseEvent, is AdEndEvent, is VideoEndEvent, is PlayEvent, is PauseEvent -> log(playerEvent.name + " (paused: " + dm_player_web_view.videoPaused + ")")
+                is QualityChangeEvent -> log(playerEvent.name + " (quality: " + dm_player_web_view.quality + ")")
+                is VolumeChangeEvent -> log(playerEvent.name + " (volume: " + dm_player_web_view.volume + ")")
+                is FullScreenToggleRequestedEvent -> onFullScreenToggleRequested()
             }
         }
 

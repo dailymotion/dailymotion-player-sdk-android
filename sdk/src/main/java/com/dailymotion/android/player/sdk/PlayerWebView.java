@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.dailymotion.android.player.sdk.events.PlayerEventFactory;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.gson.Gson;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
@@ -445,7 +447,8 @@ public class PlayerWebView extends WebView {
             mEventListener.onEvent(event, map);
         }
 
-        if (mPlayerEventListener != null) {
+        /* Expose via POJO only event we are supporting */
+        if (mPlayerEventListener != null && playerEvent != null) {
             mPlayerEventListener.onEvent(playerEvent);
         }
 
@@ -791,7 +794,7 @@ public class PlayerWebView extends WebView {
     }
 
     public interface PlayerEventListener {
-        void onEvent(@Nullable PlayerEvent event);
+        void onEvent(@NonNull PlayerEvent event);
     }
 
     public void setPlayerEventListener(PlayerEventListener listener) {
