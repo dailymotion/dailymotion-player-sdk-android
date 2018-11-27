@@ -1,5 +1,7 @@
 package com.dailymotion.android.player.sdk.events;
 
+import com.dailymotion.android.player.sdk.PlayerWebView;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,95 +9,237 @@ import java.util.Map;
 
 public class PlayerEventFactory {
 
-    public ApiReadyEvent createApiReadyEvent(String payload) {
+    public PlayerEvent createPlayerEvent(String name, Map<String, String> params, String payload) {
+        PlayerEvent playerEvent;
+        switch (name) {
+            case PlayerWebView.EVENT_APIREADY: {
+                playerEvent = createApiReadyEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_START: {
+                playerEvent = createStartEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_END: {
+                playerEvent = createEndEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_PROGRESS: {
+                playerEvent = createProgressEvent(payload, params);
+                break;
+            }
+            case PlayerWebView.EVENT_TIMEUPDATE: {
+                playerEvent = createTimeUpdateEvent(payload, params);
+                break;
+            }
+            case PlayerWebView.EVENT_DURATION_CHANGE: {
+                playerEvent = createDurationChangeEvent(payload, params);
+                break;
+            }
+            case PlayerWebView.EVENT_GESTURE_START: {
+                playerEvent = createGestureStartEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_MENU_DID_SHOW: {
+                playerEvent = createMenuDidShowEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_GESTURE_END: {
+                playerEvent = createGestureEndEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_MENU_DID_HIDE: {
+                playerEvent = createMenuDidHideEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_VIDEO_END: {
+                playerEvent = createVideoEndEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_PLAY: {
+                playerEvent = createPlayEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_PAUSE: {
+                playerEvent = createPauseEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_AD_START: {
+                playerEvent = createAdStartEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_AD_PLAY: {
+                playerEvent = createAdPlayEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_AD_PAUSE: {
+                playerEvent = createAdPauseEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_AD_TIME_UPDATE: {
+                playerEvent = createAdTimeUpdateEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_AD_END: {
+                playerEvent = createAdEndEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_CONTROLSCHANGE: {
+                playerEvent = createControlChangeEvent(payload, params);
+                break;
+            }
+            case PlayerWebView.EVENT_VOLUMECHANGE: {
+                playerEvent = createVolumeChangeEvent(payload, params);
+                break;
+            }
+            case PlayerWebView.EVENT_LOADEDMETADATA: {
+                playerEvent = createLoadedMetaDataEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_QUALITY_CHANGE: {
+                playerEvent = createQualityChangeEvent(payload, params);
+                break;
+            }
+            case PlayerWebView.EVENT_QUALITIES_AVAILABLE: {
+                playerEvent = createQualitiesAvailableEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_SEEKED: {
+                playerEvent = createSeekedEvent(payload, params);
+                break;
+            }
+            case PlayerWebView.EVENT_SEEKING: {
+                playerEvent = createSeekingEvent(payload, params);
+                break;
+            }
+            case PlayerWebView.EVENT_FULLSCREEN_TOGGLE_REQUESTED: {
+                playerEvent = createFullScreenToggleRequestedEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_VIDEO_START: {
+                playerEvent = createVideoStartEvent(payload, params);
+                break;
+            }
+            case PlayerWebView.EVENT_PLAYING: {
+                playerEvent = createPlayingEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_ADD_TO_COLLECTION_REQUESTED: {
+                playerEvent = createAddToCollectionRequestedEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_LIKE_REQUESTED: {
+                playerEvent = createLikeRequestedEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_WATCH_LATER_REQUESTED: {
+                playerEvent = createWatchLaterRequestedEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_SHARE_REQUESTED: {
+                playerEvent = createShareRequestedEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_PLAYBACK_READY: {
+                playerEvent = createPlaybackReadyEvent(payload);
+                break;
+            }
+            default:
+                playerEvent = createGenericPlayerEvent(payload);
+                break;
+        }
+        return playerEvent;
+    }
+
+    private ApiReadyEvent createApiReadyEvent(String payload) {
         return new ApiReadyEvent(payload);
     }
 
-    public TimeUpdateEvent createTimeUpdateEvent(String payload, Map<String, String> params) {
+    private TimeUpdateEvent createTimeUpdateEvent(String payload, Map<String, String> params) {
         return new TimeUpdateEvent(payload, params.get("time"));
     }
 
-    public DurationChangeEvent createDurationChangeEvent(String payload, Map<String, String> params) {
+    private DurationChangeEvent createDurationChangeEvent(String payload, Map<String, String> params) {
         return new DurationChangeEvent(payload, params.get("duration"));
     }
 
-    public PlayerEvent createProgressEvent(String payload, Map<String, String> params) {
+    private PlayerEvent createProgressEvent(String payload, Map<String, String> params) {
         return new ProgressEvent(payload, params.get("time"));
     }
 
-    public PlayerEvent createSeekedEvent(String payload, Map<String, String> params) {
+    private PlayerEvent createSeekedEvent(String payload, Map<String, String> params) {
         return new SeekedEvent(payload, params.get("time"));
     }
 
-    public PlayerEvent createSeekingEvent(String payload, Map<String, String> params) {
+    private PlayerEvent createSeekingEvent(String payload, Map<String, String> params) {
         return new SeekingEvent(payload, params.get("time"));
     }
 
-    public PlayerEvent createGestureStartEvent(String payload) {
+    private PlayerEvent createGestureStartEvent(String payload) {
         return new GestureStartEvent(payload);
     }
 
-    public PlayerEvent createGestureEndEvent(String payload) {
+    private PlayerEvent createGestureEndEvent(String payload) {
         return new GestureEndEvent(payload);
     }
 
-    public PlayerEvent createMenuDidShowEvent(String payload) {
+    private PlayerEvent createMenuDidShowEvent(String payload) {
         return new MenuDidShowEvent(payload);
     }
 
-    public PlayerEvent createMenuDidHideEvent(String payload) {
+    private PlayerEvent createMenuDidHideEvent(String payload) {
         return new MenuDidHideEvent(payload);
     }
 
-    public PlayerEvent createVideoEndEvent(String payload) {
+    private PlayerEvent createVideoEndEvent(String payload) {
         return new VideoEndEvent(payload);
     }
 
-    public PlayerEvent createPlayEvent(String payload) {
+    private PlayerEvent createPlayEvent(String payload) {
         return new PlayEvent(payload);
     }
 
-    public PlayerEvent createPauseEvent(String payload) {
+    private PlayerEvent createPauseEvent(String payload) {
         return new PauseEvent(payload);
     }
 
-    public PlayerEvent createAdPlayEvent(String payload) {
+    private PlayerEvent createAdPlayEvent(String payload) {
         return new AdPlayEvent(payload);
     }
 
-    public PlayerEvent createAdPauseEvent(String payload) {
+    private PlayerEvent createAdPauseEvent(String payload) {
         return new AdPauseEvent(payload);
     }
 
-    public PlayerEvent createControlChangeEvent(String payload, Map<String, String> map) {
+    private PlayerEvent createControlChangeEvent(String payload, Map<String, String> map) {
         return new ControlChangeEvent(payload, Boolean.parseBoolean(map.get("controls")));
     }
 
-    public PlayerEvent createVolumeChangeEvent(String payload, Map<String, String> map) {
+    private PlayerEvent createVolumeChangeEvent(String payload, Map<String, String> map) {
         return new VolumeChangeEvent(payload, map.get("volume"), Boolean.parseBoolean(map.get("muted")));
     }
 
-    public PlayerEvent createLoadedMetaDataEvent(String payload) {
+    private PlayerEvent createLoadedMetaDataEvent(String payload) {
         return new LoadedMetaDataEvent(payload);
     }
 
-    public PlayerEvent createQualityChangeEvent(String payload, Map<String, String> map) {
+    private PlayerEvent createQualityChangeEvent(String payload, Map<String, String> map) {
         return new QualityChangeEvent(payload, map.get("quality"));
     }
 
-    public PlayerEvent createFullScreenToggleRequestedEvent(String payload) {
+    private PlayerEvent createFullScreenToggleRequestedEvent(String payload) {
         return new FullScreenToggleRequestedEvent(payload);
     }
 
-    public PlayerEvent createStartEvent(String payload) {
+    private PlayerEvent createStartEvent(String payload) {
         return new StartEvent(payload);
     }
 
-    public PlayerEvent createEndEvent(String payload) {
+    private PlayerEvent createEndEvent(String payload) {
         return new EndEvent(payload);
     }
 
-    public PlayerEvent createQualitiesAvailableEvent(String payload) {
+    private PlayerEvent createQualitiesAvailableEvent(String payload) {
         if (payload == null || payload.isEmpty()) {
             return new QualitiesAvailableEvent(payload, null);
         }
@@ -115,47 +259,47 @@ public class PlayerEventFactory {
         return new QualitiesAvailableEvent(payload, availableQualities);
     }
 
-    public PlayerEvent createAdTimeUpdateEvent(String payload) {
+    private PlayerEvent createAdTimeUpdateEvent(String payload) {
         return new AdTimeUpdateEvent(payload);
     }
 
-    public PlayerEvent createVideoStartEvent(String payload, Map<String, String> map) {
+    private PlayerEvent createVideoStartEvent(String payload, Map<String, String> map) {
         return new VideoStartEvent(payload, map.get("replay"));
     }
 
-    public PlayerEvent createAdStartEvent(String payload) {
+    private PlayerEvent createAdStartEvent(String payload) {
         return new AdStartEvent(payload);
     }
 
-    public PlayerEvent createPlayingEvent(String payload) {
+    private PlayerEvent createPlayingEvent(String payload) {
         return new PlayingEvent(payload);
     }
 
-    public PlayerEvent createAdEndEvent(String payload) {
+    private PlayerEvent createAdEndEvent(String payload) {
         return new AdEndEvent(payload);
     }
 
-    public PlayerEvent createGenericPlayerEvent(String payload) {
+    private PlayerEvent createGenericPlayerEvent(String payload) {
         return new GenericPlayerEvent(payload);
     }
 
-    public PlayerEvent createAddToCollectionRequestedEvent(String payload) {
+    private PlayerEvent createAddToCollectionRequestedEvent(String payload) {
         return new AddToCollectionRequestedEvent(payload);
     }
 
-    public PlayerEvent createLikeRequestedEvent(String payload) {
+    private PlayerEvent createLikeRequestedEvent(String payload) {
         return new LikeRequestedEvent(payload);
     }
 
-    public PlayerEvent createWatchLaterRequestedEvent(String payload) {
+    private PlayerEvent createWatchLaterRequestedEvent(String payload) {
         return new WatchLaterRequestedEvent(payload);
     }
 
-    public PlayerEvent createShareRequestedEvent(String payload) {
+    private PlayerEvent createShareRequestedEvent(String payload) {
         return new ShareRequestedEvent(payload);
     }
 
-    public PlayerEvent createPlaybackReadyEvent(String payload) {
+    private PlayerEvent createPlaybackReadyEvent(String payload) {
         return new PlaybackReadyEvent(payload);
     }
 }
