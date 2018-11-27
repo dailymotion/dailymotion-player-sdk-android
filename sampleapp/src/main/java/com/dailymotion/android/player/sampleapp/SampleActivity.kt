@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 
 import com.dailymotion.android.player.sdk.PlayerWebView
+import com.dailymotion.android.player.sdk.events.*
 import com.dailymotion.websdksample.R
 import kotlinx.android.synthetic.main.new_screen_sample.*
 
@@ -73,28 +74,22 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         val playerParams = HashMap<String, String>()
         dm_player_web_view.load("x26hv6c", playerParams as Map<String, Any>?)
 
-        dm_player_web_view.setEventListener { event, map ->
-            when (event) {
-                "apiready" -> log("apiready")
-                "start" -> log("start")
-                "loadedmetadata" -> log("loadedmetadata")
-                "progress" -> log(event + " (bufferedTime: " + dm_player_web_view.bufferedTime + ")")
-                "durationchange" -> log(event + " (duration: " + dm_player_web_view.duration + ")")
-                "timeupdate", "ad_timeupdate", "seeking", "seeked" -> log(event + " (currentTime: " + dm_player_web_view.position + ")")
-                "video_start", "ad_start", "ad_play", "playing", "end" -> log(event + " (ended: " + dm_player_web_view.isEnded + ")")
-                "ad_pause", "ad_end", "video_end", "play", "pause" -> log(event + " (paused: " + dm_player_web_view.videoPaused + ")")
-                "qualitychange" -> log(event + " (quality: " + dm_player_web_view.quality + ")")
-                PlayerWebView.EVENT_VOLUMECHANGE -> log(event + " (volume: " + dm_player_web_view.volume + ")")
-                PlayerWebView.EVENT_FULLSCREEN_TOGGLE_REQUESTED -> onFullScreenToggleRequested()
-                else -> {
-                }
-            }
-        }
-
         dm_player_web_view.setPlayerEventListener { playerEvent ->
             playerEvent?.let {
-                when (it.name) {
-                    "apiready" -> log("apiready")
+                when (it) {
+                    is ApiReadyEvent -> log(it.name)
+                    is StartEvent -> log(it.name)
+                    is LoadedMetaDataEvent -> log(it.name)
+                    is ProgressEvent -> log(it.name + " (bufferedTime: " + dm_player_web_view.bufferedTime + ")")
+                    is DurationChangeEvent -> log(it.name + " (duration: " + dm_player_web_view.duration + ")")
+                    is TimeUpdateEvent, is AdTimeUpdateEvent, is SeekingEvent, is SeekedEvent -> log(it.name + " (currentTime: " + dm_player_web_view.position + ")")
+                    is VideoStartEvent, is AdStartEvent, is AdPlayEvent, is PlayingEvent, is EndEvent -> log(it.name + " (ended: " + dm_player_web_view.isEnded + ")")
+                    is AdPauseEvent, is AdEndEvent, is VideoEndEvent, is PlayEvent, is PauseEvent -> log(it.name + " (paused: " + dm_player_web_view.videoPaused + ")")
+                    is QualityChangeEvent -> log(it.name + " (quality: " + dm_player_web_view.quality + ")")
+                    is VolumeChangeEvent -> log(it.name + " (volume: " + dm_player_web_view.volume + ")")
+                    is FullScreenToggleRequestedEvent -> onFullScreenToggleRequested()
+                    else -> {
+                    }
                 }
             }
         }
