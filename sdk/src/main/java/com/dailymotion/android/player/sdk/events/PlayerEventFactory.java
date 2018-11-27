@@ -3,7 +3,6 @@ package com.dailymotion.android.player.sdk.events;
 import com.dailymotion.android.player.sdk.PlayerWebView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -144,11 +143,19 @@ public class PlayerEventFactory {
                 playerEvent = createPlaybackReadyEvent(payload);
                 break;
             }
+            case PlayerWebView.EVENT_CHROME_CAST_REQUESTED: {
+                playerEvent = createChromeCastRequestedEvent(payload);
+                break;
+            }
             default:
                 playerEvent = createGenericPlayerEvent(payload);
                 break;
         }
         return playerEvent;
+    }
+
+    private PlayerEvent createChromeCastRequestedEvent(String payload) {
+        return new ChromeCastRequestedEvent(payload);
     }
 
     private ApiReadyEvent createApiReadyEvent(String payload) {

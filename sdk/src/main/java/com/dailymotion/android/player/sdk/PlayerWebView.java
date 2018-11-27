@@ -74,7 +74,6 @@ public class PlayerWebView extends WebView {
     public static final String EVENT_END = "end";
     public static final String EVENT_CONTROLSCHANGE = "controlschange";
     public static final String EVENT_VOLUMECHANGE = "volumechange";
-
     /**
      * @deprecated Use EVENT_QUALITY_CHANGE instead
      */
@@ -84,6 +83,7 @@ public class PlayerWebView extends WebView {
     public static final String EVENT_QUALITIES_AVAILABLE = "qualitiesavailable";
 
     public static final String EVENT_PLAYBACK_READY = "playback_ready";
+    public static final String EVENT_CHROME_CAST_REQUESTED = "chromecast_requested";
 
     private static final java.lang.String ASSETS_SCHEME = "asset://";
 
