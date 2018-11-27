@@ -76,7 +76,7 @@ public class PlayerEventFactory {
                 break;
             }
             case PlayerWebView.EVENT_AD_TIME_UPDATE: {
-                playerEvent = createAdTimeUpdateEvent(payload);
+                playerEvent = createAdTimeUpdateEvent(payload, params);
                 break;
             }
             case PlayerWebView.EVENT_AD_END: {
@@ -266,8 +266,8 @@ public class PlayerEventFactory {
         return new QualitiesAvailableEvent(payload, availableQualities);
     }
 
-    private PlayerEvent createAdTimeUpdateEvent(String payload) {
-        return new AdTimeUpdateEvent(payload);
+    private PlayerEvent createAdTimeUpdateEvent(String payload, Map<String, String> map) {
+        return new AdTimeUpdateEvent(payload, map.get("time"));
     }
 
     private PlayerEvent createVideoStartEvent(String payload, Map<String, String> map) {
