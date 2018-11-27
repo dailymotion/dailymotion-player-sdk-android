@@ -138,4 +138,24 @@ public class PlayerEventFactory {
     public PlayerEvent createGenericPlayerEvent(String payload) {
         return new GenericPlayerEvent(payload);
     }
+
+    public PlayerEvent createAddToCollectionRequestedEvent(String payload) {
+        return new AddToCollectionRequestedEvent(payload);
+    }
+
+    public PlayerEvent createLikeRequestedEvent(String payload) {
+        return new LikeRequestedEvent(payload);
+    }
+
+    public PlayerEvent createWatchLaterRequestedEvent(String payload) {
+        return new WatchLaterRequestedEvent(payload);
+    }
+
+    public PlayerEvent createShareRequestedEvent(String payload) {
+        return new ShareRequestedEvent(payload);
+    }
+
+    public PlayerEvent createPlaybackReadyEvent(String payload) {
+        return new PlaybackReadyEvent(payload);
+    }
 }

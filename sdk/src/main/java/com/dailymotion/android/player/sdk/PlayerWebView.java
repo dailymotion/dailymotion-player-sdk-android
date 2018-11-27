@@ -438,6 +438,26 @@ public class PlayerWebView extends WebView {
                 playerEvent = eventFactory.createPlayingEvent(e);
                 break;
             }
+            case EVENT_ADD_TO_COLLECTION_REQUESTED: {
+                playerEvent = eventFactory.createAddToCollectionRequestedEvent(e);
+                break;
+            }
+            case EVENT_LIKE_REQUESTED: {
+                playerEvent = eventFactory.createLikeRequestedEvent(e);
+                break;
+            }
+            case EVENT_WATCH_LATER_REQUESTED: {
+                playerEvent = eventFactory.createWatchLaterRequestedEvent(e);
+                break;
+            }
+            case EVENT_SHARE_REQUESTED: {
+                playerEvent = eventFactory.createShareRequestedEvent(e);
+                break;
+            }
+            case EVENT_PLAYBACK_READY: {
+                playerEvent = eventFactory.createPlaybackReadyEvent(e);
+                break;
+            }
             default:
                 playerEvent = eventFactory.createGenericPlayerEvent(e);
                 break;
