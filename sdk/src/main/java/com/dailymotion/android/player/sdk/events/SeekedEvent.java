@@ -6,8 +6,8 @@ public class SeekedEvent extends PlayerEvent {
 
     private String time;
 
-    SeekedEvent(String time) {
-        super(PlayerWebView.EVENT_SEEKED);
+    SeekedEvent(String payload, String time) {
+        super(PlayerWebView.EVENT_SEEKED, payload);
         this.time = time;
     }
 

@@ -8,8 +8,8 @@ public class QualitiesAvailableEvent extends PlayerEvent {
 
     private List<String> qualities;
 
-    QualitiesAvailableEvent(List<String> qualities) {
-        super(PlayerWebView.EVENT_QUALITIES_AVAILABLE);
+    QualitiesAvailableEvent(String payload, List<String> qualities) {
+        super(PlayerWebView.EVENT_QUALITIES_AVAILABLE, payload);
         this.qualities = qualities;
     }
 

@@ -6,8 +6,8 @@ public class VideoStartEvent extends PlayerEvent {
 
     private String replay;
 
-    VideoStartEvent(String replay) {
-        super(PlayerWebView.EVENT_VIDEO_START);
+    VideoStartEvent(String payload, String replay) {
+        super(PlayerWebView.EVENT_VIDEO_START, payload);
         this.replay = replay;
     }
 

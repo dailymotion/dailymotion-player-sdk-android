@@ -6,8 +6,8 @@ public class ProgressEvent extends PlayerEvent {
 
     private String time;
 
-    ProgressEvent(String time) {
-        super(PlayerWebView.EVENT_PROGRESS);
+    ProgressEvent(String payload, String time) {
+        super(PlayerWebView.EVENT_PROGRESS, payload);
         this.time = time;
     }
 

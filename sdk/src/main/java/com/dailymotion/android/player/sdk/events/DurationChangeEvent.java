@@ -6,8 +6,8 @@ public class DurationChangeEvent extends PlayerEvent {
 
     private String duration;
 
-    DurationChangeEvent(String duration) {
-        super(PlayerWebView.EVENT_DURATION_CHANGE);
+    DurationChangeEvent(String payload, String duration) {
+        super(PlayerWebView.EVENT_DURATION_CHANGE, payload);
         this.duration = duration;
     }
 

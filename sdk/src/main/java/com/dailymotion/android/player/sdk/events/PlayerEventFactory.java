@@ -7,101 +7,101 @@ import java.util.Map;
 
 public class PlayerEventFactory {
 
-    public ApiReadyEvent createApiReadyEvent() {
-        return new ApiReadyEvent();
+    public ApiReadyEvent createApiReadyEvent(String payload) {
+        return new ApiReadyEvent(payload);
     }
 
-    public TimeUpdateEvent createTimeUpdateEvent(Map<String, String> params) {
-        return new TimeUpdateEvent(params.get("time"));
+    public TimeUpdateEvent createTimeUpdateEvent(String payload, Map<String, String> params) {
+        return new TimeUpdateEvent(payload, params.get("time"));
     }
 
-    public DurationChangeEvent createDurationChangeEvent(Map<String, String> params) {
-        return new DurationChangeEvent(params.get("duration"));
+    public DurationChangeEvent createDurationChangeEvent(String payload, Map<String, String> params) {
+        return new DurationChangeEvent(payload, params.get("duration"));
     }
 
-    public PlayerEvent createProgressEvent(HashMap<String, String> params) {
-        return new ProgressEvent(params.get("time"));
+    public PlayerEvent createProgressEvent(String payload, Map<String, String> params) {
+        return new ProgressEvent(payload, params.get("time"));
     }
 
-    public PlayerEvent createSeekedEvent(HashMap<String, String> params) {
-        return new SeekedEvent(params.get("time"));
+    public PlayerEvent createSeekedEvent(String payload, Map<String, String> params) {
+        return new SeekedEvent(payload, params.get("time"));
     }
 
-    public PlayerEvent createSeekingEvent(HashMap<String, String> params) {
-        return new SeekingEvent(params.get("time"));
+    public PlayerEvent createSeekingEvent(String payload, Map<String, String> params) {
+        return new SeekingEvent(payload, params.get("time"));
     }
 
-    public PlayerEvent createGestureStartEvent() {
-        return new GestureStartEvent();
+    public PlayerEvent createGestureStartEvent(String payload) {
+        return new GestureStartEvent(payload);
     }
 
-    public PlayerEvent createGestureEndEvent() {
-        return new GestureEndEvent();
+    public PlayerEvent createGestureEndEvent(String payload) {
+        return new GestureEndEvent(payload);
     }
 
-    public PlayerEvent createMenuDidShowEvent() {
-        return new MenuDidShowEvent();
+    public PlayerEvent createMenuDidShowEvent(String payload) {
+        return new MenuDidShowEvent(payload);
     }
 
-    public PlayerEvent createMenuDidHideEvent() {
-        return new MenuDidHideEvent();
+    public PlayerEvent createMenuDidHideEvent(String payload) {
+        return new MenuDidHideEvent(payload);
     }
 
-    public PlayerEvent createVideoEndEvent() {
-        return new VideoEndEvent();
+    public PlayerEvent createVideoEndEvent(String payload) {
+        return new VideoEndEvent(payload);
     }
 
-    public PlayerEvent createPlayEvent() {
-        return new PlayEvent();
+    public PlayerEvent createPlayEvent(String payload) {
+        return new PlayEvent(payload);
     }
 
-    public PlayerEvent createPauseEvent() {
-        return new PauseEvent();
+    public PlayerEvent createPauseEvent(String payload) {
+        return new PauseEvent(payload);
     }
 
-    public PlayerEvent createAdPlayEvent() {
-        return new AdPlayEvent();
+    public PlayerEvent createAdPlayEvent(String payload) {
+        return new AdPlayEvent(payload);
     }
 
-    public PlayerEvent createAdPauseEvent() {
-        return new AdPauseEvent();
+    public PlayerEvent createAdPauseEvent(String payload) {
+        return new AdPauseEvent(payload);
     }
 
-    public PlayerEvent createControlChangeEvent(HashMap<String, String> map) {
-        return new ControlChangeEvent(Boolean.parseBoolean(map.get("controls")));
+    public PlayerEvent createControlChangeEvent(String payload, Map<String, String> map) {
+        return new ControlChangeEvent(payload, Boolean.parseBoolean(map.get("controls")));
     }
 
-    public PlayerEvent createVolumeChangeEvent(HashMap<String, String> map) {
-        return new VolumeChangeEvent(map.get("volume"), Boolean.parseBoolean(map.get("muted")));
+    public PlayerEvent createVolumeChangeEvent(String payload, Map<String, String> map) {
+        return new VolumeChangeEvent(payload, map.get("volume"), Boolean.parseBoolean(map.get("muted")));
     }
 
-    public PlayerEvent createLoadedMetaDataEvent() {
-        return new LoadedMetaDataEvent();
+    public PlayerEvent createLoadedMetaDataEvent(String payload) {
+        return new LoadedMetaDataEvent(payload);
     }
 
-    public PlayerEvent createQualityChangeEvent(HashMap<String, String> map) {
-        return new QualityChangeEvent(map.get("quality"));
+    public PlayerEvent createQualityChangeEvent(String payload, Map<String, String> map) {
+        return new QualityChangeEvent(payload, map.get("quality"));
     }
 
-    public PlayerEvent createFullScreenToggleRequestedEvent() {
-        return new FullScreenToggleRequestedEvent();
+    public PlayerEvent createFullScreenToggleRequestedEvent(String payload) {
+        return new FullScreenToggleRequestedEvent(payload);
     }
 
-    public PlayerEvent createStartEvent() {
-        return new StartEvent();
+    public PlayerEvent createStartEvent(String payload) {
+        return new StartEvent(payload);
     }
 
-    public PlayerEvent createEndEvent() {
-        return new EndEvent();
+    public PlayerEvent createEndEvent(String payload) {
+        return new EndEvent(payload);
     }
 
-    public PlayerEvent createQualitiesAvailableEvent(String query) {
-        if (query == null || query.isEmpty()) {
-            return new QualitiesAvailableEvent(null);
+    public PlayerEvent createQualitiesAvailableEvent(String payload) {
+        if (payload == null || payload.isEmpty()) {
+            return new QualitiesAvailableEvent(payload, null);
         }
-        String[] argList = query.split("&");
+        String[] argList = payload.split("&");
         if (argList.length < 1) {
-            return new QualitiesAvailableEvent(null);
+            return new QualitiesAvailableEvent(payload, null);
         }
 
         List<String> availableQualities = new ArrayList<>();
@@ -112,26 +112,30 @@ public class PlayerEventFactory {
                 availableQualities.add(value);
             }
         }
-        return new QualitiesAvailableEvent(availableQualities);
+        return new QualitiesAvailableEvent(payload, availableQualities);
     }
 
-    public PlayerEvent createAdTimeUpdateEvent() {
-        return new AdTimeUpdateEvent();
+    public PlayerEvent createAdTimeUpdateEvent(String payload) {
+        return new AdTimeUpdateEvent(payload);
     }
 
-    public PlayerEvent createVideoStartEvent(HashMap<String, String> map) {
-        return new VideoStartEvent(map.get("replay"));
+    public PlayerEvent createVideoStartEvent(String payload, Map<String, String> map) {
+        return new VideoStartEvent(payload, map.get("replay"));
     }
 
-    public PlayerEvent createAdStartEvent() {
-        return new AdStartEvent();
+    public PlayerEvent createAdStartEvent(String payload) {
+        return new AdStartEvent(payload);
     }
 
-    public PlayerEvent createPlayingEvent() {
-        return new PlayingEvent();
+    public PlayerEvent createPlayingEvent(String payload) {
+        return new PlayingEvent(payload);
     }
 
-    public PlayerEvent createAdEndEvent() {
-        return new AdEndEvent();
+    public PlayerEvent createAdEndEvent(String payload) {
+        return new AdEndEvent(payload);
+    }
+
+    public PlayerEvent createGenericPlayerEvent(String payload) {
+        return new GenericPlayerEvent(payload);
     }
 }

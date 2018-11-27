@@ -6,8 +6,8 @@ public class QualityChangeEvent extends PlayerEvent {
 
     private String quality;
 
-    QualityChangeEvent(String quality) {
-        super(PlayerWebView.EVENT_QUALITY_CHANGE);
+    QualityChangeEvent(String payload, String quality) {
+        super(PlayerWebView.EVENT_QUALITY_CHANGE, payload);
         this.quality = quality;
     }
 

@@ -7,8 +7,8 @@ public class VolumeChangeEvent extends PlayerEvent {
     private String volume;
     private boolean muted;
 
-    VolumeChangeEvent(String volume, boolean muted) {
-        super(PlayerWebView.EVENT_VOLUMECHANGE);
+    VolumeChangeEvent(String payload, String volume, boolean muted) {
+        super(PlayerWebView.EVENT_VOLUMECHANGE, payload);
         this.volume = volume;
         this.muted = muted;
     }

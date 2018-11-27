@@ -6,8 +6,8 @@ public class ControlChangeEvent extends PlayerEvent {
 
     private boolean controls;
 
-    ControlChangeEvent(boolean controls) {
-        super(PlayerWebView.EVENT_CONTROLSCHANGE);
+    ControlChangeEvent(String payload, boolean controls) {
+        super(PlayerWebView.EVENT_CONTROLSCHANGE, payload);
         this.controls = controls;
     }
 

@@ -26,9 +26,6 @@ import com.dailymotion.android.player.sdk.events.PlayerEventFactory;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.gson.Gson;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
@@ -298,119 +295,119 @@ public class PlayerWebView extends WebView {
             Timber.d("[%d] event %s", hashCode(), e);
         }
 
-        PlayerEvent playerEvent = null;
+        PlayerEvent playerEvent;
         switch (event) {
             case EVENT_APIREADY: {
                 mApiReady = true;
-                playerEvent = eventFactory.createApiReadyEvent();
+                playerEvent = eventFactory.createApiReadyEvent(e);
                 break;
             }
             case EVENT_START: {
                 mIsEnded = false;
                 mHandler.removeCallbacks(mLoadCommandRunnable);
                 mLoadCommandRunnable = null;
-                playerEvent = eventFactory.createStartEvent();
+                playerEvent = eventFactory.createStartEvent(e);
                 break;
             }
             case EVENT_END: {
                 mIsEnded = true;
-                playerEvent = eventFactory.createEndEvent();
+                playerEvent = eventFactory.createEndEvent(e);
                 break;
             }
             case EVENT_PROGRESS: {
                 mBufferedTime = Float.parseFloat(map.get("time"));
-                playerEvent = eventFactory.createProgressEvent(map);
+                playerEvent = eventFactory.createProgressEvent(e, map);
                 break;
             }
             case EVENT_TIMEUPDATE: {
                 mPosition = Float.parseFloat(map.get("time"));
-                playerEvent = eventFactory.createTimeUpdateEvent(map);
+                playerEvent = eventFactory.createTimeUpdateEvent(e, map);
                 break;
             }
             case EVENT_DURATION_CHANGE: {
                 mDuration = Float.parseFloat(map.get("duration"));
-                playerEvent = eventFactory.createDurationChangeEvent(map);
+                playerEvent = eventFactory.createDurationChangeEvent(e, map);
                 break;
             }
             case EVENT_GESTURE_START: {
                 mDisallowIntercept = true;
-                playerEvent = eventFactory.createGestureStartEvent();
+                playerEvent = eventFactory.createGestureStartEvent(e);
                 break;
             }
             case EVENT_MENU_DID_SHOW: {
                 mDisallowIntercept = true;
-                playerEvent = eventFactory.createMenuDidShowEvent();
+                playerEvent = eventFactory.createMenuDidShowEvent(e);
                 break;
             }
             case EVENT_GESTURE_END: {
                 mDisallowIntercept = false;
-                playerEvent = eventFactory.createGestureEndEvent();
+                playerEvent = eventFactory.createGestureEndEvent(e);
                 break;
             }
             case EVENT_MENU_DID_HIDE: {
                 mDisallowIntercept = false;
-                playerEvent = eventFactory.createMenuDidHideEvent();
+                playerEvent = eventFactory.createMenuDidHideEvent(e);
                 break;
             }
             case EVENT_VIDEO_END: {
-                playerEvent = eventFactory.createVideoEndEvent();
+                playerEvent = eventFactory.createVideoEndEvent(e);
                 break;
             }
             case EVENT_PLAY: {
                 mVideoPaused = false;
                 mPlayWhenReady = true;
-                playerEvent = eventFactory.createPlayEvent();
+                playerEvent = eventFactory.createPlayEvent(e);
                 break;
             }
             case EVENT_PAUSE: {
                 mVideoPaused = true;
                 mPlayWhenReady = false;
-                playerEvent = eventFactory.createPauseEvent();
+                playerEvent = eventFactory.createPauseEvent(e);
                 break;
             }
             case EVENT_AD_START: {
-                playerEvent = eventFactory.createAdStartEvent();
+                playerEvent = eventFactory.createAdStartEvent(e);
                 break;
             }
             case EVENT_AD_PLAY: {
                 mPlayWhenReady = true;
-                playerEvent = eventFactory.createAdPlayEvent();
+                playerEvent = eventFactory.createAdPlayEvent(e);
                 break;
             }
             case EVENT_AD_PAUSE: {
                 mPlayWhenReady = false;
-                playerEvent = eventFactory.createAdPauseEvent();
+                playerEvent = eventFactory.createAdPauseEvent(e);
                 break;
             }
             case EVENT_AD_TIME_UPDATE: {
-                playerEvent = eventFactory.createAdTimeUpdateEvent();
+                playerEvent = eventFactory.createAdTimeUpdateEvent(e);
                 break;
             }
             case EVENT_AD_END: {
-                playerEvent = eventFactory.createAdEndEvent();
+                playerEvent = eventFactory.createAdEndEvent(e);
                 break;
             }
             case EVENT_CONTROLSCHANGE: {
                 mHandler.removeCallbacks(mControlsCommandRunnable);
                 mControlsCommandRunnable = null;
-                playerEvent = eventFactory.createControlChangeEvent(map);
+                playerEvent = eventFactory.createControlChangeEvent(e, map);
                 break;
             }
             case EVENT_VOLUMECHANGE: {
                 mVolume = Float.parseFloat(map.get("volume"));
                 mHandler.removeCallbacks(mMuteCommandRunnable);
                 mMuteCommandRunnable = null;
-                playerEvent = eventFactory.createVolumeChangeEvent(map);
+                playerEvent = eventFactory.createVolumeChangeEvent(e, map);
                 break;
             }
             case EVENT_LOADEDMETADATA: {
                 mHasMetadata = true;
-                playerEvent = eventFactory.createLoadedMetaDataEvent();
+                playerEvent = eventFactory.createLoadedMetaDataEvent(e);
                 break;
             }
             case EVENT_QUALITY_CHANGE: {
                 mQuality = map.get("quality");
-                playerEvent = eventFactory.createQualityChangeEvent(map);
+                playerEvent = eventFactory.createQualityChangeEvent(e, map);
                 break;
             }
             case EVENT_QUALITIES_AVAILABLE: {
@@ -420,27 +417,30 @@ public class PlayerWebView extends WebView {
             case EVENT_SEEKED: {
                 mIsSeeking = false;
                 mPosition = Float.parseFloat(map.get("time"));
-                playerEvent = eventFactory.createSeekedEvent(map);
+                playerEvent = eventFactory.createSeekedEvent(e, map);
                 break;
             }
             case EVENT_SEEKING: {
                 mIsSeeking = true;
                 mPosition = Float.parseFloat(map.get("time"));
-                playerEvent = eventFactory.createSeekingEvent(map);
+                playerEvent = eventFactory.createSeekingEvent(e, map);
                 break;
             }
             case EVENT_FULLSCREEN_TOGGLE_REQUESTED: {
-                playerEvent = eventFactory.createFullScreenToggleRequestedEvent();
+                playerEvent = eventFactory.createFullScreenToggleRequestedEvent(e);
                 break;
             }
             case EVENT_VIDEO_START: {
-                playerEvent = eventFactory.createVideoStartEvent(map);
+                playerEvent = eventFactory.createVideoStartEvent(e, map);
                 break;
             }
             case EVENT_PLAYING: {
-                playerEvent = eventFactory.createPlayingEvent();
+                playerEvent = eventFactory.createPlayingEvent(e);
                 break;
             }
+            default:
+                playerEvent = eventFactory.createGenericPlayerEvent(e);
+                break;
         }
 
         if (mEventListener != null) {

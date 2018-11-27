@@ -6,8 +6,8 @@ public class TimeUpdateEvent extends PlayerEvent {
 
     private String time;
 
-    TimeUpdateEvent(String time) {
-        super(PlayerWebView.EVENT_TIMEUPDATE);
+    TimeUpdateEvent(String payload, String time) {
+        super(PlayerWebView.EVENT_TIMEUPDATE, payload);
         this.time = time;
     }
 
