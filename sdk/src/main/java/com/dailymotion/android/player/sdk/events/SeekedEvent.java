@@ -2,12 +2,12 @@ package com.dailymotion.android.player.sdk.events;
 
 import com.dailymotion.android.player.sdk.PlayerWebView;
 
-public class TimeUpdateEvent extends PlayerEvent {
+public class SeekedEvent extends PlayerEvent {
 
     private String time;
 
-    TimeUpdateEvent(String time) {
-        super(PlayerWebView.EVENT_TIMEUPDATE);
+    SeekedEvent(String time) {
+        super(PlayerWebView.EVENT_SEEKED);
         this.time = time;
     }
 

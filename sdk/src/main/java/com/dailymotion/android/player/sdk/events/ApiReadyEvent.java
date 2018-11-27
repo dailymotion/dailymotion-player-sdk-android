@@ -20,6 +20,30 @@ public class ApiReadyEvent extends PlayerEvent {
             this.onSite = onSite;
             this.trafficSegment = trafficSegment;
         }
+
+        public String getCountry() {
+            return country;
+        }
+
+        public String getContinent() {
+            return continent;
+        }
+
+        public String getTimeZoneOffset() {
+            return timeZoneOffset;
+        }
+
+        public String getAsNumber() {
+            return asNumber;
+        }
+
+        public boolean isOnSite() {
+            return onSite;
+        }
+
+        public String getTrafficSegment() {
+            return trafficSegment;
+        }
     }
 
     static class Browser {
@@ -40,6 +64,34 @@ public class ApiReadyEvent extends PlayerEvent {
             this.uaName = uaName;
             this.flashVersion = flashVersion;
         }
+
+        public String getUaFamily() {
+            return uaFamily;
+        }
+
+        public String getOsFamily() {
+            return osFamily;
+        }
+
+        public String getUserAgent() {
+            return userAgent;
+        }
+
+        public String getLocale() {
+            return locale;
+        }
+
+        public String getOsName() {
+            return osName;
+        }
+
+        public String getUaName() {
+            return uaName;
+        }
+
+        public String getFlashVersion() {
+            return flashVersion;
+        }
     }
 
     static class Consent {
@@ -55,6 +107,26 @@ public class ApiReadyEvent extends PlayerEvent {
             this.ad = ad;
             this.audience = audience;
             this.xp = xp;
+        }
+
+        public boolean isPerso() {
+            return perso;
+        }
+
+        public boolean isStorage() {
+            return storage;
+        }
+
+        public boolean isAd() {
+            return ad;
+        }
+
+        public boolean isAudience() {
+            return audience;
+        }
+
+        public boolean isXp() {
+            return xp;
         }
     }
 
@@ -76,6 +148,34 @@ public class ApiReadyEvent extends PlayerEvent {
             this.secure = secure;
             this.version = version;
         }
+
+        public String getIntegration() {
+            return integration;
+        }
+
+        public String getEnv() {
+            return env;
+        }
+
+        public String getInstanceUUID() {
+            return instanceUUID;
+        }
+
+        public boolean isAutoPlay() {
+            return autoPlay;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public boolean isSecure() {
+            return secure;
+        }
+
+        public String getVersion() {
+            return version;
+        }
     }
 
     static class Device {
@@ -92,12 +192,32 @@ public class ApiReadyEvent extends PlayerEvent {
     private Player player;
     private Device device;
 
-    public ApiReadyEvent(Visitor visitor, Browser browser, Consent consent, Player player, Device device) {
+    ApiReadyEvent(Visitor visitor, Browser browser, Consent consent, Player player, Device device) {
         super(PlayerWebView.EVENT_APIREADY);
         this.visitor = visitor;
         this.browser = browser;
         this.consent = consent;
         this.player = player;
         this.device = device;
+    }
+
+    public Visitor getVisitor() {
+        return visitor;
+    }
+
+    public Browser getBrowser() {
+        return browser;
+    }
+
+    public Consent getConsent() {
+        return consent;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Device getDevice() {
+        return device;
     }
 }

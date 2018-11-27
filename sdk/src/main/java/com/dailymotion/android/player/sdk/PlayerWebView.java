@@ -61,6 +61,7 @@ public class PlayerWebView extends WebView {
     public static final String EVENT_AD_PLAY = "ad_play";
     public static final String EVENT_AD_PAUSE = "ad_pause";
     public static final String EVENT_AD_END = "ad_end";
+    public static final String EVENT_AD_TIME_UPDATE = "ad_timeupdate";
     public static final String EVENT_ADD_TO_COLLECTION_REQUESTED = "add_to_collection_requested";
     public static final String EVENT_LIKE_REQUESTED = "like_requested";
     public static final String EVENT_WATCH_LATER_REQUESTED = "watch_later_requested";
@@ -74,7 +75,15 @@ public class PlayerWebView extends WebView {
     public static final String EVENT_END = "end";
     public static final String EVENT_CONTROLSCHANGE = "controlschange";
     public static final String EVENT_VOLUMECHANGE = "volumechange";
+
+    /**
+     * @deprecated Use EVENT_QUALITY_CHANGE instead
+     */
+    @Deprecated
     public static final String EVENT_QUALITY = "qualitychange";
+    public static final String EVENT_QUALITY_CHANGE = "qualitychange";
+    public static final String EVENT_QUALITIES_AVAILABLE = "qualitiesavailable";
+
     public static final String EVENT_PLAYBACK_READY = "playback_ready";
 
     private static final java.lang.String ASSETS_SCHEME = "asset://";
@@ -298,14 +307,17 @@ public class PlayerWebView extends WebView {
                 mIsEnded = false;
                 mHandler.removeCallbacks(mLoadCommandRunnable);
                 mLoadCommandRunnable = null;
+                playerEvent = eventFactory.createStartEvent();
                 break;
             }
             case EVENT_END: {
                 mIsEnded = true;
+                playerEvent = eventFactory.createEndEvent();
                 break;
             }
             case EVENT_PROGRESS: {
                 mBufferedTime = Float.parseFloat(map.get("time"));
+                playerEvent = eventFactory.createProgressEvent(map);
                 break;
             }
             case EVENT_TIMEUPDATE: {
@@ -315,70 +327,116 @@ public class PlayerWebView extends WebView {
             }
             case EVENT_DURATION_CHANGE: {
                 mDuration = Float.parseFloat(map.get("duration"));
+                playerEvent = eventFactory.createDurationChangeEvent(map);
                 break;
             }
-            case EVENT_GESTURE_START:
+            case EVENT_GESTURE_START: {
+                mDisallowIntercept = true;
+                playerEvent = eventFactory.createGestureStartEvent();
+                break;
+            }
             case EVENT_MENU_DID_SHOW: {
                 mDisallowIntercept = true;
+                playerEvent = eventFactory.createMenuDidShowEvent();
                 break;
             }
-            case EVENT_GESTURE_END:
+            case EVENT_GESTURE_END: {
+                mDisallowIntercept = false;
+                playerEvent = eventFactory.createGestureEndEvent();
+                break;
+            }
             case EVENT_MENU_DID_HIDE: {
                 mDisallowIntercept = false;
+                playerEvent = eventFactory.createMenuDidHideEvent();
                 break;
             }
             case EVENT_VIDEO_END: {
+                playerEvent = eventFactory.createVideoEndEvent();
                 break;
             }
             case EVENT_PLAY: {
                 mVideoPaused = false;
                 mPlayWhenReady = true;
+                playerEvent = eventFactory.createPlayEvent();
                 break;
             }
             case EVENT_PAUSE: {
                 mVideoPaused = true;
                 mPlayWhenReady = false;
+                playerEvent = eventFactory.createPauseEvent();
+                break;
+            }
+            case EVENT_AD_START: {
+                playerEvent = eventFactory.createAdStartEvent();
                 break;
             }
             case EVENT_AD_PLAY: {
                 mPlayWhenReady = true;
+                playerEvent = eventFactory.createAdPlayEvent();
                 break;
             }
             case EVENT_AD_PAUSE: {
                 mPlayWhenReady = false;
+                playerEvent = eventFactory.createAdPauseEvent();
+                break;
+            }
+            case EVENT_AD_TIME_UPDATE: {
+                playerEvent = eventFactory.createAdTimeUpdateEvent();
+                break;
+            }
+            case EVENT_AD_END: {
+                playerEvent = eventFactory.createAdEndEvent();
                 break;
             }
             case EVENT_CONTROLSCHANGE: {
                 mHandler.removeCallbacks(mControlsCommandRunnable);
                 mControlsCommandRunnable = null;
+                playerEvent = eventFactory.createControlChangeEvent(map);
                 break;
             }
             case EVENT_VOLUMECHANGE: {
                 mVolume = Float.parseFloat(map.get("volume"));
                 mHandler.removeCallbacks(mMuteCommandRunnable);
                 mMuteCommandRunnable = null;
+                playerEvent = eventFactory.createVolumeChangeEvent(map);
                 break;
-
             }
             case EVENT_LOADEDMETADATA: {
                 mHasMetadata = true;
+                playerEvent = eventFactory.createLoadedMetaDataEvent();
                 break;
             }
-            case EVENT_QUALITY: {
+            case EVENT_QUALITY_CHANGE: {
                 mQuality = map.get("quality");
+                playerEvent = eventFactory.createQualityChangeEvent(map);
+                break;
+            }
+            case EVENT_QUALITIES_AVAILABLE: {
+                playerEvent = eventFactory.createQualitiesAvailableEvent(e);
                 break;
             }
             case EVENT_SEEKED: {
                 mIsSeeking = false;
                 mPosition = Float.parseFloat(map.get("time"));
+                playerEvent = eventFactory.createSeekedEvent(map);
                 break;
             }
             case EVENT_SEEKING: {
                 mIsSeeking = true;
                 mPosition = Float.parseFloat(map.get("time"));
+                playerEvent = eventFactory.createSeekingEvent(map);
                 break;
             }
             case EVENT_FULLSCREEN_TOGGLE_REQUESTED: {
+                playerEvent = eventFactory.createFullScreenToggleRequestedEvent();
+                break;
+            }
+            case EVENT_VIDEO_START: {
+                playerEvent = eventFactory.createVideoStartEvent(map);
+                break;
+            }
+            case EVENT_PLAYING: {
+                playerEvent = eventFactory.createPlayingEvent();
                 break;
             }
         }
@@ -574,7 +632,7 @@ public class PlayerWebView extends WebView {
         eventFactory = new PlayerEventFactory();
         new AdIdTask(getContext(), new AdIdTask.AdIdTaskListener() {
             @Override
-            public void onResult(AdvertisingIdClient.Info  info) {
+            public void onResult(AdvertisingIdClient.Info info) {
                 finishInitialization(baseUrl, queryParameters, httpHeaders, info);
             }
         }).execute();
@@ -715,11 +773,18 @@ public class PlayerWebView extends WebView {
         loadUrl(builder.toString(), httpHeaders);
     }
 
+    /**
+     * @deprecated Implement PlayerEventListener instead
+     */
     @Deprecated
     public interface EventListener {
         void onEvent(String event, HashMap<String, String> map);
     }
 
+    /**
+     * @param listener
+     * @deprecated Use setPlayerEventListener() instead
+     */
     @Deprecated
     public void setEventListener(EventListener listener) {
         mEventListener = listener;
