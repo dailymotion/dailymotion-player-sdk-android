@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +21,8 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.dailymotion.android.BuildConfig;
+import com.dailymotion.android.player.sdk.events.PlayerEvent;
+import com.dailymotion.android.player.sdk.events.PlayerEventFactory;
 import com.google.android.gms.ads.identifier.AdvertisingIdClient;
 import com.google.gson.Gson;
 
@@ -57,6 +60,7 @@ public class PlayerWebView extends WebView {
     public static final String EVENT_AD_PLAY = "ad_play";
     public static final String EVENT_AD_PAUSE = "ad_pause";
     public static final String EVENT_AD_END = "ad_end";
+    public static final String EVENT_AD_TIME_UPDATE = "ad_timeupdate";
     public static final String EVENT_ADD_TO_COLLECTION_REQUESTED = "add_to_collection_requested";
     public static final String EVENT_LIKE_REQUESTED = "like_requested";
     public static final String EVENT_WATCH_LATER_REQUESTED = "watch_later_requested";
@@ -70,8 +74,16 @@ public class PlayerWebView extends WebView {
     public static final String EVENT_END = "end";
     public static final String EVENT_CONTROLSCHANGE = "controlschange";
     public static final String EVENT_VOLUMECHANGE = "volumechange";
+    /**
+     * @deprecated Use EVENT_QUALITY_CHANGE instead
+     */
+    @Deprecated
     public static final String EVENT_QUALITY = "qualitychange";
+    public static final String EVENT_QUALITY_CHANGE = "qualitychange";
+    public static final String EVENT_QUALITIES_AVAILABLE = "qualitiesavailable";
+
     public static final String EVENT_PLAYBACK_READY = "playback_ready";
+    public static final String EVENT_CHROME_CAST_REQUESTED = "chromecast_requested";
 
     private static final java.lang.String ASSETS_SCHEME = "asset://";
 
@@ -110,6 +122,7 @@ public class PlayerWebView extends WebView {
     private boolean mVisible;
     private boolean mHasMetadata;
     private EventListener mEventListener;
+    private PlayerEventListener mPlayerEventListener;
     private boolean mIsWebContentsDebuggingEnabled = false;
 
     private Runnable mControlsCommandRunnable;
@@ -129,6 +142,7 @@ public class PlayerWebView extends WebView {
     private long mControlsLastTime;
     private long mMuteLastTime;
     private long mLoadLastTime;
+    private PlayerEventFactory eventFactory;
 
     public boolean isEnded() {
         return mIsEnded;
@@ -281,7 +295,8 @@ public class PlayerWebView extends WebView {
             Timber.d("[%d] event %s", hashCode(), e);
         }
 
-        switch (event) {
+        PlayerEvent playerEvent = eventFactory.createPlayerEvent(event, map, e);
+        switch (playerEvent.getName()) {
             case EVENT_APIREADY: {
                 mApiReady = true;
                 break;
@@ -308,17 +323,20 @@ public class PlayerWebView extends WebView {
                 mDuration = Float.parseFloat(map.get("duration"));
                 break;
             }
-            case EVENT_GESTURE_START:
+            case EVENT_GESTURE_START: {
+                mDisallowIntercept = true;
+                break;
+            }
             case EVENT_MENU_DID_SHOW: {
                 mDisallowIntercept = true;
                 break;
             }
-            case EVENT_GESTURE_END:
-            case EVENT_MENU_DID_HIDE: {
+            case EVENT_GESTURE_END: {
                 mDisallowIntercept = false;
                 break;
             }
-            case EVENT_VIDEO_END: {
+            case EVENT_MENU_DID_HIDE: {
+                mDisallowIntercept = false;
                 break;
             }
             case EVENT_PLAY: {
@@ -349,13 +367,12 @@ public class PlayerWebView extends WebView {
                 mHandler.removeCallbacks(mMuteCommandRunnable);
                 mMuteCommandRunnable = null;
                 break;
-
             }
             case EVENT_LOADEDMETADATA: {
                 mHasMetadata = true;
                 break;
             }
-            case EVENT_QUALITY: {
+            case EVENT_QUALITY_CHANGE: {
                 mQuality = map.get("quality");
                 break;
             }
@@ -369,13 +386,15 @@ public class PlayerWebView extends WebView {
                 mPosition = Float.parseFloat(map.get("time"));
                 break;
             }
-            case EVENT_FULLSCREEN_TOGGLE_REQUESTED: {
-                break;
-            }
         }
 
         if (mEventListener != null) {
             mEventListener.onEvent(event, map);
+        }
+
+        /* Only expose the POJO events we are supporting */
+        if (mPlayerEventListener != null) {
+            mPlayerEventListener.onEvent(playerEvent);
         }
 
         tick();
@@ -558,9 +577,10 @@ public class PlayerWebView extends WebView {
 
     public void initialize(final String baseUrl, final Map<String, String> queryParameters, final Map<String, String> httpHeaders) {
         mIsInitialized = true;
+        eventFactory = new PlayerEventFactory();
         new AdIdTask(getContext(), new AdIdTask.AdIdTaskListener() {
             @Override
-            public void onResult(AdvertisingIdClient.Info  info) {
+            public void onResult(AdvertisingIdClient.Info info) {
                 finishInitialization(baseUrl, queryParameters, httpHeaders, info);
             }
         }).execute();
@@ -701,12 +721,29 @@ public class PlayerWebView extends WebView {
         loadUrl(builder.toString(), httpHeaders);
     }
 
+    /**
+     * @deprecated Implement PlayerEventListener instead
+     */
+    @Deprecated
     public interface EventListener {
         void onEvent(String event, HashMap<String, String> map);
     }
 
+    /**
+     * @param listener
+     * @deprecated Use setPlayerEventListener() instead
+     */
+    @Deprecated
     public void setEventListener(EventListener listener) {
         mEventListener = listener;
+    }
+
+    public interface PlayerEventListener {
+        void onEvent(@NonNull PlayerEvent event);
+    }
+
+    public void setPlayerEventListener(PlayerEventListener listener) {
+        mPlayerEventListener = listener;
     }
 
     public void release() {
