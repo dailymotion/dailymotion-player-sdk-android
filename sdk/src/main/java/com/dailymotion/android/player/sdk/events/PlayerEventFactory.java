@@ -147,11 +147,19 @@ public class PlayerEventFactory {
                 playerEvent = createChromeCastRequestedEvent(payload);
                 break;
             }
+            case PlayerWebView.EVENT_VIDEO_CHANGE: {
+                playerEvent = createVideoChangeEvent(payload);
+                break;
+            }
             default:
                 playerEvent = createGenericPlayerEvent(payload);
                 break;
         }
         return playerEvent;
+    }
+
+    private PlayerEvent createVideoChangeEvent(String payload) {
+        return new VideoChangeEvent(payload);
     }
 
     private PlayerEvent createChromeCastRequestedEvent(String payload) {
