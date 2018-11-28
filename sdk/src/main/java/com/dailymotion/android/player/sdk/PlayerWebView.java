@@ -84,6 +84,7 @@ public class PlayerWebView extends WebView {
 
     public static final String EVENT_PLAYBACK_READY = "playback_ready";
     public static final String EVENT_CHROME_CAST_REQUESTED = "chromecast_requested";
+    public static final String EVENT_VIDEO_CHANGE = "videochange";
 
     private static final java.lang.String ASSETS_SCHEME = "asset://";
 
