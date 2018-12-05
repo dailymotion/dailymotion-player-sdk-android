@@ -28,7 +28,11 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URL;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -714,9 +718,23 @@ public class PlayerWebView extends WebView {
                 builder.append('&');
             }
 
-            builder.append(entry.getKey());
+            String encodedParam;
+            try {
+                encodedParam = URLEncoder.encode(entry.getValue(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                encodedParam = entry.getValue();
+            }
+
+            String encodedKey;
+            try {
+                encodedKey = URLEncoder.encode(entry.getKey(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                encodedKey = entry.getKey();
+            }
+
+            builder.append(encodedKey);
             builder.append('=');
-            builder.append(entry.getValue());
+            builder.append(encodedParam);
         }
 
         loadUrl(builder.toString(), httpHeaders);
