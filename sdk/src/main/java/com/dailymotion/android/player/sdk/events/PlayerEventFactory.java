@@ -151,6 +151,14 @@ public class PlayerEventFactory {
                 playerEvent = createVideoChangeEvent(payload);
                 break;
             }
+            case PlayerWebView.EVENT_WAITING: {
+                playerEvent = createWaitingEvent(payload);
+                break;
+            }
+            case PlayerWebView.EVENT_ERROR: {
+                playerEvent = createErrorEvent(payload, params);
+                break;
+            }
             default:
                 playerEvent = createGenericPlayerEvent(payload);
                 break;
@@ -316,5 +324,16 @@ public class PlayerEventFactory {
 
     private PlayerEvent createPlaybackReadyEvent(String payload) {
         return new PlaybackReadyEvent(payload);
+    }
+
+    private PlayerEvent createWaitingEvent(String payload) {
+        return new WaitingEvent(payload);
+    }
+
+    private PlayerEvent createErrorEvent(String payload, Map<String, String> params) {
+        String code = params.get("code");
+        String message = params.get("message");
+        String title = params.get("title");
+        return new ErrorEvent(payload, code, message, title);
     }
 }
