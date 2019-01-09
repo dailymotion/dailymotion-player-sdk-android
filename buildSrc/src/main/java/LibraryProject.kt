@@ -41,6 +41,7 @@ object LibraryProject {
         executeCommand("git tag v$libraryVersionName")
         libraryVersionCode = newVersionCode
         executeCommand("git commit -a -m 'Bump versionCode to $newVersionCode'")
+        executeCommand("git push")
         executeCommand("git push --tags")
     }
 
