@@ -1,6 +1,6 @@
 apply plugin: 'com.jfrog.bintray'
 
-version = libraryVersion
+version = LibraryProject.INSTANCE.getLibraryVersionName()
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs

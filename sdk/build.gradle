@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/dailymotion/dailymotion-player-sdk-android'
     gitUrl = 'https://github.com/dailymotion/dailymotion-player-sdk-android.git'
 
-    libraryVersion = '0.1.27'
+    libraryVersion = LibraryProject.INSTANCE.getLibraryVersionName()
 
     developerId = 'dmandroid'
     developerName = 'Dailymotion'
@@ -30,7 +30,7 @@ android {
     defaultConfig {
         minSdkVersion Version.minSdkVersion
         targetSdkVersion Version.targetSdkVersion
-        buildConfigField("String", "SDK_VERSION", "\"${libraryVersion}\"")
+        buildConfigField("String", "SDK_VERSION", "\"${LibraryProject.INSTANCE.getLibraryVersionName()}\"")
     }
 }
 
@@ -43,3 +43,9 @@ dependencies {
 
 apply from: rootProject.file('gradle/install-v1.gradle')
 apply from: rootProject.file('gradle/bintray-android-v1.gradle')
+
+task bumpAndTag {
+    doLast {
+        LibraryProject.INSTANCE.tagAndIncrement(LibraryProject.INSTANCE.getLibraryVersionCode())
+    }
+}
