@@ -4,7 +4,7 @@ import java.io.File
 
 
 object LibraryProject {
-    var libraryVersionCode: Int
+    private var libraryVersionCode: Int = 0
         get() {
             return file("properties.gradle").readLines()[0].split("=")[1].trim().toInt()
         }
@@ -14,6 +14,9 @@ object LibraryProject {
                 ext.libraryVersionName='${versionName(value)}'
                 """.trimIndent()
             file("properties.gradle").writeText(contents)
+            file("README.md").let {
+                it.writeText(it.readText().replace("'com.dailymotion.dailymotion-sdk-android:sdk:${versionName(field)}'", "'com.dailymotion.dailymotion-sdk-android:sdk:${versionName(value)}'"))
+            }
         }
 
     var libraryVersionName = "0"
@@ -21,7 +24,7 @@ object LibraryProject {
         get() = file("properties.gradle").readLines()[1].split("=")[1].trim().replace("'", "")
 
 
-    val repository by lazy {
+    private val repository by lazy {
         FileRepositoryBuilder().setGitDir(file(".git"))
                 .readEnvironment()
                 .findGitDir()
