@@ -4,7 +4,7 @@ import java.io.File
 
 
 object LibraryProject {
-    private var libraryVersionCode: Int = 0
+    private var libraryVersionCode: Int
         get() {
             return file("properties.gradle").readLines()[0].split("=")[1].trim().toInt()
         }
@@ -15,7 +15,7 @@ object LibraryProject {
                 """.trimIndent()
             file("properties.gradle").writeText(contents)
             file("README.md").let {
-                it.writeText(it.readText().replace("'com.dailymotion.dailymotion-sdk-android:sdk:${versionName(field)}'", "'com.dailymotion.dailymotion-sdk-android:sdk:${versionName(value)}'"))
+                it.writeText(it.readText().replace("com.dailymotion.dailymotion-sdk-android:sdk:${versionName(value-2)}", "com.dailymotion.dailymotion-sdk-android:sdk:${versionName(value-1)}"))
             }
         }
 

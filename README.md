@@ -20,7 +20,7 @@ You can either import the SDK using your IDE or integrate PlayerWebView.java in 
 
 You can import the sdk with :
 ```
-implementation 'com.dailymotion.dailymotion-sdk-android:sdk:0.1.27'
+implementation 'com.dailymotion.dailymotion-sdk-android:sdk:0.1.26'
 ```
 
 ```
