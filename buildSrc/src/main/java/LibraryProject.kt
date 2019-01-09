@@ -43,7 +43,7 @@ object LibraryProject {
         executeCommand("git tag v$libraryVersionName")
         libraryVersionCode = newVersionCode
         executeCommand("git add -u")
-        executeCommand("git commit -a -m \"Bump_versionCode_to_$newVersionCode\"")
+        executeCommand("git commit -a -m Bump_versionCode_to_$newVersionCode")
         executeCommand("git push")
         executeCommand("git push --tags")
     }
