@@ -16,7 +16,7 @@ object LibraryProject {
         private set
         get() = versionName(libraryVersionCode)
 
-    private fun versionName(versionCode: Int) = String.format("%d.%d.%d", versionCode/10000, (versionCode/100) % 100, versionCode % 100)
+    private fun versionName(versionCode: Int) = String.format("%d.%d.%d", versionCode / 10000, (versionCode / 100) % 100, versionCode % 100)
 
     private val projectDir by lazy { findBaseDir() }
 
@@ -40,19 +40,23 @@ object LibraryProject {
     fun tagAndIncrement(newVersionCode: Int) {
         executeCommand("git tag v$libraryVersionName")
         libraryVersionCode = newVersionCode
-        executeCommand("git commit -a -m 'Bump versionCode to $newVersionCode'")
+        executeCommand("git add -u")
+        executeCommand("git commit -a -m \"Bump_versionCode_to_$newVersionCode\"")
         executeCommand("git push")
         executeCommand("git push --tags")
     }
 
     private fun executeCommand(commandLine: String) {
         println("==> Executing command line: $commandLine")
-        ProcessBuilder(commandLine.split(" "))
+        val result = ProcessBuilder(commandLine.split(" "))
                 .directory(projectDir)
                 .redirectOutput(ProcessBuilder.Redirect.INHERIT)
                 .redirectError(ProcessBuilder.Redirect.INHERIT)
                 .start()
                 .waitFor()
+        if(result != 0){
+            throw Exception("Error executing $commandLine")
+        }
     }
 
 }
