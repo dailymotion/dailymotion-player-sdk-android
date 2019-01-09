@@ -1,35 +1,23 @@
-import org.eclipse.jgit.api.Git
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder
 import java.io.File
 
 
 object LibraryProject {
     private var libraryVersionCode: Int
         get() {
-            return file("properties.gradle").readLines()[0].split("=")[1].trim().toInt()
+            return file("current_version").readText().toInt()
         }
         set(value) {
-            val contents = """
-                ext.libraryVersionCode=$value
-                ext.libraryVersionName='${versionName(value)}'
-                """.trimIndent()
-            file("properties.gradle").writeText(contents)
+            file("current_version").writeText(value.toString())
             file("README.md").let {
-                it.writeText(it.readText().replace("com.dailymotion.dailymotion-sdk-android:sdk:${versionName(value-2)}", "com.dailymotion.dailymotion-sdk-android:sdk:${versionName(value-1)}"))
+                it.writeText(it.readText().replace(Regex("com.dailymotion.dailymotion-sdk-android:sdk:[0-9.]*"), "com.dailymotion.dailymotion-sdk-android:sdk:${versionName(value - 1)}"))
             }
         }
 
     var libraryVersionName = "0"
         private set
-        get() = file("properties.gradle").readLines()[1].split("=")[1].trim().replace("'", "")
+        get() = versionName(libraryVersionCode)
 
-
-    private val repository by lazy {
-        FileRepositoryBuilder().setGitDir(file(".git"))
-                .readEnvironment()
-                .findGitDir()
-                .build()!!
-    }
+    private fun versionName(versionCode: Int) = String.format("%d.%d.%d", versionCode/10000, (versionCode/100) % 100, versionCode % 100)
 
     private val projectDir by lazy { findBaseDir() }
 
@@ -50,31 +38,21 @@ object LibraryProject {
         return dir
     }
 
-    private fun versionName(versionCode: Int) = String.format("%d.%d.%02d", (versionCode - 100000)/10000, (versionCode/100) % 100, versionCode % 100)
-
-    private fun tag(name: String) {
-        val git = Git(repository)
-        val tag = git.tag()
-        tag.name = "v$name"
-        tag.call()
-    }
-
     fun tagAndIncrement(newVersionCode: Int) {
-        tag(libraryVersionName)
-        commitVersion(newVersionCode)
-        //the CI will push
-    }
-
-    private fun commit(message: String) {
-        val git = Git(repository)
-        val commit = git.commit()
-        commit.message = message
-        commit.setAll(true)
-        commit.call()
-    }
-
-    private fun commitVersion(newVersionCode: Int) {
+        executeCommand("git tag v$libraryVersionName")
         LibraryProject.libraryVersionCode = newVersionCode
-        commit("Bump versionCode to $newVersionCode")
+        executeCommand("git commit -a -m 'Bump versionCode to $newVersionCode'")
+        executeCommand("git push --tags")
     }
+
+    private fun executeCommand(commandLine: String) {
+        println("==> Executing command line: $commandLine")
+        ProcessBuilder(commandLine.split(" "))
+                .directory(projectDir)
+                .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+                .redirectError(ProcessBuilder.Redirect.INHERIT)
+                .start()
+                .waitFor()
+    }
+
 }
