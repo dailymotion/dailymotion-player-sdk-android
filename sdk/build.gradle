@@ -46,6 +46,6 @@ apply from: rootProject.file('gradle/bintray-android-v1.gradle')
 
 task bumpAndTag {
     doLast {
-        LibraryProject.INSTANCE.tagAndIncrement(LibraryProject.INSTANCE.getLibraryVersionCode())
+        LibraryProject.INSTANCE.tagAndIncrement(LibraryProject.INSTANCE.getLibraryVersionCode() + 1)
     }
 }
