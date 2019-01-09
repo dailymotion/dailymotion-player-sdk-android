@@ -1,4 +1,6 @@
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
 
 
 object LibraryProject {
@@ -48,14 +50,18 @@ object LibraryProject {
 
     private fun executeCommand(commandLine: String) {
         println("==> Executing command line: $commandLine")
-        val result = ProcessBuilder(commandLine.split(" "))
+        val process = ProcessBuilder(commandLine.split(" "))
                 .directory(projectDir)
                 .redirectOutput(ProcessBuilder.Redirect.INHERIT)
                 .redirectError(ProcessBuilder.Redirect.INHERIT)
                 .start()
-                .waitFor()
-        if(result != 0){
-            throw Exception("Error executing $commandLine")
+        val result = process.waitFor()
+        if (result != 0) {
+            BufferedReader(InputStreamReader(process.errorStream)).useLines { lines ->
+                val results = StringBuilder()
+                lines.forEach { results.append(it) }
+                throw Exception("$results")
+            }
         }
     }
 
