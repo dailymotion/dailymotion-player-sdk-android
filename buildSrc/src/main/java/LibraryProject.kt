@@ -2,10 +2,9 @@ import java.io.File
 
 
 object LibraryProject {
+
     private var libraryVersionCode: Int
-        get() {
-            return file("current_version").readText().toInt()
-        }
+        get() = file("current_version").readText().toInt()
         set(value) {
             file("current_version").writeText(value.toString())
             file("README.md").let {
@@ -40,7 +39,7 @@ object LibraryProject {
 
     fun tagAndIncrement(newVersionCode: Int) {
         executeCommand("git tag v$libraryVersionName")
-        LibraryProject.libraryVersionCode = newVersionCode
+        libraryVersionCode = newVersionCode
         executeCommand("git commit -a -m 'Bump versionCode to $newVersionCode'")
         executeCommand("git push --tags")
     }
