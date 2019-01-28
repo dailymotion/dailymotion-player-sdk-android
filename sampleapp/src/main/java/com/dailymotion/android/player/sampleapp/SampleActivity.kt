@@ -24,7 +24,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
     private var mFullscreen = false
 
-    fun onFullScreenToggleRequested() {
+    private fun onFullScreenToggleRequested() {
         setFullScreenInternal(!mFullscreen)
         val params: LinearLayout.LayoutParams
 
@@ -58,13 +58,14 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
         setSupportActionBar(toolbar)
 
+        @Suppress("DEPRECATION")
         if (toolbar != null) {
             toolbar!!.visibility = View.VISIBLE
             toolbar!!.setBackgroundColor(resources.getColor(android.R.color.background_dark))
             toolbar!!.setTitleTextColor(resources.getColor(android.R.color.white))
 
             val actionBar = supportActionBar
-            actionBar?.setTitle(getString(R.string.app_name))
+            actionBar?.title = getString(R.string.app_name)
         }
 
         if (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) {
@@ -161,18 +162,13 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onPause() {
         super.onPause()
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            dm_player_web_view.onPause()
-        }
+        dm_player_web_view.onPause()
     }
 
     override fun onResume() {
         super.onResume()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            dm_player_web_view.onResume()
-        }
+        dm_player_web_view.onResume()
     }
 
     private fun log(text: String) {

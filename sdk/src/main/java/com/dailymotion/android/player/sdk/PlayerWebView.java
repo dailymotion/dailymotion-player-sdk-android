@@ -121,11 +121,9 @@ public class PlayerWebView extends WebView {
     private Gson mGson;
     private boolean mDisallowIntercept = false;
     private String mVideoId;
-    private boolean mApiReady;
     private float mPosition;
     private boolean mPlayWhenReady = true;
     private boolean mVisible;
-    private boolean mHasMetadata;
     private EventListener mEventListener;
     private PlayerEventListener mPlayerEventListener;
     private boolean mIsWebContentsDebuggingEnabled = false;
@@ -148,6 +146,10 @@ public class PlayerWebView extends WebView {
     private long mMuteLastTime;
     private long mLoadLastTime;
     private PlayerEventFactory eventFactory;
+
+    private boolean mApiReady;
+    private boolean mHasMetadata;
+    private boolean mHasPlaybackReady;
 
     public boolean isEnded() {
         return mIsEnded;
@@ -391,6 +393,10 @@ public class PlayerWebView extends WebView {
                 mPosition = Float.parseFloat(map.get("time"));
                 break;
             }
+            case EVENT_PLAYBACK_READY: {
+                mHasPlaybackReady = true;
+                break;
+            }
         }
 
         if (mEventListener != null) {
@@ -415,6 +421,12 @@ public class PlayerWebView extends WebView {
         while (iterator.hasNext()) {
             final Command command = iterator.next();
             switch (command.methodName) {
+                case COMMAND_PAUSE:
+                case COMMAND_PLAY:
+                    if (!mHasPlaybackReady) {
+                        continue;
+                    }
+                    break;
                 case COMMAND_NOTIFY_LIKECHANGED:
                     if (!mHasMetadata) {
                         continue;
@@ -480,6 +492,7 @@ public class PlayerWebView extends WebView {
             mVideoId = (String) params[0];
 
             mHasMetadata = false;
+            mHasPlaybackReady = false;
 
             iterator = mCommandList.iterator();
             while (iterator.hasNext()) {
