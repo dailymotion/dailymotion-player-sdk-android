@@ -188,10 +188,8 @@ public class PlayerWebView extends WebView {
                 // when we resume, we don't want video to start automatically
             }
             if (!mVisible) {
-                pauseTimers();
                 onPause();
             } else {
-                resumeTimers();
                 onResume();
             }
         }
