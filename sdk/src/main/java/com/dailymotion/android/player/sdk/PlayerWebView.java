@@ -179,7 +179,24 @@ public class PlayerWebView extends WebView {
         return mVideoId;
     }
 
+    /**
+     * @deprecated Use setVisible(visible, shouldPauseTimer, shouldResumeTimer) instead
+     */
+    @Deprecated
     public void setVisible(boolean visible) {
+        setVisible(visible, true);
+    }
+
+    /**
+     * Notify PlayerWebView of the view visibility.
+     *
+     * @param visible TRUE, view is visible. FALSE otherwise.
+     * @param shouldHandleTimers if TRUE, will call resumeTimers() if visible is TRUE and pauseTimers() if visible is FALSE.
+     *                           Otherwise, calls to resumeTimers() / pauseTimers() won't be made.
+     *                           Beware pauseTimers() will pause timers for all your webviews. If you're using more than 2,
+     *                           you might want to handle this separately.
+     */
+    public void setVisible(boolean visible, boolean shouldHandleTimers) {
         if (mVisible != visible) {
             mVisible = visible;
 
@@ -188,11 +205,15 @@ public class PlayerWebView extends WebView {
                 // when we resume, we don't want video to start automatically
             }
             if (!mVisible) {
-                pauseTimers();
                 onPause();
+                if (shouldHandleTimers) {
+                    pauseTimers();
+                }
             } else {
-                resumeTimers();
                 onResume();
+                if (shouldHandleTimers) {
+                    resumeTimers();
+                }
             }
         }
     }
