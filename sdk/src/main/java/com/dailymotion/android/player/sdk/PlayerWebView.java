@@ -179,7 +179,22 @@ public class PlayerWebView extends WebView {
         return mVideoId;
     }
 
+    /**
+     * @deprecated Use setVisible(visible, shouldPauseTimer, shouldResumeTimer) instead
+     */
+    @Deprecated
     public void setVisible(boolean visible) {
+        setVisible(visible, true);
+    }
+
+    /**
+     * Notify PlayerWebView of the view visibility.
+     *
+     * @param visible TRUE, view is visible. FALSE otherwise.
+     * @param shouldHandleTimers if TRUE, will call resumeTimers() if visible is TRUE and pauseTimers() if visible is FALSE.
+     *                           Otherwise, calls to resumeTimers() / pauseTimers() won't be made.
+     */
+    public void setVisible(boolean visible, boolean shouldHandleTimers) {
         if (mVisible != visible) {
             mVisible = visible;
 
@@ -189,8 +204,14 @@ public class PlayerWebView extends WebView {
             }
             if (!mVisible) {
                 onPause();
+                if (shouldHandleTimers) {
+                    pauseTimers();
+                }
             } else {
                 onResume();
+                if (shouldHandleTimers) {
+                    resumeTimers();
+                }
             }
         }
     }
