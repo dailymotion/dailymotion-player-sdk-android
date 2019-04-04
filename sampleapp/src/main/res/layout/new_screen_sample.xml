@@ -14,7 +14,7 @@
     </android.support.v7.widget.Toolbar>
 
     <com.dailymotion.android.player.sdk.PlayerWebView
-        android:id="@+id/dm_player_web_view"
+        android:id="@+id/playerWebview"
         android:layout_width="match_parent"
         android:layout_height="215dp">
     </com.dailymotion.android.player.sdk.PlayerWebView>

@@ -19,13 +19,13 @@ class LoadPauseTest {
         val activity = testRule.activity
 
         activity.runOnUiThread {
-            activity.dm_player_web_view.load("x26hv6c")
-            activity.dm_player_web_view.pause()
+            activity.playerWebview.load("x26hv6c")
+            activity.playerWebview.pause()
         }
         Thread.sleep(10000)
         activity.runOnUiThread {
-            if (activity.dm_player_web_view.position >= 1000) {
-                Assert.fail("Pause() failed: ${activity.dm_player_web_view.position}ms >= 1000ms")
+            if (activity.playerWebview.position >= 1000) {
+                Assert.fail("Pause() failed: ${activity.playerWebview.position}ms >= 1000ms")
             }
         }
     }
