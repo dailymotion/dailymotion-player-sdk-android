@@ -1,7 +1,10 @@
 package com.dailymotion.android.player.sampleapp
 
+import android.annotation.TargetApi
 import android.content.pm.ActivityInfo
 import android.content.pm.ApplicationInfo
+import android.net.http.SslError
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -10,6 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.webkit.*
+import com.dailymotion.android.player.sdk.PlayerWebView
+
 import com.dailymotion.android.player.sdk.events.*
 import com.dailymotion.websdksample.R
 import kotlinx.android.synthetic.main.new_screen_sample.*
@@ -47,6 +53,31 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
         setSupportActionBar(toolbar)
 
+        playerWebview.setWebViewErrorListener(object: PlayerWebView.WebViewErrorListener {
+
+            override fun onErrorReceived(webView: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
+                val message = "WebView [${webView.hashCode()}] received an error with code: $errorCode, description: $description from URL: $failingUrl"
+                log(message)
+            }
+
+            @TargetApi(Build.VERSION_CODES.M)
+            override fun onErrorReceived(webView: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
+                val message = "WebView [${webView.hashCode()}] received an error with code: ${error?.errorCode}, description: ${error?.description}from URL: ${request?.url?.toString()}"
+                log(message)
+            }
+
+            override fun onReceivedSslError(webView: WebView?, handler: SslErrorHandler?, error: SslError?) {
+                val message = "WebView [${webView.hashCode()}] received an SSL error with primaryCode: ${error?.primaryError}"
+                log(message)
+            }
+
+            @TargetApi(Build.VERSION_CODES.M)
+            override fun onReceivedHttpError(webView: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?) {
+                val message = "WebView [${webView.hashCode()}] received an HTTP error with statusCode: ${errorResponse?.statusCode}"
+                log(message)
+            }
+        })
+
         @Suppress("DEPRECATION")
         toolbar?.let {
             it.visibility = View.VISIBLE
@@ -62,7 +93,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         val playerParams = HashMap<String, String>()
-        playerWebview.load("x26hv6c", playerParams as Map<String, Any>?)
+        playerWebview.load("x70val9", playerParams as Map<String, Any>?)
 
         playerWebview.setPlayerEventListener { playerEvent ->
             when (playerEvent) {
