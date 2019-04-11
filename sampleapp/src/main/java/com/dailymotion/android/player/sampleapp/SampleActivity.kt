@@ -93,7 +93,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         val playerParams = HashMap<String, String>()
-        playerWebview.load("x26hv6c", playerParams as Map<String, Any>?)
+        playerWebview.load("x70val9", playerParams as Map<String, Any>?)
 
         playerWebview.setPlayerEventListener { playerEvent ->
             when (playerEvent) {
