@@ -3,7 +3,7 @@ Dailymotion Player SDK Android
 [ ![Download](https://api.bintray.com/packages/dailymotion/com.dailymotion.dailymotion-sdk-android/sdk/images/download.svg) ](https://bintray.com/dailymotion/com.dailymotion.dailymotion-sdk-android/sdk/_latestVersion)
 [![Build Status](https://travis-ci.org/dailymotion/dailymotion-player-sdk-android.svg?branch=master)](https://travis-ci.org/dailymotion/dailymotion-player-sdk-android)
 
-This SDK aims at easily embedding Dailymotion videos on your Android application using WebView. It supports api level 14+ (Android 4.0+).
+This SDK aims at easily embedding Dailymotion videos on your Android application using WebView. It supports api level 21+.
 The SDK is bundled with a sample application
 
 Features
