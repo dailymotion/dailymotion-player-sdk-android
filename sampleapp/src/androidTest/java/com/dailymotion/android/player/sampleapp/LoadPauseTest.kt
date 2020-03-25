@@ -1,7 +1,7 @@
 package com.dailymotion.android.player.sampleapp
 
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
 import kotlinx.android.synthetic.main.new_screen_sample.*
 import org.junit.Assert
 import org.junit.Rule

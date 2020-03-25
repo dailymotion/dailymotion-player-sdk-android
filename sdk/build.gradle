@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 ext {
     bintrayRepo = 'com.dailymotion.dailymotion-sdk-android'
@@ -39,6 +41,9 @@ dependencies {
     api 'com.google.code.gson:gson:2.8.5'
     api 'com.jakewharton.timber:timber:4.7.1'
     api 'com.google.android.gms:play-services-ads:16.0.0'
+
+    api 'androidx.core:core-ktx:1.2.0'
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
 
 apply from: rootProject.file('gradle/install-v1.gradle')
