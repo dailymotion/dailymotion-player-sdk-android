@@ -93,9 +93,9 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         val playerParams = HashMap<String, String>()
-        playerWebview.load("x70val9", playerParams as Map<String, Any>?)
+        playerWebview.load(videoId = "x70val9", loadParams = playerParams)
 
-        playerWebview.setPlayerEventListener { playerEvent ->
+        playerWebview.playerEventListener = { playerEvent ->
             when (playerEvent) {
                 is ApiReadyEvent -> log(playerEvent.name)
                 is StartEvent -> log(playerEvent.name)
