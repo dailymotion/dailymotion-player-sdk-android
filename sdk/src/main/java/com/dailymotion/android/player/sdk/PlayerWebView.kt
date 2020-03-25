@@ -35,57 +35,22 @@ import java.util.*
  * on 6/13/17.
  */
 class PlayerWebView : WebView {
+
     private val mCommandList = ArrayList<Command>()
     private val mExtraUA = ";dailymotion-player-sdk-android " + BuildConfig.SDK_VERSION
-
-    internal data class Command(var methodName: String? = null,
-                                var params: Array<Any> = emptyArray()) {
-
-        override fun equals(other: Any?): Boolean {
-            if (this === other) return true
-            if (javaClass != other?.javaClass) return false
-
-            other as Command
-
-            if (methodName != other.methodName) return false
-            if (!params.contentEquals(other.params)) return false
-
-            return true
-        }
-
-        override fun hashCode(): Int {
-            var result = methodName?.hashCode() ?: 0
-            result = 31 * result + params.contentHashCode()
-            return result
-        }
-    }
 
     private var mHandler: Handler? = null
     private var mGson: Gson? = null
     private var mDisallowIntercept = false
-    var videoId: String? = null
-        private set
     private var mPosition = 0f
     private var mPlayWhenReady = true
     private var mVisible = false
-    var playerEventListener: ((PlayerEvent) -> Unit)? = null
 
-    private var webViewErrorListener: WebViewErrorListener? = null
     private var mIsWebContentsDebuggingEnabled = false
     private var mControlsCommandRunnable: Runnable? = null
     private var mMuteCommandRunnable: Runnable? = null
     private var mLoadCommandRunnable: Runnable? = null
-    var videoPaused = false
-        private set
-    private var mQuality: String? = ""
-    var bufferedTime = 0.0
-        private set
-    var duration = 0.0
-        private set
-    var isSeeking = false
-        private set
-    var isEnded = false
-        private set
+
     private var mIsInitialized = false
     private var mIsFullScreen = false
     private var mVolume = 1f
@@ -96,6 +61,25 @@ class PlayerWebView : WebView {
     private var mApiReady = false
     private var mHasMetadata = false
     private var mHasPlaybackReady = false
+    private var mQuality: String? = ""
+    private var webViewErrorListener: WebViewErrorListener? = null
+
+    var mJavascriptBridge: Any = JavascriptBridge()
+    var playerEventListener: ((PlayerEvent) -> Unit)? = null
+
+    var videoId: String? = null
+        private set
+
+    var videoPaused = false
+        private set
+    var bufferedTime = 0.0
+        private set
+    var duration = 0.0
+        private set
+    var isSeeking = false
+        private set
+    var isEnded = false
+        private set
 
     var quality: String?
         get() = mQuality
@@ -103,46 +87,16 @@ class PlayerWebView : WebView {
             queueCommand(COMMAND_QUALITY, quality!!)
         }
 
-    /**
-     * Notify PlayerWebView of the view visibility.
-     *
-     * @param visible TRUE, view is visible. FALSE otherwise.
-     * @param shouldHandleTimers if TRUE, it will call resumeTimers() if visible param is TRUE and pauseTimers() if visible param is FALSE.
-     * Otherwise, calls to resumeTimers() / pauseTimers() won't be made.
-     * Beware pauseTimers() will pause timers for all your WebViews. If you're using more than 2, you might want to handle this separately.
-     */
-    fun setVisible(visible: Boolean, shouldHandleTimers: Boolean) {
-        if (mVisible != visible) {
-            mVisible = visible
-            if (!mVisible) {
-                playWhenReady = false
-                // when we resume, we don't want video to start automatically
-            }
-            if (!mVisible) {
-                onPause()
-                if (shouldHandleTimers) {
-                    pauseTimers()
-                }
-            } else {
-                onResume()
-                if (shouldHandleTimers) {
-                    resumeTimers()
-                }
-            }
-        }
-    }
+    val position: Long
+        get() = (mPosition * 1000).toLong()
 
-    private fun updatePlayState() {
-        if (!mVisible) {
-            pause()
-        } else {
-            if (mPlayWhenReady) {
-                play()
-            } else {
-                pause()
+    var volume: Float
+        get() = mVolume
+        set(volume) {
+            if (volume in 0f..1f) {
+                queueCommand(COMMAND_VOLUME, volume)
             }
         }
-    }
 
     var playWhenReady: Boolean
         get() = mPlayWhenReady
@@ -151,290 +105,24 @@ class PlayerWebView : WebView {
             updatePlayState()
         }
 
-    fun setMinimizeProgress(p: Float) {
-        showControls(p <= 0)
-    }
+    constructor(context: Context?) : super(context) { /* do nothing */ }
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) { /* do nothing */ }
+    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { /* do nothing */ }
 
-    fun setIsLiked(isLiked: Boolean) {
-        queueCommand(COMMAND_NOTIFY_LIKECHANGED, isLiked)
-    }
-
-    fun setIsInWatchLater(isInWatchLater: Boolean) {
-        queueCommand(COMMAND_NOTIFY_WATCHLATERCHANGED, isInWatchLater)
-    }
-
-    private inner class JavascriptBridge {
-        @JavascriptInterface
-        fun triggerEvent(e: String) {
-            mHandler!!.post { handleEvent(e) }
+    @JvmOverloads
+    fun load(videoId: String?, loadParams: Map<String, Any?>? = emptyMap()) {
+        if (!mIsInitialized) {
+            val defaultQueryParameters: MutableMap<String?, String?> = HashMap()
+            defaultQueryParameters["sharing-enable"] = "false"
+            defaultQueryParameters["watchlater-enable"] = "false"
+            defaultQueryParameters["like-enable"] = "false"
+            defaultQueryParameters["collections-enable"] = "false"
+            defaultQueryParameters["fullscreen-action"] = "trigger_event"
+            defaultQueryParameters["locale"] = Locale.getDefault().language
+            initialize("https://www.dailymotion.com/embed/", defaultQueryParameters, HashMap())
         }
+        queueCommand(COMMAND_LOAD, videoId!!, loadParams!!)
     }
-
-    private fun sendCommand(command: Command) {
-        when (command.methodName) {
-            COMMAND_MUTE -> callPlayerMethod(if (command.params[0] as Boolean) "mute" else "unmute")
-            COMMAND_CONTROLS -> callPlayerMethod("api", "controls", if (command.params[0] as Boolean) "true" else "false")
-            COMMAND_QUALITY -> callPlayerMethod("api", "quality", command.params[0])
-            COMMAND_SUBTITLE -> callPlayerMethod("api", "subtitle", command.params[0])
-            COMMAND_TOGGLE_CONTROLS -> callPlayerMethod("api", "toggle-controls", command.params)
-            COMMAND_TOGGLE_PLAY -> callPlayerMethod("api", "toggle-play", command.params)
-            COMMAND_VOLUME -> callPlayerMethod("api", "volume", command.params)
-            else -> callPlayerMethod(command.methodName, *command.params)
-        }
-    }
-
-    private fun handleEvent(e: String) {
-
-        /*
-         * the data we get from the api is a bit strange...
-         */
-        var e = e
-        e = URLDecoder.decode(e)
-        val p = e.split("&").toTypedArray()
-        val map = HashMap<String, String?>()
-        for (s in p) {
-            val s2 = s.split("=").toTypedArray()
-            if (s2.size == 1) {
-                map[s2[0]] = null
-            } else if (s2.size == 2) {
-                map[s2[0]] = s2[1]
-            } else {
-                Timber.e("bad param: $s")
-            }
-        }
-        val event = map["event"]
-        if (event == null) {
-            Timber.e("bad event 2: $e")
-            return
-        }
-        if (event != "timeupdate") {
-            Timber.d("[%d] event %s", hashCode(), e)
-        }
-        val playerEvent = eventFactory!!.createPlayerEvent(event, map, e)
-        when (playerEvent.name) {
-            EVENT_APIREADY -> {
-                mApiReady = true
-            }
-            EVENT_START -> {
-                isEnded = false
-                mHandler!!.removeCallbacks(mLoadCommandRunnable)
-                mLoadCommandRunnable = null
-            }
-            EVENT_END -> {
-                isEnded = true
-            }
-            EVENT_PROGRESS -> {
-                bufferedTime = map["time"]!!.toFloat().toDouble()
-            }
-            EVENT_TIMEUPDATE -> {
-                mPosition = map["time"]!!.toFloat()
-            }
-            EVENT_DURATION_CHANGE -> {
-                duration = map["duration"]!!.toFloat().toDouble()
-            }
-            EVENT_GESTURE_START -> {
-                mDisallowIntercept = true
-            }
-            EVENT_MENU_DID_SHOW -> {
-                mDisallowIntercept = true
-            }
-            EVENT_GESTURE_END -> {
-                mDisallowIntercept = false
-            }
-            EVENT_MENU_DID_HIDE -> {
-                mDisallowIntercept = false
-            }
-            EVENT_PLAY -> {
-                videoPaused = false
-                mPlayWhenReady = true
-            }
-            EVENT_PAUSE -> {
-                videoPaused = true
-                mPlayWhenReady = false
-            }
-            EVENT_AD_PLAY -> {
-                mPlayWhenReady = true
-            }
-            EVENT_AD_PAUSE -> {
-                mPlayWhenReady = false
-            }
-            EVENT_CONTROLSCHANGE -> {
-                mHandler!!.removeCallbacks(mControlsCommandRunnable)
-                mControlsCommandRunnable = null
-            }
-            EVENT_VOLUMECHANGE -> {
-                mVolume = map["volume"]!!.toFloat()
-                mHandler!!.removeCallbacks(mMuteCommandRunnable)
-                mMuteCommandRunnable = null
-            }
-            EVENT_LOADEDMETADATA -> {
-                mHasMetadata = true
-            }
-            EVENT_QUALITY_CHANGE -> {
-                mQuality = map["quality"]
-            }
-            EVENT_SEEKED -> {
-                isSeeking = false
-                mPosition = map["time"]!!.toFloat()
-            }
-            EVENT_SEEKING -> {
-                isSeeking = true
-                mPosition = map["time"]!!.toFloat()
-            }
-            EVENT_PLAYBACK_READY -> {
-                mHasPlaybackReady = true
-            }
-        }
-
-        playerEventListener?.invoke(playerEvent)
-
-        tick()
-    }
-
-    private fun tick() {
-        if (!mApiReady) {
-            return
-        }
-        val iterator = mCommandList.iterator()
-        loop@ while (iterator.hasNext()) {
-            val command = iterator.next()
-            when (command.methodName) {
-                COMMAND_PAUSE, COMMAND_PLAY -> if (!mHasPlaybackReady) {
-                    continue@loop
-                }
-                COMMAND_NOTIFY_LIKECHANGED -> if (!mHasMetadata) {
-                    continue@loop
-                }
-                COMMAND_NOTIFY_WATCHLATERCHANGED -> if (!mHasMetadata) {
-                    continue@loop
-                }
-                COMMAND_MUTE -> {
-                    if (System.currentTimeMillis() - mMuteLastTime < 1000) {
-                        continue@loop
-                    }
-                    mMuteLastTime = System.currentTimeMillis()
-                }
-                COMMAND_LOAD -> {
-                    if (System.currentTimeMillis() - mLoadLastTime < 1000) {
-                        continue@loop
-                    }
-                    mLoadLastTime = System.currentTimeMillis()
-                }
-                COMMAND_CONTROLS -> {
-                    if (System.currentTimeMillis() - mControlsLastTime < 1000) {
-                        continue@loop
-                    }
-                    mControlsLastTime = System.currentTimeMillis()
-                }
-            }
-            iterator.remove()
-            sendCommand(command)
-        }
-    }
-
-    var mJavascriptBridge: Any = JavascriptBridge()
-    override fun loadUrl(url: String) {
-        Timber.d("[%d] loadUrl %s", hashCode(), url)
-        super.loadUrl(url)
-    }
-
-    fun queueCommand(method: String, vararg params: Any) {
-        /*
-         * remove duplicate commands
-         */
-        var iterator = mCommandList.iterator()
-        while (iterator.hasNext()) {
-            if (iterator.next().methodName == method) {
-                iterator.remove()
-            }
-        }
-
-        /*
-         * if we're loading a new video, cancel the stuff from before
-         */if (method == COMMAND_LOAD) {
-            mPosition = 0f
-            mDisallowIntercept = false
-            videoId = params[0] as String
-            mHasMetadata = false
-            mHasPlaybackReady = false
-            iterator = mCommandList.iterator()
-            while (iterator.hasNext()) {
-                when (iterator.next().methodName) {
-                    COMMAND_NOTIFY_LIKECHANGED, COMMAND_NOTIFY_WATCHLATERCHANGED, COMMAND_SEEK, COMMAND_PAUSE, COMMAND_PLAY -> iterator.remove()
-                }
-            }
-        }
-        val command = Command()
-        command.methodName = method
-        command.params = params.asList().toTypedArray()
-        mCommandList.add(command)
-        tick()
-    }
-
-    fun callPlayerMethod(method: String?, vararg params: Any) {
-        val builder = StringBuilder()
-        builder.append("javascript:player.")
-        builder.append(method)
-        builder.append('(')
-        var count = 0
-        for (o in params) {
-            count++
-            if (o is String) {
-                builder.append("'$o'")
-            } else if (o is Number) {
-                builder.append(o.toString())
-            } else if (o is Boolean) {
-                builder.append(o.toString())
-            } else {
-                builder.append("JSON.parse('" + mGson!!.toJson(o) + "')")
-            }
-            if (count < params.size) {
-                builder.append(",")
-            }
-        }
-        builder.append(')')
-        val js = builder.toString()
-        loadUrl(js)
-    }
-
-    private fun mute(mute: Boolean) {
-        queueCommand(COMMAND_MUTE, mute)
-    }
-
-    fun mute() {
-        mute(true)
-    }
-
-    fun unmute() {
-        mute(false)
-    }
-
-    fun play() {
-        queueCommand(COMMAND_PLAY)
-    }
-
-    fun pause() {
-        queueCommand(COMMAND_PAUSE)
-    }
-
-    fun seek(time: Double) {
-        queueCommand(COMMAND_SEEK, time)
-    }
-
-    fun showControls(visible: Boolean) {
-        queueCommand(COMMAND_CONTROLS, visible)
-    }
-
-    fun setFullscreenButton(fullScreen: Boolean) {
-        if (fullScreen != mIsFullScreen) {
-            mIsFullScreen = fullScreen
-            queueCommand(COMMAND_NOTIFYFULLSCREENCHANGED)
-        }
-    }
-
-    constructor(context: Context?) : super(context) {}
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {}
 
     fun initialize(baseUrl: String?, queryParameters: Map<String?, String?>?, httpHeaders: Map<String?, String?>?) {
         mIsInitialized = true
@@ -600,19 +288,224 @@ class PlayerWebView : WebView {
         loadUrl(builder.toString(), httpHeaders)
     }
 
-    interface WebViewErrorListener {
-        fun onErrorReceived(webView: WebView?, errorCode: Int, description: String?, failingUrl: String?)
-
-        @RequiresApi(Build.VERSION_CODES.M)
-        fun onErrorReceived(view: WebView?, request: WebResourceRequest?, error: WebResourceError?)
-        fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?)
-
-        @RequiresApi(Build.VERSION_CODES.M)
-        fun onReceivedHttpError(view: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?)
+    private fun sendCommand(command: Command) {
+        when (command.methodName) {
+            COMMAND_MUTE -> callPlayerMethod(if (command.params[0] as Boolean) "mute" else "unmute")
+            COMMAND_CONTROLS -> callPlayerMethod("api", "controls", if (command.params[0] as Boolean) "true" else "false")
+            COMMAND_QUALITY -> callPlayerMethod("api", "quality", command.params[0])
+            COMMAND_SUBTITLE -> callPlayerMethod("api", "subtitle", command.params[0])
+            COMMAND_TOGGLE_CONTROLS -> callPlayerMethod("api", "toggle-controls", command.params)
+            COMMAND_TOGGLE_PLAY -> callPlayerMethod("api", "toggle-play", command.params)
+            COMMAND_VOLUME -> callPlayerMethod("api", "volume", command.params)
+            else -> callPlayerMethod(command.methodName, *command.params)
+        }
     }
 
-    fun setWebViewErrorListener(errorListener: WebViewErrorListener?) {
-        webViewErrorListener = errorListener
+    private fun handleEvent(e: String) {
+
+        /* The data we get from the api is a bit strange... */
+        var e = e
+        e = URLDecoder.decode(e)
+        val p = e.split("&").toTypedArray()
+        val map = HashMap<String, String?>()
+        for (s in p) {
+            val s2 = s.split("=").toTypedArray()
+            if (s2.size == 1) {
+                map[s2[0]] = null
+            } else if (s2.size == 2) {
+                map[s2[0]] = s2[1]
+            } else {
+                Timber.e("bad param: $s")
+            }
+        }
+        val event = map["event"]
+        if (event == null) {
+            Timber.e("bad event 2: $e")
+            return
+        }
+        if (event != "timeupdate") {
+            Timber.d("[%d] event %s", hashCode(), e)
+        }
+        val playerEvent = eventFactory!!.createPlayerEvent(event, map, e)
+        when (playerEvent.name) {
+            EVENT_APIREADY -> {
+                mApiReady = true
+            }
+            EVENT_START -> {
+                isEnded = false
+                mHandler!!.removeCallbacks(mLoadCommandRunnable)
+                mLoadCommandRunnable = null
+            }
+            EVENT_END -> {
+                isEnded = true
+            }
+            EVENT_PROGRESS -> {
+                bufferedTime = map["time"]!!.toFloat().toDouble()
+            }
+            EVENT_TIMEUPDATE -> {
+                mPosition = map["time"]!!.toFloat()
+            }
+            EVENT_DURATION_CHANGE -> {
+                duration = map["duration"]!!.toFloat().toDouble()
+            }
+            EVENT_GESTURE_START -> {
+                mDisallowIntercept = true
+            }
+            EVENT_MENU_DID_SHOW -> {
+                mDisallowIntercept = true
+            }
+            EVENT_GESTURE_END -> {
+                mDisallowIntercept = false
+            }
+            EVENT_MENU_DID_HIDE -> {
+                mDisallowIntercept = false
+            }
+            EVENT_PLAY -> {
+                videoPaused = false
+                mPlayWhenReady = true
+            }
+            EVENT_PAUSE -> {
+                videoPaused = true
+                mPlayWhenReady = false
+            }
+            EVENT_AD_PLAY -> {
+                mPlayWhenReady = true
+            }
+            EVENT_AD_PAUSE -> {
+                mPlayWhenReady = false
+            }
+            EVENT_CONTROLSCHANGE -> {
+                mHandler!!.removeCallbacks(mControlsCommandRunnable)
+                mControlsCommandRunnable = null
+            }
+            EVENT_VOLUMECHANGE -> {
+                mVolume = map["volume"]!!.toFloat()
+                mHandler!!.removeCallbacks(mMuteCommandRunnable)
+                mMuteCommandRunnable = null
+            }
+            EVENT_LOADEDMETADATA -> {
+                mHasMetadata = true
+            }
+            EVENT_QUALITY_CHANGE -> {
+                mQuality = map["quality"]
+            }
+            EVENT_SEEKED -> {
+                isSeeking = false
+                mPosition = map["time"]!!.toFloat()
+            }
+            EVENT_SEEKING -> {
+                isSeeking = true
+                mPosition = map["time"]!!.toFloat()
+            }
+            EVENT_PLAYBACK_READY -> {
+                mHasPlaybackReady = true
+            }
+        }
+
+        playerEventListener?.invoke(playerEvent)
+
+        tick()
+    }
+
+    private fun tick() {
+        if (!mApiReady) {
+            return
+        }
+        val iterator = mCommandList.iterator()
+        loop@ while (iterator.hasNext()) {
+            val command = iterator.next()
+            when (command.methodName) {
+                COMMAND_PAUSE, COMMAND_PLAY -> if (!mHasPlaybackReady) {
+                    continue@loop
+                }
+                COMMAND_NOTIFY_LIKECHANGED -> if (!mHasMetadata) {
+                    continue@loop
+                }
+                COMMAND_NOTIFY_WATCHLATERCHANGED -> if (!mHasMetadata) {
+                    continue@loop
+                }
+                COMMAND_MUTE -> {
+                    if (System.currentTimeMillis() - mMuteLastTime < 1000) {
+                        continue@loop
+                    }
+                    mMuteLastTime = System.currentTimeMillis()
+                }
+                COMMAND_LOAD -> {
+                    if (System.currentTimeMillis() - mLoadLastTime < 1000) {
+                        continue@loop
+                    }
+                    mLoadLastTime = System.currentTimeMillis()
+                }
+                COMMAND_CONTROLS -> {
+                    if (System.currentTimeMillis() - mControlsLastTime < 1000) {
+                        continue@loop
+                    }
+                    mControlsLastTime = System.currentTimeMillis()
+                }
+            }
+            iterator.remove()
+            sendCommand(command)
+        }
+    }
+
+    fun queueCommand(method: String, vararg params: Any) {
+        /*
+         * remove duplicate commands
+         */
+        var iterator = mCommandList.iterator()
+        while (iterator.hasNext()) {
+            if (iterator.next().methodName == method) {
+                iterator.remove()
+            }
+        }
+
+        /*
+         * if we're loading a new video, cancel the stuff from before
+         */
+        if (method == COMMAND_LOAD) {
+            mPosition = 0f
+            mDisallowIntercept = false
+            videoId = params[0] as String
+            mHasMetadata = false
+            mHasPlaybackReady = false
+            iterator = mCommandList.iterator()
+            while (iterator.hasNext()) {
+                when (iterator.next().methodName) {
+                    COMMAND_NOTIFY_LIKECHANGED, COMMAND_NOTIFY_WATCHLATERCHANGED, COMMAND_SEEK, COMMAND_PAUSE, COMMAND_PLAY -> iterator.remove()
+                }
+            }
+        }
+        val command = Command()
+        command.methodName = method
+        command.params = params.asList().toTypedArray()
+        mCommandList.add(command)
+        tick()
+    }
+
+    fun callPlayerMethod(method: String?, vararg params: Any) {
+        val builder = StringBuilder()
+        builder.append("javascript:player.")
+        builder.append(method)
+        builder.append('(')
+        var count = 0
+        for (o in params) {
+            count++
+            if (o is String) {
+                builder.append("'$o'")
+            } else if (o is Number) {
+                builder.append(o.toString())
+            } else if (o is Boolean) {
+                builder.append(o.toString())
+            } else {
+                builder.append("JSON.parse('" + mGson!!.toJson(o) + "')")
+            }
+            if (count < params.size) {
+                builder.append(",")
+            }
+        }
+        builder.append(')')
+        val js = builder.toString()
+        loadUrl(js)
     }
 
     fun release() {
@@ -620,19 +513,92 @@ class PlayerWebView : WebView {
         onPause()
     }
 
-    @JvmOverloads
-    fun load(videoId: String?, loadParams: Map<String, Any?>? = emptyMap()) {
-        if (!mIsInitialized) {
-            val defaultQueryParameters: MutableMap<String?, String?> = HashMap()
-            defaultQueryParameters["sharing-enable"] = "false"
-            defaultQueryParameters["watchlater-enable"] = "false"
-            defaultQueryParameters["like-enable"] = "false"
-            defaultQueryParameters["collections-enable"] = "false"
-            defaultQueryParameters["fullscreen-action"] = "trigger_event"
-            defaultQueryParameters["locale"] = Locale.getDefault().language
-            initialize("https://www.dailymotion.com/embed/", defaultQueryParameters, HashMap())
+    /**
+     * Notify PlayerWebView of the view visibility.
+     *
+     * @param visible TRUE, view is visible. FALSE otherwise.
+     * @param shouldHandleTimers if TRUE, it will call resumeTimers() if visible param is TRUE and pauseTimers() if visible param is FALSE.
+     * Otherwise, calls to resumeTimers() / pauseTimers() won't be made.
+     * Beware pauseTimers() will pause timers for all your WebViews. If you're using more than 2, you might want to handle this separately.
+     */
+    fun setVisible(visible: Boolean, shouldHandleTimers: Boolean) {
+        if (mVisible != visible) {
+            mVisible = visible
+            if (!mVisible) {
+                playWhenReady = false
+                // when we resume, we don't want video to start automatically
+            }
+            if (!mVisible) {
+                onPause()
+                if (shouldHandleTimers) {
+                    pauseTimers()
+                }
+            } else {
+                onResume()
+                if (shouldHandleTimers) {
+                    resumeTimers()
+                }
+            }
         }
-        queueCommand(COMMAND_LOAD, videoId!!, loadParams!!)
+    }
+
+    private fun updatePlayState() {
+        if (!mVisible) {
+            pause()
+        } else {
+            if (mPlayWhenReady) {
+                play()
+            } else {
+                pause()
+            }
+        }
+    }
+
+    fun setMinimizeProgress(p: Float) {
+        showControls(p <= 0)
+    }
+
+    fun setIsLiked(isLiked: Boolean) {
+        queueCommand(COMMAND_NOTIFY_LIKECHANGED, isLiked)
+    }
+
+    fun setIsInWatchLater(isInWatchLater: Boolean) {
+        queueCommand(COMMAND_NOTIFY_WATCHLATERCHANGED, isInWatchLater)
+    }
+
+    private fun mute(mute: Boolean) {
+        queueCommand(COMMAND_MUTE, mute)
+    }
+
+    fun mute() {
+        mute(true)
+    }
+
+    fun unmute() {
+        mute(false)
+    }
+
+    fun play() {
+        queueCommand(COMMAND_PLAY)
+    }
+
+    fun pause() {
+        queueCommand(COMMAND_PAUSE)
+    }
+
+    fun seek(time: Double) {
+        queueCommand(COMMAND_SEEK, time)
+    }
+
+    fun showControls(visible: Boolean) {
+        queueCommand(COMMAND_CONTROLS, visible)
+    }
+
+    fun setFullscreenButton(fullScreen: Boolean) {
+        if (fullScreen != mIsFullScreen) {
+            mIsFullScreen = fullScreen
+            queueCommand(COMMAND_NOTIFYFULLSCREENCHANGED)
+        }
     }
 
     fun setSubtitle(language_code: String?) {
@@ -647,19 +613,17 @@ class PlayerWebView : WebView {
         queueCommand(COMMAND_TOGGLE_PLAY)
     }
 
-    val position: Long
-        get() = (mPosition * 1000).toLong()
-
-    var volume: Float
-        get() = mVolume
-        set(volume) {
-            if (volume in 0f..1f) {
-                queueCommand(COMMAND_VOLUME, volume)
-            }
-        }
-
     fun setIsWebContentsDebuggingEnabled(isWebContentsDebuggingEnabled: Boolean) {
         mIsWebContentsDebuggingEnabled = isWebContentsDebuggingEnabled
+    }
+
+    fun setWebViewErrorListener(errorListener: WebViewErrorListener?) {
+        webViewErrorListener = errorListener
+    }
+
+    override fun loadUrl(url: String) {
+        Timber.d("[%d] loadUrl %s", hashCode(), url)
+        super.loadUrl(url)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -669,8 +633,44 @@ class PlayerWebView : WebView {
         return super.onTouchEvent(event)
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
+    private inner class JavascriptBridge {
+        @JavascriptInterface
+        fun triggerEvent(e: String) {
+            mHandler!!.post { handleEvent(e) }
+        }
+    }
+
+    internal data class Command(var methodName: String? = null,
+                                var params: Array<Any> = emptyArray()) {
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (javaClass != other?.javaClass) return false
+
+            other as Command
+
+            if (methodName != other.methodName) return false
+            if (!params.contentEquals(other.params)) return false
+
+            return true
+        }
+
+        override fun hashCode(): Int {
+            var result = methodName?.hashCode() ?: 0
+            result = 31 * result + params.contentHashCode()
+            return result
+        }
+    }
+
+    interface WebViewErrorListener {
+        fun onErrorReceived(webView: WebView?, errorCode: Int, description: String?, failingUrl: String?)
+
+        @RequiresApi(Build.VERSION_CODES.M)
+        fun onErrorReceived(view: WebView?, request: WebResourceRequest?, error: WebResourceError?)
+        fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?)
+
+        @RequiresApi(Build.VERSION_CODES.M)
+        fun onReceivedHttpError(view: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?)
     }
 
     companion object {
