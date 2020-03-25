@@ -68,7 +68,6 @@ class PlayerWebView : WebView {
     private var mPosition = 0f
     private var mPlayWhenReady = true
     private var mVisible = false
-    private var mEventListener: EventListener? = null
     var playerEventListener: ((PlayerEvent) -> Unit)? = null
 
     private var webViewErrorListener: WebViewErrorListener? = null
@@ -104,19 +103,13 @@ class PlayerWebView : WebView {
             queueCommand(COMMAND_QUALITY, quality!!)
         }
 
-    @Deprecated("Use setVisible(visible, shouldPauseTimer, shouldResumeTimer) instead")
-    fun setVisible(visible: Boolean) {
-        setVisible(visible, true)
-    }
-
     /**
      * Notify PlayerWebView of the view visibility.
      *
      * @param visible TRUE, view is visible. FALSE otherwise.
-     * @param shouldHandleTimers if TRUE, will call resumeTimers() if visible is TRUE and pauseTimers() if visible is FALSE.
+     * @param shouldHandleTimers if TRUE, it will call resumeTimers() if visible param is TRUE and pauseTimers() if visible param is FALSE.
      * Otherwise, calls to resumeTimers() / pauseTimers() won't be made.
-     * Beware pauseTimers() will pause timers for all your webviews. If you're using more than 2,
-     * you might want to handle this separately.
+     * Beware pauseTimers() will pause timers for all your WebViews. If you're using more than 2, you might want to handle this separately.
      */
     fun setVisible(visible: Boolean, shouldHandleTimers: Boolean) {
         if (mVisible != visible) {
@@ -292,11 +285,7 @@ class PlayerWebView : WebView {
                 mHasPlaybackReady = true
             }
         }
-        if (mEventListener != null) {
-            mEventListener!!.onEvent(event, map)
-        }
 
-        /* Only expose the POJO events we are supporting */
         playerEventListener?.invoke(playerEvent)
 
         tick()
@@ -626,19 +615,6 @@ class PlayerWebView : WebView {
         webViewErrorListener = errorListener
     }
 
-    @Deprecated("Implement PlayerEventListener instead")
-    interface EventListener {
-        fun onEvent(event: String?, map: HashMap<String, String?>?)
-    }
-
-    /**
-     * @param listener
-     */
-    @Deprecated("Use setPlayerEventListener() instead")
-    fun setEventListener(listener: EventListener?) {
-        mEventListener = listener
-    }
-
     fun release() {
         loadUrl("about:blank")
         onPause()
@@ -677,7 +653,7 @@ class PlayerWebView : WebView {
     var volume: Float
         get() = mVolume
         set(volume) {
-            if (volume >= 0f && volume <= 1f) {
+            if (volume in 0f..1f) {
                 queueCommand(COMMAND_VOLUME, volume)
             }
         }
@@ -698,6 +674,7 @@ class PlayerWebView : WebView {
     }
 
     companion object {
+
         const val EVENT_APIREADY = "apiready"
         const val EVENT_TIMEUPDATE = "timeupdate"
         const val EVENT_DURATION_CHANGE = "durationchange"
@@ -728,15 +705,11 @@ class PlayerWebView : WebView {
         const val EVENT_END = "end"
         const val EVENT_CONTROLSCHANGE = "controlschange"
         const val EVENT_VOLUMECHANGE = "volumechange"
-
-        @Deprecated("Use EVENT_QUALITY_CHANGE instead")
-        val EVENT_QUALITY = "qualitychange"
         const val EVENT_QUALITY_CHANGE = "qualitychange"
         const val EVENT_QUALITIES_AVAILABLE = "qualitiesavailable"
         const val EVENT_PLAYBACK_READY = "playback_ready"
         const val EVENT_CHROME_CAST_REQUESTED = "chromecast_requested"
         const val EVENT_VIDEO_CHANGE = "videochange"
-        private const val ASSETS_SCHEME = "asset://"
         const val COMMAND_NOTIFY_LIKECHANGED = "notifyLikeChanged"
         const val COMMAND_NOTIFY_WATCHLATERCHANGED = "notifyWatchLaterChanged"
         const val COMMAND_NOTIFYFULLSCREENCHANGED = "notifyFullscreenChanged"
@@ -752,5 +725,7 @@ class PlayerWebView : WebView {
         const val COMMAND_TOGGLE_CONTROLS = "toggle-controls"
         const val COMMAND_TOGGLE_PLAY = "toggle-play"
         const val COMMAND_VOLUME = "volume"
+
+        private const val ASSETS_SCHEME = "asset://"
     }
 }
