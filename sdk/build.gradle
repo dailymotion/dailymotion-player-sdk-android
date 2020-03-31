@@ -56,11 +56,6 @@ task bumpAndTag {
     }
 }
 
-tasks.withType(Javadoc).all {
-    /* Disable javadoc since we do not have any java file */
-    enabled = false
-}
-
 // Because the components are created only during the afterEvaluate phase, you must
 // configure your publications using the afterEvaluate() lifecycle method.
 afterEvaluate {
