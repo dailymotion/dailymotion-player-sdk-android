@@ -74,13 +74,6 @@ afterEvaluate {
                 // You can then customize attributes of the publication as shown below.
                 version = LibraryProject.INSTANCE.getLibraryVersionName()
             }
-            // Creates a Maven publication called “debug”.
-            debug(MavenPublication) {
-                // Applies the component for the debug build variant.
-                from components.debug
-
-                version = LibraryProject.INSTANCE.getLibraryVersionName()
-            }
         }
     }
 }
