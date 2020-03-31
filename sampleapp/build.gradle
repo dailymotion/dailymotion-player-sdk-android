@@ -23,10 +23,6 @@ android {
         targetSdkVersion Version.targetSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
-    lintOptions {
-        abortOnError false
-    }
 }
 
 repositories {
