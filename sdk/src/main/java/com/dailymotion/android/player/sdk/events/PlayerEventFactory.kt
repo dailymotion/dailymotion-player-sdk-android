@@ -116,109 +116,109 @@ class PlayerEventFactory {
     }
 
     private fun createVideoChangeEvent(payload: String): PlayerEvent {
-        return PlayerEvent.VideoChangeEvent(payload)
+        return VideoChangeEvent(payload)
     }
 
     private fun createChromeCastRequestedEvent(payload: String): PlayerEvent {
-        return PlayerEvent.ChromeCastRequestedEvent(payload)
+        return ChromeCastRequestedEvent(payload)
     }
 
     private fun createApiReadyEvent(payload: String): PlayerEvent {
-        return PlayerEvent.ApiReadyEvent(payload)
+        return ApiReadyEvent(payload)
     }
 
     private fun createTimeUpdateEvent(payload: String, params: Map<String, String?>): PlayerEvent {
-        return PlayerEvent.TimeUpdateEvent(payload, params["time"])
+        return TimeUpdateEvent(payload, params["time"])
     }
 
     private fun createDurationChangeEvent(payload: String, params: Map<String, String?>): PlayerEvent {
-        return PlayerEvent.DurationChangeEvent(payload, params["duration"])
+        return DurationChangeEvent(payload, params["duration"])
     }
 
     private fun createProgressEvent(payload: String, params: Map<String, String?>): PlayerEvent {
-        return PlayerEvent.ProgressEvent(payload, params["time"])
+        return ProgressEvent(payload, params["time"])
     }
 
     private fun createSeekedEvent(payload: String, params: Map<String, String?>): PlayerEvent {
-        return PlayerEvent.SeekedEvent(payload, params["time"])
+        return SeekedEvent(payload, params["time"])
     }
 
     private fun createSeekingEvent(payload: String, params: Map<String, String?>): PlayerEvent {
-        return PlayerEvent.SeekingEvent(payload, params["time"])
+        return SeekingEvent(payload, params["time"])
     }
 
     private fun createGestureStartEvent(payload: String): PlayerEvent {
-        return PlayerEvent.GestureStartEvent(payload)
+        return GestureStartEvent(payload)
     }
 
     private fun createGestureEndEvent(payload: String): PlayerEvent {
-        return PlayerEvent.GestureEndEvent(payload)
+        return GestureEndEvent(payload)
     }
 
     private fun createMenuDidShowEvent(payload: String): PlayerEvent {
-        return PlayerEvent.MenuDidShowEvent(payload)
+        return MenuDidShowEvent(payload)
     }
 
     private fun createMenuDidHideEvent(payload: String): PlayerEvent {
-        return PlayerEvent.MenuDidHideEvent(payload)
+        return MenuDidHideEvent(payload)
     }
 
     private fun createVideoEndEvent(payload: String): PlayerEvent {
-        return PlayerEvent.VideoEndEvent(payload)
+        return VideoEndEvent(payload)
     }
 
     private fun createPlayEvent(payload: String): PlayerEvent {
-        return PlayerEvent.PlayEvent(payload)
+        return PlayEvent(payload)
     }
 
     private fun createPauseEvent(payload: String): PlayerEvent {
-        return PlayerEvent.PauseEvent(payload)
+        return PauseEvent(payload)
     }
 
     private fun createAdPlayEvent(payload: String): PlayerEvent {
-        return PlayerEvent.AdPlayEvent(payload)
+        return AdPlayEvent(payload)
     }
 
     private fun createAdPauseEvent(payload: String): PlayerEvent {
-        return PlayerEvent.AdPauseEvent(payload)
+        return AdPauseEvent(payload)
     }
 
     private fun createControlChangeEvent(payload: String, map: Map<String, String?>): PlayerEvent {
-        return PlayerEvent.ControlChangeEvent(payload, map["controls"]?.toBoolean() ?: false)
+        return ControlChangeEvent(payload, map["controls"]?.toBoolean() ?: false)
     }
 
     private fun createVolumeChangeEvent(payload: String, map: Map<String, String?>): PlayerEvent {
-        return PlayerEvent.VolumeChangeEvent(payload, map["volume"], map["muted"]?.toBoolean()
+        return VolumeChangeEvent(payload, map["volume"], map["muted"]?.toBoolean()
                 ?: false)
     }
 
     private fun createLoadedMetaDataEvent(payload: String): PlayerEvent {
-        return PlayerEvent.LoadedMetaDataEvent(payload)
+        return LoadedMetaDataEvent(payload)
     }
 
     private fun createQualityChangeEvent(payload: String, map: Map<String, String?>): PlayerEvent {
-        return PlayerEvent.QualityChangeEvent(payload, map["quality"])
+        return QualityChangeEvent(payload, map["quality"])
     }
 
     private fun createFullScreenToggleRequestedEvent(payload: String): PlayerEvent {
-        return PlayerEvent.FullScreenToggleRequestedEvent(payload)
+        return FullScreenToggleRequestedEvent(payload)
     }
 
     private fun createStartEvent(payload: String): PlayerEvent {
-        return PlayerEvent.StartEvent(payload)
+        return StartEvent(payload)
     }
 
     private fun createEndEvent(payload: String): PlayerEvent {
-        return PlayerEvent.EndEvent(payload)
+        return EndEvent(payload)
     }
 
     private fun createQualitiesAvailableEvent(payload: String?): PlayerEvent {
         if (payload == null || payload.isEmpty()) {
-            return PlayerEvent.QualitiesAvailableEvent(payload, null)
+            return QualitiesAvailableEvent(payload, null)
         }
         val argList = payload.split("&").toTypedArray()
         if (argList.size < 1) {
-            return PlayerEvent.QualitiesAvailableEvent(payload, null)
+            return QualitiesAvailableEvent(payload, null)
         }
         val availableQualities: MutableList<String> = ArrayList()
         for (arg in argList) {
@@ -228,50 +228,50 @@ class PlayerEventFactory {
                 availableQualities.add(value)
             }
         }
-        return PlayerEvent.QualitiesAvailableEvent(payload, availableQualities)
+        return QualitiesAvailableEvent(payload, availableQualities)
     }
 
     private fun createAdTimeUpdateEvent(payload: String, map: Map<String, String?>): PlayerEvent {
-        return PlayerEvent.AdTimeUpdateEvent(payload, map["time"])
+        return AdTimeUpdateEvent(payload, map["time"])
     }
 
     private fun createVideoStartEvent(payload: String, map: Map<String, String?>): PlayerEvent {
-        return PlayerEvent.VideoStartEvent(payload, map["replay"])
+        return VideoStartEvent(payload, map["replay"])
     }
 
     private fun createAdStartEvent(payload: String): PlayerEvent {
-        return PlayerEvent.AdStartEvent(payload)
+        return AdStartEvent(payload)
     }
 
     private fun createPlayingEvent(payload: String): PlayerEvent {
-        return PlayerEvent.PlayingEvent(payload)
+        return PlayingEvent(payload)
     }
 
     private fun createAdEndEvent(payload: String): PlayerEvent {
-        return PlayerEvent.AdEndEvent(payload)
+        return AdEndEvent(payload)
     }
 
     private fun createGenericPlayerEvent(payload: String): PlayerEvent {
-        return PlayerEvent.GenericPlayerEvent(payload)
+        return GenericPlayerEvent(payload)
     }
 
     private fun createAddToCollectionRequestedEvent(payload: String): PlayerEvent {
-        return PlayerEvent.AddToCollectionRequestedEvent(payload)
+        return AddToCollectionRequestedEvent(payload)
     }
 
     private fun createLikeRequestedEvent(payload: String): PlayerEvent {
-        return PlayerEvent.LikeRequestedEvent(payload)
+        return LikeRequestedEvent(payload)
     }
 
     private fun createWatchLaterRequestedEvent(payload: String): PlayerEvent {
-        return PlayerEvent.WatchLaterRequestedEvent(payload)
+        return WatchLaterRequestedEvent(payload)
     }
 
     private fun createShareRequestedEvent(payload: String): PlayerEvent {
-        return PlayerEvent.ShareRequestedEvent(payload)
+        return ShareRequestedEvent(payload)
     }
 
     private fun createPlaybackReadyEvent(payload: String): PlayerEvent {
-        return PlayerEvent.PlaybackReadyEvent(payload)
+        return PlaybackReadyEvent(payload)
     }
 }

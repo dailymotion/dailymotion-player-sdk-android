@@ -100,32 +100,32 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         playerWebview.playerEventListener = { playerEvent ->
             when (playerEvent) {
 
-                is PlayerEvent.ApiReadyEvent -> log(playerEvent.name)
-                is PlayerEvent.StartEvent -> log(playerEvent.name)
-                is PlayerEvent.LoadedMetaDataEvent -> log(playerEvent.name)
-                is PlayerEvent.ProgressEvent -> log(playerEvent.name + " (bufferedTime: " + playerWebview.bufferedTime + ")")
-                is PlayerEvent.DurationChangeEvent -> log(playerEvent.name + " (duration: " + playerWebview.duration + ")")
+                is ApiReadyEvent -> log(playerEvent.name)
+                is StartEvent -> log(playerEvent.name)
+                is LoadedMetaDataEvent -> log(playerEvent.name)
+                is ProgressEvent -> log(playerEvent.name + " (bufferedTime: " + playerWebview.bufferedTime + ")")
+                is DurationChangeEvent -> log(playerEvent.name + " (duration: " + playerWebview.duration + ")")
 
-                is PlayerEvent.TimeUpdateEvent,
-                is PlayerEvent.AdTimeUpdateEvent,
-                is PlayerEvent.SeekingEvent,
-                is PlayerEvent.SeekedEvent -> log(playerEvent.name + " (currentTime: " + playerWebview.position + ")")
+                is TimeUpdateEvent,
+                is AdTimeUpdateEvent,
+                is SeekingEvent,
+                is SeekedEvent -> log(playerEvent.name + " (currentTime: " + playerWebview.position + ")")
 
-                is PlayerEvent.VideoStartEvent,
-                is PlayerEvent.AdStartEvent,
-                is PlayerEvent.AdPlayEvent,
-                is PlayerEvent.PlayingEvent,
-                is PlayerEvent.EndEvent -> log(playerEvent.name + " (ended: " + playerWebview.isEnded + ")")
+                is VideoStartEvent,
+                is AdStartEvent,
+                is AdPlayEvent,
+                is PlayingEvent,
+                is EndEvent -> log(playerEvent.name + " (ended: " + playerWebview.isEnded + ")")
 
-                is PlayerEvent.AdPauseEvent,
-                is PlayerEvent.AdEndEvent,
-                is PlayerEvent.VideoEndEvent,
-                is PlayerEvent.PlayEvent,
-                is PlayerEvent.PauseEvent -> log(playerEvent.name + " (paused: " + playerWebview.videoPaused + ")")
+                is AdPauseEvent,
+                is AdEndEvent,
+                is VideoEndEvent,
+                is PlayEvent,
+                is PauseEvent -> log(playerEvent.name + " (paused: " + playerWebview.videoPaused + ")")
 
-                is PlayerEvent.QualityChangeEvent -> log(playerEvent.name + " (quality: " + playerWebview.quality + ")")
-                is PlayerEvent.VolumeChangeEvent -> log(playerEvent.name + " (volume: " + playerWebview.volume + ")")
-                is PlayerEvent.FullScreenToggleRequestedEvent -> onFullScreenToggleRequested()
+                is QualityChangeEvent -> log(playerEvent.name + " (quality: " + playerWebview.quality + ")")
+                is VolumeChangeEvent -> log(playerEvent.name + " (volume: " + playerWebview.volume + ")")
+                is FullScreenToggleRequestedEvent -> onFullScreenToggleRequested()
             }
         }
 
