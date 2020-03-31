@@ -55,7 +55,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
         setSupportActionBar(toolbar)
 
-        playerWebview.setWebViewErrorListener(object: PlayerWebView.WebViewErrorListener {
+        playerWebview.setWebViewErrorListener(object : PlayerWebView.WebViewErrorListener {
 
             override fun onErrorReceived(webView: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
                 val message = "WebView [${webView.hashCode()}] received an error with code: $errorCode, description: $description from URL: $failingUrl"
@@ -97,34 +97,33 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         val playerParams = HashMap<String, String>()
         playerWebview.load(videoId = "x70val9", loadParams = playerParams)
 
-        playerWebview.playerEventListener = { playerEvent ->
-            when (playerEvent) {
-
-                is ApiReadyEvent -> log(playerEvent.name)
-                is StartEvent -> log(playerEvent.name)
-                is LoadedMetaDataEvent -> log(playerEvent.name)
-                is ProgressEvent -> log(playerEvent.name + " (bufferedTime: " + playerWebview.bufferedTime + ")")
-                is DurationChangeEvent -> log(playerEvent.name + " (duration: " + playerWebview.duration + ")")
+        playerWebview.setEventListener { event ->
+            when (event) {
+                is ApiReadyEvent -> log(event.name)
+                is StartEvent -> log(event.name)
+                is LoadedMetaDataEvent -> log(event.name)
+                is ProgressEvent -> log(event.name + " (bufferedTime: " + playerWebview.bufferedTime + ")")
+                is DurationChangeEvent -> log(event.name + " (duration: " + playerWebview.duration + ")")
 
                 is TimeUpdateEvent,
                 is AdTimeUpdateEvent,
                 is SeekingEvent,
-                is SeekedEvent -> log(playerEvent.name + " (currentTime: " + playerWebview.position + ")")
+                is SeekedEvent -> log(event.name + " (currentTime: " + playerWebview.position + ")")
 
                 is VideoStartEvent,
                 is AdStartEvent,
                 is AdPlayEvent,
                 is PlayingEvent,
-                is EndEvent -> log(playerEvent.name + " (ended: " + playerWebview.isEnded + ")")
+                is EndEvent -> log(event.name + " (ended: " + playerWebview.isEnded + ")")
 
                 is AdPauseEvent,
                 is AdEndEvent,
                 is VideoEndEvent,
                 is PlayEvent,
-                is PauseEvent -> log(playerEvent.name + " (paused: " + playerWebview.videoPaused + ")")
+                is PauseEvent -> log(event.name + " (paused: " + playerWebview.videoPaused + ")")
 
-                is QualityChangeEvent -> log(playerEvent.name + " (quality: " + playerWebview.quality + ")")
-                is VolumeChangeEvent -> log(playerEvent.name + " (volume: " + playerWebview.volume + ")")
+                is QualityChangeEvent -> log(event.name + " (quality: " + playerWebview.quality + ")")
+                is VolumeChangeEvent -> log(event.name + " (volume: " + playerWebview.volume + ")")
                 is FullScreenToggleRequestedEvent -> onFullScreenToggleRequested()
             }
         }

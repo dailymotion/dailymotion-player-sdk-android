@@ -63,9 +63,9 @@ class PlayerWebView : WebView {
     private var mHasPlaybackReady = false
     private var mQuality: String? = ""
     private var webViewErrorListener: WebViewErrorListener? = null
+    private var playerEventListener: EventListener? = null
 
     var mJavascriptBridge: Any = JavascriptBridge()
-    var playerEventListener: ((PlayerEvent) -> Unit)? = null
 
     var videoId: String? = null
         private set
@@ -402,7 +402,7 @@ class PlayerWebView : WebView {
             }
         }
 
-        playerEventListener?.invoke(playerEvent)
+        playerEventListener?.onEventReceived(playerEvent)
 
         tick()
     }
@@ -621,6 +621,18 @@ class PlayerWebView : WebView {
         webViewErrorListener = errorListener
     }
 
+    fun setEventListener(listener: EventListener) {
+        playerEventListener = listener
+    }
+
+    fun setEventListener(listener: (PlayerEvent) -> (Unit)) {
+        playerEventListener = object : EventListener {
+            override fun onEventReceived(event: PlayerEvent) {
+                listener.invoke(event)
+            }
+        }
+    }
+
     override fun loadUrl(url: String) {
         Timber.d("[%d] loadUrl %s", hashCode(), url)
         super.loadUrl(url)
@@ -666,11 +678,15 @@ class PlayerWebView : WebView {
         fun onErrorReceived(webView: WebView?, errorCode: Int, description: String?, failingUrl: String?)
 
         @RequiresApi(Build.VERSION_CODES.M)
-        fun onErrorReceived(view: WebView?, request: WebResourceRequest?, error: WebResourceError?)
-        fun onReceivedSslError(view: WebView?, handler: SslErrorHandler?, error: SslError?)
+        fun onErrorReceived(webView: WebView?, request: WebResourceRequest?, error: WebResourceError?)
+        fun onReceivedSslError(webView: WebView?, handler: SslErrorHandler?, error: SslError?)
 
         @RequiresApi(Build.VERSION_CODES.M)
-        fun onReceivedHttpError(view: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?)
+        fun onReceivedHttpError(webView: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?)
+    }
+
+    interface EventListener {
+        fun onEventReceived(event: PlayerEvent)
     }
 
     companion object {
