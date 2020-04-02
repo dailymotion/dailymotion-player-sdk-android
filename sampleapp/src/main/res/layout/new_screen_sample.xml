@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/ToolBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/abc_action_bar_default_height_material">
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <com.dailymotion.android.player.sdk.PlayerWebView
         android:id="@+id/playerWebview"
