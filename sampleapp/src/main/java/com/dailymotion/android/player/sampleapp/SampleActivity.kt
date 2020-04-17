@@ -118,12 +118,11 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onBackPressed() {
-        playerWebView.goBack()
-        if (isPlayerFullscreen) {
-            onFullScreenToggleRequested()
-        }
-        if (isLogFullScreen) {
-            toggleLogFullScreen()
+        when {
+            isPlayerFullscreen -> onFullScreenToggleRequested()
+            isLogFullScreen -> toggleLogFullScreen()
+            playerWebView.canGoBack() -> playerWebView.goBack()
+            else -> finish()
         }
     }
 
