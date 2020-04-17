@@ -20,6 +20,9 @@ android {
     compileSdkVersion Version.compileSdkVersion
 
     defaultConfig {
+
+        buildConfigField("String", "PLAYER_SDK_VERSION", "\"${LibraryProject.INSTANCE.libraryVersionName}\"")
+
         minSdkVersion Version.minSdkVersion
         targetSdkVersion Version.targetSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

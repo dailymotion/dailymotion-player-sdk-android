@@ -17,10 +17,12 @@ import android.view.ViewGroup
 import android.webkit.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import com.dailymotion.android.player.sdk.PlayerWebView
 
 import com.dailymotion.android.player.sdk.events.*
+import com.dailymotion.websdksample.BuildConfig
 import com.dailymotion.websdksample.R
 import kotlinx.android.synthetic.main.new_screen_sample.*
 import java.util.concurrent.TimeUnit
@@ -34,7 +36,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         const val DEFAULT_SEEK_VALUE_SEC = "30"
     }
 
-    private var isInFullScreen = false
+    private var isPlayerFullscreen = false
     private var videoAvailableQuality = emptyList<String>()
     private var selectedQuality = DEFAULT_QUALITY
 
@@ -109,6 +111,9 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         playerWebView.goBack()
+        if (isPlayerFullscreen) {
+            onFullScreenToggleRequested()
+        }
     }
 
     override fun onPause() {
@@ -138,7 +143,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
             it.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white))
 
             val actionBar = supportActionBar
-            actionBar?.title = getString(R.string.app_name)
+            actionBar?.title = "${getString(R.string.app_name)} v${BuildConfig.PLAYER_SDK_VERSION}"
         }
 
         toggleControlsButton.setOnClickListener(this@SampleActivity)
@@ -168,6 +173,10 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun initializePlayer(videoId: String, params: Map<String, String>) {
 
+        if (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) {
+            playerWebView.setIsWebContentsDebuggingEnabled(true)
+        }
+
         /* Plug our listener so we can listen to WebView errors */
         playerWebView.setWebViewErrorListener(object : PlayerWebView.WebViewErrorListener {
             override fun onErrorReceived(webView: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
@@ -188,12 +197,6 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
                 log("WebView [${webView.hashCode()}] received an HTTP error with statusCode: ${errorResponse?.statusCode}")
             }
         })
-
-        if (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) {
-            playerWebView.setIsWebContentsDebuggingEnabled(true)
-        }
-
-        playerWebView.load(videoId = videoId, loadParams = params)
 
         playerWebView.setEventListener { event ->
             when (event) {
@@ -226,37 +229,47 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
                 is FullScreenToggleRequestedEvent -> onFullScreenToggleRequested()
             }
         }
+
+        playerWebView.load(videoId = videoId, loadParams = params)
     }
 
     private fun setFullScreenInternal(fullScreen: Boolean) {
-        isInFullScreen = fullScreen
-        controlsContainerLayout.visibility = if (isInFullScreen) View.GONE else View.VISIBLE
-        playerWebView.setFullscreenButton(isInFullScreen)
+        isPlayerFullscreen = fullScreen
+        controlsContainerLayout.visibility = if (isPlayerFullscreen) View.GONE else View.VISIBLE
+        playerWebView.setFullscreenButton(isPlayerFullscreen)
     }
 
     @SuppressLint("SourceLockedOrientationActivity")
     private fun onFullScreenToggleRequested() {
-        setFullScreenInternal(!isInFullScreen)
-        val params: ConstraintLayout.LayoutParams
-        if (isInFullScreen) {
+        setFullScreenInternal(!isPlayerFullscreen)
+
+        if (isPlayerFullscreen) {
             toolbar?.visibility = View.GONE
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-            params = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            playerWebView.layoutParams = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+
         } else {
             toolbar?.visibility = View.VISIBLE
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
-            params = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (215 * resources.displayMetrics.density).toInt())
+            playerWebView.layoutParams = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (215 * resources.displayMetrics.density).toInt())
+
+            val constraintSet = ConstraintSet()
+            constraintSet.clone(rootConstraintLayout)
+            constraintSet.connect(R.id.playerWebView, ConstraintSet.TOP, R.id.toolbar, ConstraintSet.BOTTOM,0)
+            constraintSet.applyTo(rootConstraintLayout)
         }
-        playerWebView.layoutParams = params
     }
 
     private fun log(text: String) {
         logText.append("\n" + text)
-        val scroll = logText.layout.getLineTop(logText.lineCount) - logText.height
-        if (scroll > 0) {
-            logText.scrollTo(0, scroll)
-        } else {
-            logText.scrollTo(0, 0)
+
+        logText.layout?.let {
+            val scroll = it.getLineTop(logText.lineCount) - logText.height
+            if (scroll > 0) {
+                logText.scrollTo(0, scroll)
+            } else {
+                logText.scrollTo(0, 0)
+            }
         }
     }
 }
