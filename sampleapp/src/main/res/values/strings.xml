@@ -29,7 +29,10 @@
 
     <string name="subtitle_english">Set EN subtitle</string>
     <string name="set_quality_to">Set quality to</string>
+    <string name="quality_unit">dp</string>
 
+    <string name="value">value</string>
     <string name="player_events_trace">Player events trace</string>
+    <string name="select_video_quality">Select video quality</string>
 
 </resources>

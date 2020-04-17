@@ -2,6 +2,7 @@ package com.dailymotion.android.player.sampleapp
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.content.DialogInterface
 import android.content.pm.ActivityInfo
 import android.content.pm.ApplicationInfo
 import android.net.http.SslError
@@ -13,8 +14,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.webkit.*
+import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.dailymotion.android.player.sdk.PlayerWebView
@@ -28,15 +29,20 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val DEFAULT_VIDEO_ID = "x70val9"
+        const val DEFAULT_QUALITY = "240"
+        const val DEFAULT_VOLUME_VALUE = "1"
+        const val DEFAULT_SEEK_VALUE_SEC = "30"
     }
 
     private var isInFullScreen = false
+    private var videoAvailableQuality = emptyList<String>()
+    private var selectedQuality = DEFAULT_QUALITY
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initializeContentView()
-        initializePlayer(DEFAULT_VIDEO_ID, emptyMap())
+        initializePlayer(videoIdEditText.text.toString(), emptyMap())
     }
 
     override fun onClick(v: View) {
@@ -73,9 +79,20 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
                 playerWebView.volume = value
             }
 
-            loadVideoButton -> playerWebView.load("x19b6ui")
+            loadVideoButton -> playerWebView.load(videoIdEditText.text.toString())
             subtitleButton -> playerWebView.setSubtitle("en")
-            switchQualityButton -> playerWebView.quality = "240"
+
+            switchQualityButton -> playerWebView.quality = selectedQuality
+            qualityEditText -> {
+                val availableQualities = videoAvailableQuality.toTypedArray()
+                AlertDialog.Builder(this@SampleActivity)
+                        .setTitle(getString(R.string.select_video_quality))
+                        .setItems(availableQualities) { _: DialogInterface, pos: Int ->
+                            selectedQuality = availableQualities[pos]
+                            qualityEditText.setText(selectedQuality)
+                        }
+                        .create().show()
+            }
         }
     }
 
@@ -108,6 +125,11 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.new_screen_sample)
         setSupportActionBar(toolbar)
 
+        seekEditText.setText(DEFAULT_SEEK_VALUE_SEC)
+        videoIdEditText.setText(DEFAULT_VIDEO_ID)
+        volumeEditText.setText(DEFAULT_VOLUME_VALUE)
+        qualityEditText.setText(DEFAULT_QUALITY)
+
         logText.movementMethod = ScrollingMovementMethod()
 
         toolbar?.let {
@@ -138,8 +160,10 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         volumeButton.setOnClickListener(this@SampleActivity)
 
         loadVideoButton.setOnClickListener(this@SampleActivity)
-        switchQualityButton.setOnClickListener(this@SampleActivity)
         subtitleButton.setOnClickListener(this@SampleActivity)
+
+        switchQualityButton.setOnClickListener(this@SampleActivity)
+        qualityEditText.setOnClickListener(this@SampleActivity)
     }
 
     private fun initializePlayer(videoId: String, params: Map<String, String>) {
@@ -196,6 +220,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
                 is PlayEvent,
                 is PauseEvent -> log(event.name + " (paused: " + playerWebView.videoPaused + ")")
 
+                is QualitiesAvailableEvent -> videoAvailableQuality = event.qualities ?: listOf(DEFAULT_QUALITY)
                 is QualityChangeEvent -> log(event.name + " (quality: " + playerWebView.quality + ")")
                 is VolumeChangeEvent -> log(event.name + " (volume: " + playerWebView.volume + ")")
                 is FullScreenToggleRequestedEvent -> onFullScreenToggleRequested()
