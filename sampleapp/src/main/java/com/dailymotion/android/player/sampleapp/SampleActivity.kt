@@ -13,15 +13,16 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.LinearLayout
 import android.webkit.*
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import com.dailymotion.android.player.sdk.PlayerWebView
 
 import com.dailymotion.android.player.sdk.events.*
 import com.dailymotion.websdksample.R
 import kotlinx.android.synthetic.main.new_screen_sample.*
+import java.util.concurrent.TimeUnit
 
 class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -40,21 +41,41 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         when (v) {
-            btnPlay -> playerWebview.play()
-            btnTogglePlay -> playerWebview.togglePlay()
-            btnPause -> playerWebview.pause()
-            btnSeek -> playerWebview.seek(30.0)
-            btnLoadVideo -> playerWebview.load("x19b6ui")
-            btnSetQuality -> playerWebview.quality = "240"
-            btnSetSubtitle -> playerWebview.setSubtitle("en")
-            btnToggleControls -> playerWebview.toggleControls()
-            btnShowControls -> playerWebview.showControls(true)
-            btnHideControls -> playerWebview.showControls(false)
-            btnSetVolume -> {
-                val text = (findViewById<View>(R.id.editTextVolume) as EditText).text.toString()
-                val volume = java.lang.Float.parseFloat(text)
-                playerWebview.volume = volume
+
+            toggleControlsButton -> playerWebView.toggleControls()
+            showControlsButton -> playerWebView.showControls(true)
+            hideControlsButton -> playerWebView.showControls(false)
+
+            playButton -> playerWebView.play()
+            togglePlayPauseButton -> playerWebView.togglePlay()
+            pauseButton -> playerWebView.pause()
+
+            seekForwardButton -> {
+                val seekValueSec = seekEditText.text.toString().toDouble()
+                val positionInMs = playerWebView.position
+                val finalPositionSec = TimeUnit.MILLISECONDS.toSeconds(positionInMs) + seekValueSec
+                playerWebView.seek(finalPositionSec)
             }
+            seekBackwardButton -> {
+                val seekValueSec = seekEditText.text.toString().toDouble()
+                val positionInMs = playerWebView.position
+                var finalPositionSec = TimeUnit.MILLISECONDS.toSeconds(positionInMs) - seekValueSec
+                if (finalPositionSec < 0) {
+                     finalPositionSec = 0.0
+                }
+                playerWebView.seek(finalPositionSec)
+            }
+
+            muteButton -> playerWebView.mute()
+            unMuteButton -> playerWebView.unmute()
+            volumeButton -> {
+                val value = volumeEditText.text.toString().toFloat()
+                playerWebView.volume = value
+            }
+
+            loadVideoButton -> playerWebView.load("x19b6ui")
+            subtitleButton -> playerWebView.setSubtitle("en")
+            switchQualityButton -> playerWebView.quality = "240"
         }
     }
 
@@ -70,17 +91,17 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onBackPressed() {
-        playerWebview.goBack()
+        playerWebView.goBack()
     }
 
     override fun onPause() {
         super.onPause()
-        playerWebview.onPause()
+        playerWebView.onPause()
     }
 
     override fun onResume() {
         super.onResume()
-        playerWebview.onResume()
+        playerWebView.onResume()
     }
 
     private fun initializeContentView() {
@@ -98,23 +119,33 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
             actionBar?.title = getString(R.string.app_name)
         }
 
-        btnTogglePlay.setOnClickListener(this@SampleActivity)
-        btnPlay.setOnClickListener(this@SampleActivity)
-        btnPause.setOnClickListener(this@SampleActivity)
-        btnSeek.setOnClickListener(this@SampleActivity)
-        btnLoadVideo.setOnClickListener(this@SampleActivity)
-        btnSetQuality.setOnClickListener(this@SampleActivity)
-        btnSetSubtitle.setOnClickListener(this@SampleActivity)
-        btnToggleControls.setOnClickListener(this@SampleActivity)
-        btnShowControls.setOnClickListener(this@SampleActivity)
-        btnHideControls.setOnClickListener(this@SampleActivity)
-        btnSetVolume.setOnClickListener(this@SampleActivity)
+        toggleControlsButton.setOnClickListener(this@SampleActivity)
+        showControlsButton.setOnClickListener(this@SampleActivity)
+        hideControlsButton.setOnClickListener(this@SampleActivity)
+
+        toggleControlsButton.setOnClickListener(this@SampleActivity)
+        showControlsButton.setOnClickListener(this@SampleActivity)
+        hideControlsButton.setOnClickListener(this@SampleActivity)
+
+        togglePlayPauseButton.setOnClickListener(this@SampleActivity)
+        playButton.setOnClickListener(this@SampleActivity)
+        pauseButton.setOnClickListener(this@SampleActivity)
+
+        seekForwardButton.setOnClickListener(this@SampleActivity)
+        seekBackwardButton.setOnClickListener(this@SampleActivity)
+        volumeEditText.setOnClickListener(this@SampleActivity)
+
+        volumeButton.setOnClickListener(this@SampleActivity)
+
+        loadVideoButton.setOnClickListener(this@SampleActivity)
+        switchQualityButton.setOnClickListener(this@SampleActivity)
+        subtitleButton.setOnClickListener(this@SampleActivity)
     }
 
     private fun initializePlayer(videoId: String, params: Map<String, String>) {
 
         /* Plug our listener so we can listen to WebView errors */
-        playerWebview.setWebViewErrorListener(object : PlayerWebView.WebViewErrorListener {
+        playerWebView.setWebViewErrorListener(object : PlayerWebView.WebViewErrorListener {
             override fun onErrorReceived(webView: WebView?, errorCode: Int, description: String?, failingUrl: String?) {
                 log("WebView [${webView.hashCode()}] received an error with code: $errorCode, description: $description from URL: $failingUrl")
             }
@@ -135,38 +166,38 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         })
 
         if (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) {
-            playerWebview.setIsWebContentsDebuggingEnabled(true)
+            playerWebView.setIsWebContentsDebuggingEnabled(true)
         }
 
-        playerWebview.load(videoId = videoId, loadParams = params)
+        playerWebView.load(videoId = videoId, loadParams = params)
 
-        playerWebview.setEventListener { event ->
+        playerWebView.setEventListener { event ->
             when (event) {
                 is ApiReadyEvent -> log(event.name)
                 is StartEvent -> log(event.name)
                 is LoadedMetaDataEvent -> log(event.name)
-                is ProgressEvent -> log(event.name + " (bufferedTime: " + playerWebview.bufferedTime + ")")
-                is DurationChangeEvent -> log(event.name + " (duration: " + playerWebview.duration + ")")
+                is ProgressEvent -> log(event.name + " (bufferedTime: " + playerWebView.bufferedTime + ")")
+                is DurationChangeEvent -> log(event.name + " (duration: " + playerWebView.duration + ")")
 
                 is TimeUpdateEvent,
                 is AdTimeUpdateEvent,
                 is SeekingEvent,
-                is SeekedEvent -> log(event.name + " (currentTime: " + playerWebview.position + ")")
+                is SeekedEvent -> log(event.name + " (currentTime: " + playerWebView.position + ")")
 
                 is VideoStartEvent,
                 is AdStartEvent,
                 is AdPlayEvent,
                 is PlayingEvent,
-                is EndEvent -> log(event.name + " (ended: " + playerWebview.isEnded + ")")
+                is EndEvent -> log(event.name + " (ended: " + playerWebView.isEnded + ")")
 
                 is AdPauseEvent,
                 is AdEndEvent,
                 is VideoEndEvent,
                 is PlayEvent,
-                is PauseEvent -> log(event.name + " (paused: " + playerWebview.videoPaused + ")")
+                is PauseEvent -> log(event.name + " (paused: " + playerWebView.videoPaused + ")")
 
-                is QualityChangeEvent -> log(event.name + " (quality: " + playerWebview.quality + ")")
-                is VolumeChangeEvent -> log(event.name + " (volume: " + playerWebview.volume + ")")
+                is QualityChangeEvent -> log(event.name + " (quality: " + playerWebView.quality + ")")
+                is VolumeChangeEvent -> log(event.name + " (volume: " + playerWebView.volume + ")")
                 is FullScreenToggleRequestedEvent -> onFullScreenToggleRequested()
             }
         }
@@ -174,31 +205,27 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun setFullScreenInternal(fullScreen: Boolean) {
         isInFullScreen = fullScreen
-        action_layout.visibility = if (isInFullScreen) View.GONE else View.VISIBLE
-        playerWebview.setFullscreenButton(isInFullScreen)
+        controlsContainerLayout.visibility = if (isInFullScreen) View.GONE else View.VISIBLE
+        playerWebView.setFullscreenButton(isInFullScreen)
     }
 
     @SuppressLint("SourceLockedOrientationActivity")
     private fun onFullScreenToggleRequested() {
         setFullScreenInternal(!isInFullScreen)
-        val params: LinearLayout.LayoutParams
+        val params: ConstraintLayout.LayoutParams
         if (isInFullScreen) {
             toolbar?.visibility = View.GONE
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-            params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+            params = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         } else {
             toolbar?.visibility = View.VISIBLE
             requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
-            params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (215 * resources.displayMetrics.density).toInt())
+            params = ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (215 * resources.displayMetrics.density).toInt())
         }
-        playerWebview.layoutParams = params
+        playerWebView.layoutParams = params
     }
 
     private fun log(text: String) {
-        if (action_layout.visibility == View.GONE) {
-            return
-        }
-
         logText.append("\n" + text)
         val scroll = logText.layout.getLineTop(logText.lineCount) - logText.height
         if (scroll > 0) {

@@ -3,8 +3,33 @@
 
     <string name="app_name">Player SDK Sample</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="launch">Go to video activiy</string>
+
+    <string name="toggle_controls">Toggle controls</string>
+    <string name="show_controls">Show controls</string>
+    <string name="hide_controls">Hide controls</string>
+
+    <string name="toggle_play_pause">Toggle\nplay / pause</string>
+    <string name="play">play</string>
+    <string name="pause">pause</string>
+
+    <string name="seek_forward">Seek\nforward</string>
+    <string name="seek_backward">Seek\nbackward</string>
+    <string name="seek_value_hint">value</string>
+    <string name="seek_unit">seconds</string>
+
+    <string name="mute">mute</string>
+    <string name="unmute">unmute</string>
+    <string name="volume">Set\nvolume to</string>
+    <string name="volume_value_hint">Between\n0F and 1F</string>
+
+    <string name="load_video">Load video</string>
+    <string name="video_id_value_hint">video id</string>
+
+    <string name="subtitle_english">Set EN subtitle</string>
+    <string name="set_quality_to">Set quality to</string>
+
+    <string name="player_events_trace">Player events trace</string>
 
 </resources>
