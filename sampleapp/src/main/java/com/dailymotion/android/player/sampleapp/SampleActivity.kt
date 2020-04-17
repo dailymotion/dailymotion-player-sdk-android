@@ -25,6 +25,8 @@ import com.dailymotion.android.player.sdk.events.*
 import com.dailymotion.websdksample.BuildConfig
 import com.dailymotion.websdksample.R
 import kotlinx.android.synthetic.main.new_screen_sample.*
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 
 class SampleActivity : AppCompatActivity(), View.OnClickListener {
@@ -39,6 +41,9 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
     private var isPlayerFullscreen = false
     private var videoAvailableQuality = emptyList<String>()
     private var selectedQuality = DEFAULT_QUALITY
+
+    private var isLogFullScreen = false
+    private var keepScrollBottom = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +74,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
                 val positionInMs = playerWebView.position
                 var finalPositionSec = TimeUnit.MILLISECONDS.toSeconds(positionInMs) - seekValueSec
                 if (finalPositionSec < 0) {
-                     finalPositionSec = 0.0
+                    finalPositionSec = 0.0
                 }
                 playerWebView.seek(finalPositionSec)
             }
@@ -95,6 +100,9 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
                         }
                         .create().show()
             }
+
+            logFullScreenButton -> toggleLogFullScreen()
+            logScrollBottom -> toggleLogScrollBottom()
         }
     }
 
@@ -113,6 +121,9 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         playerWebView.goBack()
         if (isPlayerFullscreen) {
             onFullScreenToggleRequested()
+        }
+        if (isLogFullScreen) {
+            toggleLogFullScreen()
         }
     }
 
@@ -169,6 +180,9 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
         switchQualityButton.setOnClickListener(this@SampleActivity)
         qualityEditText.setOnClickListener(this@SampleActivity)
+
+        logFullScreenButton.setOnClickListener(this@SampleActivity)
+        logScrollBottom.setOnClickListener(this@SampleActivity)
     }
 
     private fun initializePlayer(videoId: String, params: Map<String, String>) {
@@ -255,20 +269,45 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
             val constraintSet = ConstraintSet()
             constraintSet.clone(rootConstraintLayout)
-            constraintSet.connect(R.id.playerWebView, ConstraintSet.TOP, R.id.toolbar, ConstraintSet.BOTTOM,0)
+            constraintSet.connect(R.id.playerWebView, ConstraintSet.TOP, R.id.toolbar, ConstraintSet.BOTTOM, 0)
             constraintSet.applyTo(rootConstraintLayout)
         }
     }
 
-    private fun log(text: String) {
-        logText.append("\n" + text)
+    private fun toggleLogFullScreen() {
+        isLogFullScreen = !isLogFullScreen
 
-        logText.layout?.let {
-            val scroll = it.getLineTop(logText.lineCount) - logText.height
-            if (scroll > 0) {
-                logText.scrollTo(0, scroll)
-            } else {
-                logText.scrollTo(0, 0)
+        val constraintSet = ConstraintSet()
+        constraintSet.clone(rootConstraintLayout)
+        if (isLogFullScreen) {
+            constraintSet.connect(R.id.logControlsContainerLayout, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0)
+        } else {
+            constraintSet.connect(R.id.logControlsContainerLayout, ConstraintSet.TOP, R.id.controlsContainerLayout, ConstraintSet.BOTTOM, 0)
+        }
+        constraintSet.applyTo(rootConstraintLayout)
+    }
+
+    private fun toggleLogScrollBottom() {
+        keepScrollBottom = !keepScrollBottom
+        if (keepScrollBottom) {
+            logScrollBottom.setImageResource(R.drawable.ic_scroll_bottom_toggled)
+        } else {
+            logScrollBottom.setImageResource(R.drawable.ic_scroll_bottom)
+        }
+    }
+
+    private fun log(text: String) {
+        val timestamp = SimpleDateFormat.getTimeInstance().format(Date())
+        logText.append("\n$timestamp: $text")
+
+        if (keepScrollBottom) {
+            logText.layout?.let {
+                val scroll = it.getLineTop(logText.lineCount) - logText.height
+                if (scroll > 0) {
+                    logText.scrollTo(0, scroll)
+                } else {
+                    logText.scrollTo(0, 0)
+                }
             }
         }
     }
