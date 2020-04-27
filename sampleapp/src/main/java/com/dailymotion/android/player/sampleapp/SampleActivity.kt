@@ -59,8 +59,8 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
             showControlsButton -> playerWebView.showControls(true)
             hideControlsButton -> playerWebView.showControls(false)
 
-            playButton -> playerWebView.play()
             togglePlayPauseButton -> playerWebView.togglePlay()
+            playButton -> playerWebView.play()
             pauseButton -> playerWebView.pause()
 
             seekForwardButton -> {
@@ -170,8 +170,9 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
         seekForwardButton.setOnClickListener(this@SampleActivity)
         seekBackwardButton.setOnClickListener(this@SampleActivity)
-        volumeEditText.setOnClickListener(this@SampleActivity)
 
+        muteButton.setOnClickListener(this@SampleActivity)
+        unMuteButton.setOnClickListener(this@SampleActivity)
         volumeButton.setOnClickListener(this@SampleActivity)
 
         loadVideoButton.setOnClickListener(this@SampleActivity)
