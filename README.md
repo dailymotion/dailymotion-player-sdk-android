@@ -20,7 +20,7 @@ You can either import the SDK using your IDE or integrate PlayerWebView.kt in yo
 
 Using gradle, you can import the sdk with :
 ```
-implementation 'com.dailymotion.dailymotion-sdk-android:sdk:0.1.31'
+implementation 'com.dailymotion.dailymotion-sdk-android:sdk:0.2'
 ```
 
 The sdk will need the following permission and attributes inside your `AndroidManifest.xml`:
