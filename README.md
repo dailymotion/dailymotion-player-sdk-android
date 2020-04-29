@@ -25,15 +25,11 @@ implementation 'com.dailymotion.dailymotion-sdk-android:sdk:0.1.31'
 
 The sdk will need the following permission and attributes inside your `AndroidManifest.xml`:
 ```
-
 <uses-permission android:name="android.permission.INTERNET" />
+```
 
-<application
-
- android:hardwareAccelerated="true"
-
- >
-
+```
+android:hardwareAccelerated="true"
 ```
 
 ### Use in your Activity or Fragment
@@ -83,7 +79,7 @@ The `load(...)` method can also take additionnal parameters:
 For the screen rotation to be handled correctly, you need to add
 
 ```xml
-        android:configChanges="orientation|screenSize"
+    android:configChanges="orientation|screenSize"
 ```
 
 to any activity using PlayerWebView, in your AndroidManifest.xml
