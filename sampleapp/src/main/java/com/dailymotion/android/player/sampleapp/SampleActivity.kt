@@ -15,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
+import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -120,7 +121,6 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
     override fun onBackPressed() {
         when {
             isPlayerFullscreen -> onFullScreenToggleRequested()
-            isLogFullScreen -> toggleLogFullScreen()
             playerWebView.canGoBack() -> playerWebView.goBack()
             else -> finish()
         }
@@ -277,14 +277,15 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
     private fun toggleLogFullScreen() {
         isLogFullScreen = !isLogFullScreen
 
-        val constraintSet = ConstraintSet()
-        constraintSet.clone(rootConstraintLayout)
         if (isLogFullScreen) {
-            constraintSet.connect(R.id.logControlsContainerLayout, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0)
+            controlsContainerLayout.visibility = View.GONE
+            val height = scrollContainerLayout.height
+            logControlsContainerLayout.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height)
+
         } else {
-            constraintSet.connect(R.id.logControlsContainerLayout, ConstraintSet.TOP, R.id.controlsContainerLayout, ConstraintSet.BOTTOM, 0)
+            controlsContainerLayout.visibility = View.VISIBLE
+            logControlsContainerLayout.layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, resources.getDimensionPixelSize(R.dimen.log_default_height))
         }
-        constraintSet.applyTo(rootConstraintLayout)
     }
 
     private fun toggleLogScrollBottom() {
