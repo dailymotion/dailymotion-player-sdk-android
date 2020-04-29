@@ -4,72 +4,74 @@ Dailymotion Player SDK Android
 [![Build Status](https://travis-ci.org/dailymotion/dailymotion-player-sdk-android.svg?branch=master)](https://travis-ci.org/dailymotion/dailymotion-player-sdk-android)
 
 This SDK aims at easily embedding Dailymotion videos on your Android application using WebView. It supports api level 21+.
-The SDK is bundled with a sample application
+The SDK is bundled with a sample application.
 
 Features
 --------
 
 - Dead simple to use. No need to specify a layout container for the VideoView
-- Supports Android 3.0.x and superior
+- Supports Android 5.0.x (API level 21) and superior
 
 How to use
 ----------
 
 ### Add the SDK to your project
-You can either import the SDK using your IDE or integrate PlayerWebView.java in your project.
+You can either import the SDK using your IDE or integrate PlayerWebView.kt in your project.
 
-You can import the sdk with :
+Using gradle, you can import the sdk with :
 ```
-implementation 'com.dailymotion.dailymotion-sdk-android:sdk:0.1.31'
+implementation 'com.dailymotion.dailymotion-sdk-android:sdk:0.2'
+```
+
+The sdk will need the following permission and attributes inside your `AndroidManifest.xml`:
+```
+<uses-permission android:name="android.permission.INTERNET" />
 ```
 
 ```
 android:hardwareAccelerated="true"
-
-<uses-permission android:name="android.permission.INTERNET" />
 ```
 
 ### Use in your Activity or Fragment
 First, add the PlayerWebView in your layout in place of the regular WebView.
 
 ```xml
-        <com.dailymotion.android.player.sdk.PlayerWebView
-               android:id="@+id/dm_player_web_view"
-               android:layout_width="match_parent"
-               android:layout_height="215dp">
-       </com.dailymotion.android.player.sdk.PlayerWebView>
+    <com.dailymotion.android.player.sdk.PlayerWebView
+        android:id="@+id/dm_player_web_view"
+        android:layout_width="match_parent"
+        android:layout_height="215dp" />
 ```
 
 Then in your Activity code just launch your content.
-Get your PlayerWebView then call load("id").
+To play a video, simply call the `load(...)` method of `PlayerWebView`.
 
 
-```java
-    private PlayerWebView mVideoView;
+```kotlin
+    lateinit var playerWebView: PlayerWebView
     
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.screen_sample);
 
-        mVideoView = (PlayerWebView) findViewById(R.id.dm_player_web_view);
-        mVideoView.load("x26hv6c");
+        playerWebView = findViewById(R.id.playerWebview)
+        playerWebView.load(videoId = "x26hv6c");
     }
 ```
 
-You can load the video with your parameters.
-```java
-    private PlayerWebView mVideoView;
+The `load(...)` method can also take additionnal parameters:
+```kotlin
+    lateinit var playerWebView: PlayerWebView
     
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.screen_sample);
 
-        mVideoView = (PlayerWebView) findViewById(R.id.dm_player_web_view);
-        Map<String, String> playerParams = new HashMap<>();
-        playerParams.put("key", "value");
-        mVideoView.load("x26hv6c", playerParams);
+        playerWebView = findViewById(R.id.playerWebview)
+        val params = mapOf(
+                "key1" to "value1",
+                "key2" to "value2"
+        )
+        playerWebView.load(videoId = "x26hv6c", loadParams = params);
     }
 ```
 
@@ -77,7 +79,7 @@ You can load the video with your parameters.
 For the screen rotation to be handled correctly, you need to add
 
 ```xml
-        android:configChanges="orientation|screenSize"
+    android:configChanges="orientation|screenSize"
 ```
 
 to any activity using PlayerWebView, in your AndroidManifest.xml
@@ -85,40 +87,31 @@ to any activity using PlayerWebView, in your AndroidManifest.xml
 ### Lifecycle
 You have to call onPause and onResume when these events occur in your lifecycle :
 
-```java
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-            mVideoView.onPause();
-        }
+```kotlin
+    override fun onPause() {
+        super.onPause()
+        playerWebview.onPause()
     }
-        
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-            mVideoView.onResume();
-        }
+    override fun onResume() {
+        super.onResume()
+        playerWebview.onResume()
     }
 ```
 
 ### Play Services
-The SDK uses Google Play Services to get the [Advertising Id](http://www.androiddocs.com/google/play-services/id.html)
-If your app also uses play services, you may want to override the `play-services-ads` version to avoid conflicting with other play services artifacts.
+The SDK uses Google Play Services to get the [Advertising Id](https://developer.android.com/training/articles/ad-id)
+If your app also uses play services, you may want to override the `play-services-ads-identifier` version to avoid conflicting with other play services artifacts.
 
-```java
+```
 dependencies {
-    implementation "com.google.android.gms:play-services-ads:[your_play_services_version]"
+    implementation 'com.google.android.gms:play-services-ads-identifier:[your_play_services_version]'
 }
 ```
 
 ### Publish your own sdk on Bintray
 
-Update your local.properties files with this lines and replace <user> and <api.key> values`
+Update your local.properties files with this lines and replace <user> and <api.key> values
 
 ```
 bintray.user=<user>
