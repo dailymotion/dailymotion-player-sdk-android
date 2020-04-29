@@ -23,22 +23,27 @@ Using gradle, you can import the sdk with :
 implementation 'com.dailymotion.dailymotion-sdk-android:sdk:0.1.31'
 ```
 
-The sdk will need the following permission and attributes:
+The sdk will need the following permission and attributes inside your `AndroidManifest.xml`:
 ```
-android:hardwareAccelerated="true"
 
 <uses-permission android:name="android.permission.INTERNET" />
+
+<application
+
+ android:hardwareAccelerated="true"
+
+ >
+
 ```
 
 ### Use in your Activity or Fragment
 First, add the PlayerWebView in your layout in place of the regular WebView.
 
 ```xml
-        <com.dailymotion.android.player.sdk.PlayerWebView
-               android:id="@+id/dm_player_web_view"
-               android:layout_width="match_parent"
-               android:layout_height="215dp">
-       </com.dailymotion.android.player.sdk.PlayerWebView>
+    <com.dailymotion.android.player.sdk.PlayerWebView
+        android:id="@+id/dm_player_web_view"
+        android:layout_width="match_parent"
+        android:layout_height="215dp" />
 ```
 
 Then in your Activity code just launch your content.
@@ -110,7 +115,7 @@ dependencies {
 
 ### Publish your own sdk on Bintray
 
-Update your local.properties files with this lines and replace <user> and <api.key> values`
+Update your local.properties files with this lines and replace <user> and <api.key> values
 
 ```
 bintray.user=<user>
