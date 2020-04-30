@@ -9,7 +9,6 @@ import android.net.http.SslError
 import android.os.Build
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -17,11 +16,11 @@ import android.view.ViewGroup
 import android.webkit.*
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import com.dailymotion.android.player.sdk.PlayerWebView
-
 import com.dailymotion.android.player.sdk.events.*
 import com.dailymotion.websdksample.BuildConfig
 import com.dailymotion.websdksample.R
@@ -124,16 +123,6 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
             playerWebView.canGoBack() -> playerWebView.goBack()
             else -> finish()
         }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        playerWebView.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        playerWebView.onResume()
     }
 
     private fun initializeContentView() {
