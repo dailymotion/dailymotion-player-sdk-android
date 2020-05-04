@@ -507,6 +507,23 @@ class PlayerWebView : WebView {
         loadUrl(js)
     }
 
+    /**
+     * This is an hack to prevent an auto-play when coming from the background
+     * *
+     * The webview auto-pause the video when going to background, to auto-play later when going back to foreground
+     * even if we have manually call a video pause between
+     *
+     * We override onWindowVisibilityChanged and call our owns setVisible method
+     */
+    override fun onWindowVisibilityChanged(visibility: Int) {
+        if (visibility == View.VISIBLE){
+            super.onWindowVisibilityChanged(View.VISIBLE)
+            setVisible(true, false)
+        }else{
+            setVisible(false, false)
+        }
+    }
+
     fun release() {
         loadUrl("about:blank")
         onPause()
