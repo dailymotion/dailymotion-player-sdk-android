@@ -33,6 +33,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
         const val DEFAULT_VIDEO_ID = "x70val9"
+        const val DEFAULT_PLAYLIST_ID = "x5zhzj"
         const val DEFAULT_QUALITY = "240"
         const val DEFAULT_VOLUME_VALUE = "1"
         const val DEFAULT_SEEK_VALUE_SEC = "30"
@@ -49,7 +50,10 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
 
         initializeContentView()
-        initializePlayer(videoIdEditText.text.toString(), emptyMap())
+        initializePlayer(mapOf("video" to videoIdEditText.text.toString(),
+                "playlist" to playlistIdEditText.text.toString(),
+                /* Set it to true because the default value is false */
+                "queue-enable" to "true"))
     }
 
     override fun onClick(v: View) {
@@ -86,7 +90,15 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
                 playerWebView.volume = value
             }
 
-            loadVideoButton -> playerWebView.load(videoIdEditText.text.toString())
+            loadVideoButton -> {
+                val params = mutableMapOf("video" to videoIdEditText.text.toString())
+                /* queue-enable must be set to TRUE at the FIRST load call otherwise you won't be able to see the playlist queue */
+                val playlistId = playlistIdEditText.text.toString()
+                if (playlistId.isNotEmpty()) {
+                    params["playlist"] = playlistId
+                }
+                playerWebView.load(params)
+            }
             subtitleButton -> playerWebView.setSubtitle("en")
 
             switchQualityButton -> playerWebView.quality = selectedQuality
@@ -131,6 +143,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
         seekEditText.setText(DEFAULT_SEEK_VALUE_SEC)
         videoIdEditText.setText(DEFAULT_VIDEO_ID)
+        playlistIdEditText.setText(DEFAULT_PLAYLIST_ID)
         volumeEditText.setText(DEFAULT_VOLUME_VALUE)
         qualityEditText.setText(DEFAULT_QUALITY)
 
@@ -174,7 +187,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         logScrollBottom.setOnClickListener(this@SampleActivity)
     }
 
-    private fun initializePlayer(videoId: String, params: Map<String, String>) {
+    private fun initializePlayer(params: Map<String, String>) {
 
         if (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) {
             playerWebView.setIsWebContentsDebuggingEnabled(true)
@@ -233,7 +246,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-        playerWebView.load(videoId = videoId, loadParams = params)
+        playerWebView.load(params = params)
     }
 
     private fun setFullScreenInternal(fullScreen: Boolean) {

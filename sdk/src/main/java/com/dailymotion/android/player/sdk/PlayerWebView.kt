@@ -69,6 +69,9 @@ class PlayerWebView : WebView {
     var videoId: String? = null
         private set
 
+    var playlistId: String? = null
+        private set
+
     var videoPaused = false
         private set
     var bufferedTime = 0.0
@@ -108,8 +111,20 @@ class PlayerWebView : WebView {
     constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) { /* do nothing */ }
     constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { /* do nothing */ }
 
+    @Deprecated("Use load(params: Map<String, Any?>?) instead")
     @JvmOverloads
     fun load(videoId: String?, loadParams: Map<String, Any?>? = emptyMap()) {
+        val finalParams = loadParams?.toMutableMap() ?: mutableMapOf()
+        finalParams[LOAD_PARAMS_VIDEO_KEY] = videoId
+        load(params = finalParams)
+    }
+
+    /**
+     * Load a video with a given map of params. To see a full list of supported params check:
+     * https://developer.dailymotion.com/player/#player-api-methods-load
+     */
+    fun load(params: Map<String, Any?>? = emptyMap()) {
+
         if (!mIsInitialized) {
             val defaultQueryParameters: MutableMap<String?, String?> = HashMap()
             defaultQueryParameters["sharing-enable"] = "false"
@@ -118,9 +133,16 @@ class PlayerWebView : WebView {
             defaultQueryParameters["collections-enable"] = "false"
             defaultQueryParameters["fullscreen-action"] = "trigger_event"
             defaultQueryParameters["locale"] = Locale.getDefault().language
+            defaultQueryParameters["queue-enable"] = "false"
+
+            /* Override default values */
+            if (params?.contains("queue-enable") == true) {
+                defaultQueryParameters["queue-enable"] = params["queue-enable"] as? String
+            }
+
             initialize("https://www.dailymotion.com/embed/", defaultQueryParameters, HashMap())
         }
-        queueCommand(COMMAND_LOAD, videoId!!, loadParams!!)
+        queueCommand(COMMAND_LOAD, params!!)
     }
 
     fun initialize(baseUrl: String?, queryParameters: Map<String?, String?>?, httpHeaders: Map<String?, String?>?) {
@@ -241,7 +263,6 @@ class PlayerWebView : WebView {
         // the following parameters below are compulsory, make sure they are always defined
         parameters["app"] = context.packageName
         parameters["api"] = "nativeBridge"
-        parameters["queue-enable"] = "0"
         if (Utils.hasFireTV(context)) {
             parameters["client_type"] = "firetv"
         } else if (Utils.hasLeanback(context)) {
@@ -464,7 +485,18 @@ class PlayerWebView : WebView {
         if (method == COMMAND_LOAD) {
             mPosition = 0f
             mDisallowIntercept = false
-            videoId = params[0] as String
+            val loadParam = params[0] as? Map<*, *>
+            loadParam?.keys?.let {
+                for (key in it) {
+                    if (key is String) {
+                        if (key == LOAD_PARAMS_VIDEO_KEY) {
+                            videoId = loadParam[key] as? String
+                        } else if (key == LOAD_PARAMS_PLAYLIST_KEY) {
+                            playlistId = loadParam[key] as? String
+                        }
+                    }
+                }
+            }
             mHasMetadata = false
             mHasPlaybackReady = false
             iterator = mCommandList.iterator()
@@ -706,6 +738,9 @@ class PlayerWebView : WebView {
     }
 
     companion object {
+
+        private const val LOAD_PARAMS_VIDEO_KEY = "video"
+        private const val LOAD_PARAMS_PLAYLIST_KEY = "playlist"
 
         const val EVENT_APIREADY = "apiready"
         const val EVENT_TIMEUPDATE = "timeupdate"
