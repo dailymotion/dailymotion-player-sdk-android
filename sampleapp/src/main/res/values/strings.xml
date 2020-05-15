@@ -25,7 +25,8 @@
     <string name="volume_value_hint">Between\n0F and 1F</string>
 
     <string name="load_video">Load video</string>
-    <string name="video_id_value_hint">video id</string>
+    <string name="video_id_value_hint">videoId</string>
+    <string name="playlist_id_value_hint">playlistId</string>
 
     <string name="subtitle_english">Set EN subtitle</string>
     <string name="set_quality_to">Set quality to</string>

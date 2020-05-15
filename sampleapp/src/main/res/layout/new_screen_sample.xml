@@ -212,18 +212,49 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/load_video"
+                    app:layout_constraintHorizontal_bias="1"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/videoIdEditText"
                     app:layout_constraintTop_toBottomOf="@id/fourthRowBarrier" />
+
+                <TextView android:id="@+id/videoIdTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/video_id_value_hint"
+                    app:layout_constraintLeft_toRightOf="@id/loadVideoButton"
+                    app:layout_constraintRight_toLeftOf="@id/videoIdEditText"
+                    app:layout_constraintBaseline_toBaselineOf="@id/videoIdEditText"/>
 
                 <EditText
                     android:id="@+id/videoIdEditText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/video_id_value_hint"
+                    android:inputType="text"
                     android:imeOptions="actionDone"
                     app:layout_constraintBottom_toBottomOf="@id/loadVideoButton"
-                    app:layout_constraintLeft_toRightOf="@id/loadVideoButton"
+                    app:layout_constraintLeft_toRightOf="@id/videoIdTextView"
+                    app:layout_constraintRight_toLeftOf="@id/playlistIdTextView"
+                    app:layout_constraintTop_toTopOf="@id/loadVideoButton" />
+
+                <TextView android:id="@+id/playlistIdTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/playlist_id_value_hint"
+                    app:layout_constraintLeft_toRightOf="@id/videoIdEditText"
+                    app:layout_constraintRight_toLeftOf="@id/playlistIdEditText"
+                    app:layout_constraintBaseline_toBaselineOf="@id/playlistIdEditText"/>
+
+                <EditText
+                    android:id="@+id/playlistIdEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/playlist_id_value_hint"
+                    android:inputType="text"
+                    android:imeOptions="actionDone"
+                    app:layout_constraintBottom_toBottomOf="@id/loadVideoButton"
+                    app:layout_constraintLeft_toRightOf="@id/playlistIdTextView"
+                    app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="@id/loadVideoButton" />
 
                 <androidx.constraintlayout.widget.Barrier
