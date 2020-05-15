@@ -68,10 +68,11 @@ The `load(...)` method can also take additionnal parameters:
 
         playerWebView = findViewById(R.id.playerWebview)
         val params = mapOf(
-                "key1" to "value1",
-                "key2" to "value2"
+                "video" to "videoXId",
+                "key2" to "value2",
+                "key3" to "value3",
         )
-        playerWebView.load(videoId = "x26hv6c", loadParams = params);
+        playerWebView.load(loadParams = params);
     }
 ```
 
