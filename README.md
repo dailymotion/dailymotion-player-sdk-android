@@ -122,3 +122,10 @@ bintray.apikey=<api.key>
 ```
 
 In your terminal call `gradlew install` then `gradlew bintrayUpload` 
+
+Faq
+---
+
+**Q.** I have an only Java project and I don’t plan to move to Kotlin. How can use your sdk ?\
+**A.** Starting from 0.2.0, the sdk is Kotlin only however you can still use the previous sdk version which are in Java and still available.\
+For instance, [0.1.31](https://bintray.com/dailymotion/com.dailymotion.dailymotion-sdk-android/sdk/0.1.31) is the latest sdk using only Java.
