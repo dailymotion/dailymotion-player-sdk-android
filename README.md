@@ -11,6 +11,7 @@ Features
 
 - Dead simple to use. No need to specify a layout container for the VideoView
 - Supports Android 5.0.x (API level 21) and superior
+- Fully in kotlin. If your project is still in JAVA, you will need to add the kotlin dependencies: https://developer.android.com/kotlin/add-kotlin
 
 How to use
 ----------
@@ -54,7 +55,8 @@ To play a video, simply call the `load(...)` method of `PlayerWebView`.
         setContentView(R.layout.screen_sample);
 
         playerWebView = findViewById(R.id.playerWebview)
-        playerWebView.load(videoId = "x26hv6c");
+        val params = mapOf("video" to "x26hv6c")
+        playerWebView.load(loadParams = params);
     }
 ```
 
