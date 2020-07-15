@@ -28,8 +28,10 @@
     <string name="video_id_value_hint">videoId</string>
     <string name="playlist_id_value_hint">playlistId</string>
 
-    <string name="subtitle_english">Set EN subtitle</string>
-    <string name="set_quality_to">Set quality to</string>
+    <string name="scale_mode">Scale mode</string>
+    <string name="apply_scale_mode">Set scaleMode</string>
+
+    <string name="quality">Quality</string>
     <string name="quality_unit">dp</string>
 
     <string name="value">value</string>
