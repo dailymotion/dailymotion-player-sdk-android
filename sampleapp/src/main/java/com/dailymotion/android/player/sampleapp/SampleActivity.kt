@@ -43,8 +43,8 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private var scaleModeList = listOf(
-            "fit",
-            "fill"
+            PlayerWebView.SCALE_MODE_FIT,
+            PlayerWebView.SCALE_MODE_FILL
     )
     private var selectedScaleMode = DEFAULT_SCALE_MODE
 

@@ -800,6 +800,9 @@ class PlayerWebView : WebView {
         const val COMMAND_VOLUME = "volume"
         const val COMMAND_SCALE = "scaleMode"
 
+        const val SCALE_MODE_FIT = "fit"
+        const val SCALE_MODE_FILL = "fill"
+
         private const val ASSETS_SCHEME = "asset://"
     }
 }
