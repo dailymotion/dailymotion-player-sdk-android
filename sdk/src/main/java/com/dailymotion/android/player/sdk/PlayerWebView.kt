@@ -762,6 +762,7 @@ class PlayerWebView : WebView {
         const val EVENT_ADD_TO_COLLECTION_REQUESTED = "add_to_collection_requested"
         const val EVENT_LIKE_REQUESTED = "like_requested"
         const val EVENT_WATCH_LATER_REQUESTED = "watch_later_requested"
+        const val EVENT_ERROR = "error"
         const val EVENT_SHARE_REQUESTED = "share_requested"
         const val EVENT_FULLSCREEN_TOGGLE_REQUESTED = "fullscreen_toggle_requested"
         const val EVENT_PLAY = "play"

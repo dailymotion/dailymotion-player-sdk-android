@@ -41,3 +41,4 @@ class VideoEndEvent internal constructor(override val payload: String?) : Player
 class VideoStartEvent internal constructor(override val payload: String?, val replay: String?) : PlayerEvent(PlayerWebView.EVENT_VIDEO_START, payload)
 class VolumeChangeEvent internal constructor(override val payload: String?, val volume: String?, val isMuted: Boolean) : PlayerEvent(PlayerWebView.EVENT_VOLUMECHANGE, payload)
 class WatchLaterRequestedEvent internal constructor(override val payload: String?) : PlayerEvent(PlayerWebView.EVENT_WATCH_LATER_REQUESTED, payload)
+class ErrorEvent internal constructor(override val payload: String?, val code: String?, val title: String?, val message: String?) : PlayerEvent(PlayerWebView.EVENT_ERROR, payload)
