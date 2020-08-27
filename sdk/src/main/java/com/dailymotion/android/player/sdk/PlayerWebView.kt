@@ -127,7 +127,6 @@ class PlayerWebView : WebView {
 
         if (!mIsInitialized) {
             val defaultQueryParameters: MutableMap<String?, String?> = HashMap()
-            defaultQueryParameters["logger"] = "1"
             defaultQueryParameters["sharing-enable"] = "false"
             defaultQueryParameters["watchlater-enable"] = "false"
             defaultQueryParameters["like-enable"] = "false"
