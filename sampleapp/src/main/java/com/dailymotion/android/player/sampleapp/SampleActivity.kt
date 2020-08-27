@@ -215,34 +215,37 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         })
 
         playerWebView.setEventListener { event ->
+            val eventName = event.name
             when (event) {
-                is ApiReadyEvent -> log(event.name)
-                is StartEvent -> log(event.name)
-                is LoadedMetaDataEvent -> log(event.name)
-                is ProgressEvent -> log(event.name + " (bufferedTime: " + playerWebView.bufferedTime + ")")
-                is DurationChangeEvent -> log(event.name + " (duration: " + playerWebView.duration + ")")
+                is ApiReadyEvent -> log(eventName)
+                is StartEvent -> log(eventName)
+                is LoadedMetaDataEvent -> log(eventName)
+                is ProgressEvent -> log(eventName + " (bufferedTime: " + playerWebView.bufferedTime + ")")
+                is DurationChangeEvent -> log(eventName + " (duration: " + playerWebView.duration + ")")
 
                 is TimeUpdateEvent,
                 is AdTimeUpdateEvent,
                 is SeekingEvent,
-                is SeekedEvent -> log(event.name + " (currentTime: " + playerWebView.position + ")")
+                is SeekedEvent -> log(eventName + " (currentTime: " + playerWebView.position + ")")
 
                 is VideoStartEvent,
                 is AdStartEvent,
                 is AdPlayEvent,
                 is PlayingEvent,
-                is EndEvent -> log(event.name + " (ended: " + playerWebView.isEnded + ")")
+                is EndEvent -> log(eventName + " (ended: " + playerWebView.isEnded + ")")
 
                 is AdPauseEvent,
                 is AdEndEvent,
                 is VideoEndEvent,
                 is PlayEvent,
-                is PauseEvent -> log(event.name + " (paused: " + playerWebView.videoPaused + ")")
+                is PauseEvent -> log(eventName + " (paused: " + playerWebView.videoPaused + ")")
 
                 is QualitiesAvailableEvent -> videoAvailableQuality = event.qualities ?: listOf(DEFAULT_QUALITY)
-                is QualityChangeEvent -> log(event.name + " (quality: " + playerWebView.quality + ")")
-                is VolumeChangeEvent -> log(event.name + " (volume: " + playerWebView.volume + ")")
+                is QualityChangeEvent -> log(eventName + " (quality: " + playerWebView.quality + ")")
+                is VolumeChangeEvent -> log(eventName + " (volume: " + playerWebView.volume + ")")
                 is FullScreenToggleRequestedEvent -> onFullScreenToggleRequested()
+
+                is ErrorEvent -> log("Caught $eventName event with code: ${event.code}, title=${event.title}, message=${event.message}")
             }
         }
 

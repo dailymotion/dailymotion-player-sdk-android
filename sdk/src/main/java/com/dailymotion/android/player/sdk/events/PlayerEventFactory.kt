@@ -111,8 +111,18 @@ class PlayerEventFactory {
             PlayerWebView.EVENT_VIDEO_CHANGE -> {
                 createVideoChangeEvent(payload)
             }
+            PlayerWebView.EVENT_ERROR -> {
+                createErrorEvent(payload, params)
+            }
             else -> createGenericPlayerEvent(payload)
         }
+    }
+
+    private fun createErrorEvent(payload: String, params: Map<String, String?>): PlayerEvent {
+        return ErrorEvent(payload = payload,
+                code = params["code"],
+                title = params["title"],
+                message = params["message"])
     }
 
     private fun createVideoChangeEvent(payload: String): PlayerEvent {
