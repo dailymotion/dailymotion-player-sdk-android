@@ -32,12 +32,21 @@ import java.util.concurrent.TimeUnit
 class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
     companion object {
-        const val DEFAULT_VIDEO_ID = "x70val9"
+
+        const val DEFAULT_VERTICAL_VIDEO_ID = "x7h2j4q"
+        const val DEFAULT_HORIZONTAL_VIDEO_ID = "x70val9"
         const val DEFAULT_PLAYLIST_ID = "x5zhzj"
+        const val DEFAULT_SCALE_MODE = "fit"
         const val DEFAULT_QUALITY = "240"
         const val DEFAULT_VOLUME_VALUE = "1"
         const val DEFAULT_SEEK_VALUE_SEC = "30"
     }
+
+    private var scaleModeList = listOf(
+            PlayerWebView.SCALE_MODE_FIT,
+            PlayerWebView.SCALE_MODE_FILL
+    )
+    private var selectedScaleMode = DEFAULT_SCALE_MODE
 
     private var isPlayerFullscreen = false
     private var videoAvailableQuality = emptyList<String>()
@@ -99,9 +108,19 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 playerWebView.load(params)
             }
-            subtitleButton -> playerWebView.setSubtitle("en")
 
-            switchQualityButton -> playerWebView.quality = selectedQuality
+            scaleModeEditText -> {
+                /* Be sure to load a vertical video to see correctly the scale mode effect. For instance, load DEFAULT_VERTICAL_VIDEO_ID */
+                AlertDialog.Builder(this@SampleActivity)
+                        .setTitle(getString(R.string.apply_scale_mode))
+                        .setItems(scaleModeList.toTypedArray()) { _: DialogInterface, pos: Int ->
+                            selectedScaleMode = scaleModeList[pos]
+                            scaleModeEditText.setText(selectedScaleMode)
+                            playerWebView.scaleMode(selectedScaleMode)
+                        }
+                        .create().show()
+            }
+
             qualityEditText -> {
                 val availableQualities = videoAvailableQuality.toTypedArray()
                 AlertDialog.Builder(this@SampleActivity)
@@ -109,6 +128,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
                         .setItems(availableQualities) { _: DialogInterface, pos: Int ->
                             selectedQuality = availableQualities[pos]
                             qualityEditText.setText(selectedQuality)
+                            playerWebView.quality = selectedQuality
                         }
                         .create().show()
             }
@@ -142,10 +162,11 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         setSupportActionBar(toolbar)
 
         seekEditText.setText(DEFAULT_SEEK_VALUE_SEC)
-        videoIdEditText.setText(DEFAULT_VIDEO_ID)
+        videoIdEditText.setText(DEFAULT_HORIZONTAL_VIDEO_ID)
         playlistIdEditText.setText(DEFAULT_PLAYLIST_ID)
         volumeEditText.setText(DEFAULT_VOLUME_VALUE)
         qualityEditText.setText(DEFAULT_QUALITY)
+        scaleModeEditText.setText(DEFAULT_SCALE_MODE)
 
         logText.movementMethod = ScrollingMovementMethod()
 
@@ -178,9 +199,9 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         volumeButton.setOnClickListener(this@SampleActivity)
 
         loadVideoButton.setOnClickListener(this@SampleActivity)
-        subtitleButton.setOnClickListener(this@SampleActivity)
 
-        switchQualityButton.setOnClickListener(this@SampleActivity)
+        scaleModeEditText.setOnClickListener(this@SampleActivity)
+
         qualityEditText.setOnClickListener(this@SampleActivity)
 
         logFullScreenButton.setOnClickListener(this@SampleActivity)

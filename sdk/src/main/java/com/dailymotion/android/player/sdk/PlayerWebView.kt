@@ -317,6 +317,7 @@ class PlayerWebView : WebView {
             COMMAND_TOGGLE_CONTROLS -> callPlayerMethod("api", "toggle-controls", command.params)
             COMMAND_TOGGLE_PLAY -> callPlayerMethod("api", "toggle-play", command.params)
             COMMAND_VOLUME -> callPlayerMethod("api", "volume", command.params)
+            COMMAND_SCALE -> callPlayerMethod("api", "scaleMode", command.params[0])
             else -> callPlayerMethod(command.methodName, *command.params)
         }
     }
@@ -642,6 +643,10 @@ class PlayerWebView : WebView {
         queueCommand(COMMAND_CONTROLS, visible)
     }
 
+    fun scaleMode(scaleMode: String) {
+        queueCommand(COMMAND_SCALE, scaleMode)
+    }
+
     fun setFullscreenButton(fullScreen: Boolean) {
         if (fullScreen != mIsFullScreen) {
             mIsFullScreen = fullScreen
@@ -793,6 +798,10 @@ class PlayerWebView : WebView {
         const val COMMAND_TOGGLE_CONTROLS = "toggle-controls"
         const val COMMAND_TOGGLE_PLAY = "toggle-play"
         const val COMMAND_VOLUME = "volume"
+        const val COMMAND_SCALE = "scaleMode"
+
+        const val SCALE_MODE_FIT = "fit"
+        const val SCALE_MODE_FILL = "fill"
 
         private const val ASSETS_SCHEME = "asset://"
     }

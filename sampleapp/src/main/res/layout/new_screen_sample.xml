@@ -265,23 +265,36 @@
                     app:constraint_referenced_ids="loadVideoButton, videoIdEditText" />
 
                 <!-- Misc buttons -->
-                <Button
-                    android:id="@+id/subtitleButton"
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/scaleModeTextView"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/subtitle_english"
+                    android:text="@string/scale_mode"
+                    android:layout_marginTop="12dp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@id/switchQualityButton"
+                    app:layout_constraintRight_toLeftOf="@id/scaleModeEditText"
                     app:layout_constraintTop_toBottomOf="@id/fifthRowBarrier" />
 
-                <Button
-                    android:id="@+id/switchQualityButton"
-                    android:layout_width="0dp"
+                <EditText
+                    android:id="@+id/scaleModeEditText"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/set_quality_to"
-                    app:layout_constraintLeft_toRightOf="@id/subtitleButton"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/scale_mode"
+                    app:layout_constraintTop_toTopOf="@id/scaleModeTextView"
+                    app:layout_constraintLeft_toRightOf="@id/scaleModeTextView"
+                    app:layout_constraintRight_toLeftOf="@id/qualityTextView"
+                    app:layout_constraintBottom_toBottomOf="@id/scaleModeTextView"/>
+
+                <TextView
+                    android:id="@+id/qualityTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/quality"
+                    android:layout_marginLeft="12dp"
+                    app:layout_constraintLeft_toRightOf="@id/scaleModeEditText"
                     app:layout_constraintRight_toLeftOf="@id/qualityEditText"
-                    app:layout_constraintTop_toTopOf="@id/subtitleButton" />
+                    app:layout_constraintBaseline_toBaselineOf="@id/scaleModeTextView" />
 
                 <EditText
                     android:id="@+id/qualityEditText"
@@ -289,10 +302,10 @@
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="false"
                     android:gravity="end"
-                    app:layout_constraintBottom_toBottomOf="@id/switchQualityButton"
-                    app:layout_constraintLeft_toRightOf="@id/switchQualityButton"
+                    app:layout_constraintBottom_toBottomOf="@id/qualityTextView"
+                    app:layout_constraintLeft_toRightOf="@id/qualityTextView"
                     app:layout_constraintRight_toLeftOf="@id/qualityUnitTextView"
-                    app:layout_constraintTop_toTopOf="@id/switchQualityButton" />
+                    app:layout_constraintTop_toTopOf="@id/qualityTextView" />
 
                 <TextView
                     android:id="@+id/qualityUnitTextView"
@@ -302,7 +315,7 @@
                     app:layout_constraintBaseline_toBaselineOf="@id/qualityEditText"
                     app:layout_constraintLeft_toRightOf="@id/qualityEditText"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/switchQualityButton" />
+                    app:layout_constraintTop_toTopOf="@id/qualityEditText" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
