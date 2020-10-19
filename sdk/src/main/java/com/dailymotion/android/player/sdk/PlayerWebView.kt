@@ -49,6 +49,9 @@ class PlayerWebView : WebView {
     private var mControlsCommandRunnable: Runnable? = null
     private var mMuteCommandRunnable: Runnable? = null
     private var mLoadCommandRunnable: Runnable? = null
+    private var mTickRunnable = Runnable {
+        tick()
+    }
 
     private var mIsInitialized = false
     private var mIsFullScreen = false
@@ -425,7 +428,8 @@ class PlayerWebView : WebView {
 
         playerEventListener?.onEventReceived(playerEvent)
 
-        tick()
+        mHandler?.removeCallbacks(mTickRunnable)
+        mHandler?.post(mTickRunnable)
     }
 
     private fun tick() {
@@ -466,6 +470,12 @@ class PlayerWebView : WebView {
             }
             iterator.remove()
             sendCommand(command)
+        }
+        if(mCommandList.isNotEmpty()){
+            /**
+             * Ensure we will tick again as some commands are waiting to be sent
+             */
+            mHandler?.postDelayed(mTickRunnable, 1000)
         }
     }
 
@@ -511,7 +521,8 @@ class PlayerWebView : WebView {
         command.methodName = method
         command.params = params.asList().toTypedArray()
         mCommandList.add(command)
-        tick()
+        mHandler?.removeCallbacks(mTickRunnable)
+        mHandler?.post(mTickRunnable)
     }
 
     fun callPlayerMethod(method: String?, vararg params: Any) {
