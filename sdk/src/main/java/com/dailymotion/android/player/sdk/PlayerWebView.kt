@@ -694,6 +694,10 @@ class PlayerWebView : WebView {
         playerEventListener = listener
     }
 
+    fun setOverrideUrlLoadingListener(listener: OverrideUrlLoadingListener) {
+        overrideUrlLoadingListener = listener
+    }
+
     fun setEventListener(listener: (PlayerEvent) -> (Unit)) {
         playerEventListener = object : EventListener {
             override fun onEventReceived(event: PlayerEvent) {
