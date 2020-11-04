@@ -225,6 +225,10 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
                 log("WebView [${webView.hashCode()}] received an error with code: ${error?.errorCode}, description: ${error?.description}from URL: ${request?.url?.toString()}")
             }
 
+            override fun onShouldOverrideUrlLoadingFailed(exception: Exception) {
+                log("Exception during onShouldOverrideUrlLoading : ${exception.message}")
+            }
+
             override fun onReceivedSslError(webView: WebView?, handler: SslErrorHandler?, error: SslError?) {
                 log("WebView [${webView.hashCode()}] received an SSL error with primaryCode: ${error?.primaryError}")
             }
