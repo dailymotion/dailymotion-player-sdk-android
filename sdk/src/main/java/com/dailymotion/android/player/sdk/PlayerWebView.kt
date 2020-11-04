@@ -231,7 +231,7 @@ class PlayerWebView : WebView {
                     httpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(httpIntent)
                 }catch (e: ActivityNotFoundException){
-                    Timber.e(e)
+                    webViewErrorListener?.onShouldOverrideUrlLoadingFailed(e)
                 }
                 return true
             }
@@ -745,6 +745,7 @@ class PlayerWebView : WebView {
 
     interface WebViewErrorListener {
         fun onErrorReceived(webView: WebView?, errorCode: Int, description: String?, failingUrl: String?)
+        fun onShouldOverrideUrlLoadingFailed(exception: Exception)
 
         @RequiresApi(Build.VERSION_CODES.M)
         fun onErrorReceived(webView: WebView?, request: WebResourceRequest?, error: WebResourceError?)
