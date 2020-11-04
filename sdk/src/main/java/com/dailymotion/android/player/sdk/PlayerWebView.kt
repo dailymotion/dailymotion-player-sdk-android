@@ -2,6 +2,7 @@ package com.dailymotion.android.player.sdk
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -224,10 +225,14 @@ class PlayerWebView : WebView {
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 Timber.e("webview redirect to %s", url)
-                val httpIntent = Intent(Intent.ACTION_VIEW)
-                httpIntent.data = Uri.parse(url)
-                httpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                context.startActivity(httpIntent)
+                try{
+                    val httpIntent = Intent(Intent.ACTION_VIEW)
+                    httpIntent.data = Uri.parse(url)
+                    httpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(httpIntent)
+                }catch (e: ActivityNotFoundException){
+                    Timber.e(e)
+                }
                 return true
             }
 
