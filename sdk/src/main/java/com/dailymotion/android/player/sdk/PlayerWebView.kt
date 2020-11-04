@@ -231,6 +231,7 @@ class PlayerWebView : WebView {
                     httpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(httpIntent)
                 }catch (e: ActivityNotFoundException){
+                    Timber.e(e)
                     webViewErrorListener?.onShouldOverrideUrlLoadingFailed(e)
                 }
                 return true
