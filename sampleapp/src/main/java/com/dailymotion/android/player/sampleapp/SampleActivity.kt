@@ -21,10 +21,12 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import com.dailymotion.android.player.sdk.PlayerWebView
+import com.dailymotion.android.player.sdk.TCF2Handler
 import com.dailymotion.android.player.sdk.events.*
 import com.dailymotion.websdksample.BuildConfig
 import com.dailymotion.websdksample.R
 import kotlinx.android.synthetic.main.new_screen_sample.*
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -57,6 +59,9 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val didLoadConsentString = TCF2Handler().loadConsentString(context = this)
+        Timber.d("Successfully loaded consent string: $didLoadConsentString")
 
         initializeContentView()
         initializePlayer(mapOf("video" to videoIdEditText.text.toString(),
