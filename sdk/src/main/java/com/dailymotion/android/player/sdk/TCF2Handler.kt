@@ -6,6 +6,7 @@ import android.webkit.CookieManager
 import timber.log.Timber
 import java.net.URLEncoder
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class TCF2Handler {
 
@@ -15,7 +16,7 @@ class TCF2Handler {
      *
      * @param context
      * @param consentString fallback value if the consent string found following IAB specs is not present
-     * @param consentStringCookieMaxAge cookie max age if set otherwise it will default to 6 month
+     * @param consentStringCookieMaxAge cookie max age (in seconds) if set otherwise it will default to 6 month
      *
      * @return true if consent string was correctly loaded, false otherwise.
      */
@@ -50,10 +51,6 @@ class TCF2Handler {
      * @return cookie max age
      */
     private fun getCookieDefaultMaxAge(): Long {
-        val today = Date()
-        val calendar = Calendar.getInstance()
-        calendar.time = today
-        calendar.add(Calendar.MONTH, 6)
-        return calendar.time.time
+        return TimeUnit.DAYS.toSeconds(6 * 30)
     }
 }
