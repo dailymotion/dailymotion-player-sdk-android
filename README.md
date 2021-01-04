@@ -102,6 +102,24 @@ You have to call onPause and onResume when these events occur in your lifecycle 
     }
 ```
 
+### IAB TCF2
+The SDK follows the [IAB TCF2 standard](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework) to [access](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#how-do-third-party-sdks-vendors-access-the-consent-information-in-app) the stored consent string.
+In order to pass the consent string to the player, just use those lines **after the consent string was generated** by the CMP:
+
+```kotlin
+    // Instantiate the TCF2Handler
+    val tcf2Handler = TCF2Handler()
+    
+    // Make the player load the consent string stored at the location determined by IAB TCF2 Standard
+    val didLoadConsentString = tcf2Handler.loadConsentString(context = this)
+    
+    if (didLoadConsentString) {
+        // Successfully loaded the consent string
+    } else {
+        // Failed to load the consent string: check logs
+    }
+```
+
 ### Play Services
 The SDK uses Google Play Services to get the [Advertising Id](https://developer.android.com/training/articles/ad-id)
 If your app also uses play services, you may want to override the `play-services-ads-identifier` version to avoid conflicting with other play services artifacts.
