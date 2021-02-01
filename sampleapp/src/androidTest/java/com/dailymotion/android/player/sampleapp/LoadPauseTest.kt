@@ -2,6 +2,7 @@ package com.dailymotion.android.player.sampleapp
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.ActivityTestRule
+import com.sampleapp.dailymotion.SampleActivity
 import kotlinx.android.synthetic.main.new_screen_sample.*
 import org.junit.Assert
 import org.junit.Rule
@@ -19,13 +20,13 @@ class LoadPauseTest {
         val activity = testRule.activity
 
         activity.runOnUiThread {
-            activity.playerWebview.load("x26hv6c")
-            activity.playerWebview.pause()
+            activity.playerWebView.load("x26hv6c")
+            activity.playerWebView.pause()
         }
         Thread.sleep(10000)
         activity.runOnUiThread {
-            if (activity.playerWebview.position >= 1000) {
-                Assert.fail("Pause() failed: ${activity.playerWebview.position}ms >= 1000ms")
+            if (activity.playerWebView.position >= 1000) {
+                Assert.fail("Pause() failed: ${activity.playerWebView.position}ms >= 1000ms")
             }
         }
     }

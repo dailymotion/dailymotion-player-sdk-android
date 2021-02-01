@@ -1,8 +1,6 @@
-package com.dailymotion.android.player.sampleapp
+package com.sampleapp.dailymotion
 
 import android.app.Application
-
-import com.dailymotion.websdksample.BuildConfig
 
 import timber.log.Timber
 

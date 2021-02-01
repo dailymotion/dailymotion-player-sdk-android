@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.dailymotion.websdksample"
+    package="com.sampleapp.dailymotion"
     android:versionCode="1"
     android:versionName="1.0">
 
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name="com.dailymotion.android.player.sampleapp.MyApp"
+        android:name="com.sampleapp.dailymotion.MyApp"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.dailymotion.android.player.sampleapp.SampleActivity"
+            android:name="com.sampleapp.dailymotion.SampleActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustPan"
             android:label="@string/app_name">

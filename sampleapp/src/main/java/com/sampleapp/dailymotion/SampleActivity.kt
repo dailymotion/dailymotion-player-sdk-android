@@ -1,4 +1,4 @@
-package com.dailymotion.android.player.sampleapp
+package com.sampleapp.dailymotion
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -23,8 +23,6 @@ import androidx.core.content.ContextCompat
 import com.dailymotion.android.player.sdk.PlayerWebView
 import com.dailymotion.android.player.sdk.TCF2Handler
 import com.dailymotion.android.player.sdk.events.*
-import com.dailymotion.websdksample.BuildConfig
-import com.dailymotion.websdksample.R
 import kotlinx.android.synthetic.main.new_screen_sample.*
 import timber.log.Timber
 import java.text.SimpleDateFormat
