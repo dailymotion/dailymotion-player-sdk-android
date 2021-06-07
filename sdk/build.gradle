@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'maven-publish'
+//apply plugin: 'maven-publish'
 
 ext {
     bintrayRepo = 'com.dailymotion.dailymotion-sdk-android'
@@ -46,9 +46,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
-apply from: rootProject.file('gradle/install-v1.gradle')
-apply from: rootProject.file('gradle/bintray-android-v1.gradle')
-
 task tagAndBump {
     doLast {
         LibraryProject.INSTANCE.tagAndIncrement(LibraryProject.INSTANCE.getLibraryVersionCode() + 1)
@@ -57,7 +54,7 @@ task tagAndBump {
 
 // Because the components are created only during the afterEvaluate phase, you must
 // configure your publications using the afterEvaluate() lifecycle method.
-afterEvaluate {
+/**afterEvaluate {
     publishing {
         publications {
             // Creates a Maven publication called "release".
@@ -70,4 +67,4 @@ afterEvaluate {
             }
         }
     }
-}
+}**/

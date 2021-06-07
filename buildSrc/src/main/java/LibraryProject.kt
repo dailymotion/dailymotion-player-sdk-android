@@ -27,7 +27,7 @@ object LibraryProject {
     private fun isBaseDir(dir: File) = dir.list().contains(".git")
 
     private fun findBaseDir(): File? {
-        var dir = File(File(".").absolutePath)
+        var dir = File(".")
 
         while (!isBaseDir(dir)) {
             if (dir.parent == null) {
