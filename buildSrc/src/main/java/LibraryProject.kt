@@ -5,7 +5,7 @@ import java.io.InputStreamReader
 
 object LibraryProject {
 
-    private var libraryVersionCode: Int
+    var libraryVersionCode: Int
         get() = file("current_version").readText().toInt()
         set(value) {
             file("current_version").writeText(value.toString())
