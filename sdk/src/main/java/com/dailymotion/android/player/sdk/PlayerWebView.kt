@@ -67,6 +67,7 @@ class PlayerWebView : WebView {
     private var mQuality: String? = ""
     private var webViewErrorListener: WebViewErrorListener? = null
     private var playerEventListener: EventListener? = null
+    private var overrideUrlLoadingInterceptor: OverrideUrlLoadingInterceptor? = null
 
     var mJavascriptBridge: Any = JavascriptBridge()
 
@@ -225,6 +226,9 @@ class PlayerWebView : WebView {
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 Timber.e("webview redirect to %s", url)
+                if (overrideUrlLoadingInterceptor != null && overrideUrlLoadingInterceptor!!.intercept(url)) {
+                    return true
+                }
                 try{
                     val httpIntent = Intent(Intent.ACTION_VIEW)
                     httpIntent.data = Uri.parse(url)
@@ -695,6 +699,10 @@ class PlayerWebView : WebView {
         playerEventListener = listener
     }
 
+    fun setOverrideUrlLoadingInterceptor(interceptor: OverrideUrlLoadingInterceptor) {
+        overrideUrlLoadingInterceptor = interceptor
+    }
+
     fun setEventListener(listener: (PlayerEvent) -> (Unit)) {
         playerEventListener = object : EventListener {
             override fun onEventReceived(event: PlayerEvent) {
@@ -758,6 +766,10 @@ class PlayerWebView : WebView {
 
     interface EventListener {
         fun onEventReceived(event: PlayerEvent)
+    }
+
+    interface OverrideUrlLoadingInterceptor {
+        fun intercept(url: String): Boolean
     }
 
     companion object {
