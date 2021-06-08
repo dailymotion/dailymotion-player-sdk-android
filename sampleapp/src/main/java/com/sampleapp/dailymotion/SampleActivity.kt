@@ -1,4 +1,4 @@
-package com.dailymotion.android.player.sampleapp
+package com.sampleapp.dailymotion
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
@@ -21,10 +21,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import com.dailymotion.android.player.sdk.PlayerWebView
+import com.dailymotion.android.player.sdk.TCF2Handler
 import com.dailymotion.android.player.sdk.events.*
-import com.dailymotion.websdksample.BuildConfig
-import com.dailymotion.websdksample.R
 import kotlinx.android.synthetic.main.new_screen_sample.*
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -57,6 +57,9 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val didLoadConsentString = TCF2Handler().loadConsentString(context = this)
+        Timber.d("Successfully loaded consent string: $didLoadConsentString")
 
         initializeContentView()
         initializePlayer(mapOf("video" to videoIdEditText.text.toString(),
@@ -223,6 +226,10 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
             @TargetApi(Build.VERSION_CODES.M)
             override fun onErrorReceived(webView: WebView?, request: WebResourceRequest?, error: WebResourceError?) {
                 log("WebView [${webView.hashCode()}] received an error with code: ${error?.errorCode}, description: ${error?.description}from URL: ${request?.url?.toString()}")
+            }
+
+            override fun onShouldOverrideUrlLoadingFailed(exception: Exception) {
+                log("Exception during onShouldOverrideUrlLoading : ${exception.message}")
             }
 
             override fun onReceivedSslError(webView: WebView?, handler: SslErrorHandler?, error: SslError?) {

@@ -2,6 +2,7 @@ package com.dailymotion.android.player.sdk
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -228,10 +229,15 @@ class PlayerWebView : WebView {
                 if (overrideUrlLoadingInterceptor != null && overrideUrlLoadingInterceptor!!.intercept(url)) {
                     return true
                 }
-                val httpIntent = Intent(Intent.ACTION_VIEW)
-                httpIntent.data = Uri.parse(url)
-                httpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                context.startActivity(httpIntent)
+                try{
+                    val httpIntent = Intent(Intent.ACTION_VIEW)
+                    httpIntent.data = Uri.parse(url)
+                    httpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    context.startActivity(httpIntent)
+                }catch (e: ActivityNotFoundException){
+                    Timber.e(e)
+                    webViewErrorListener?.onShouldOverrideUrlLoadingFailed(e)
+                }
                 return true
             }
 
@@ -748,6 +754,7 @@ class PlayerWebView : WebView {
 
     interface WebViewErrorListener {
         fun onErrorReceived(webView: WebView?, errorCode: Int, description: String?, failingUrl: String?)
+        fun onShouldOverrideUrlLoadingFailed(exception: Exception)
 
         @RequiresApi(Build.VERSION_CODES.M)
         fun onErrorReceived(webView: WebView?, request: WebResourceRequest?, error: WebResourceError?)

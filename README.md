@@ -3,13 +3,14 @@ Dailymotion Player SDK Android
 [ ![Download](https://api.bintray.com/packages/dailymotion/com.dailymotion.dailymotion-sdk-android/sdk/images/download.svg) ](https://bintray.com/dailymotion/com.dailymotion.dailymotion-sdk-android/sdk/_latestVersion)
 [![Build Status](https://travis-ci.org/dailymotion/dailymotion-player-sdk-android.svg?branch=master)](https://travis-ci.org/dailymotion/dailymotion-player-sdk-android)
 
-This SDK aims at easily embedding Dailymotion videos on your Android application using WebView. It supports api level 21+.
-The SDK is bundled with a sample application.
+Our Android SDK allows for effortless embedding of the Dailymotion video player in your Android application using a WebView. It supports api level 21+.
+This SDK that we provide to our publishers is the same tool we use to create our flagship Dailymotion applications. It provides access to the Player API and gives you full control of the player. To learn more please check out official Dailymotion Android developer doc [here](https://developer.dailymotion.com/player/#embed-mobile-android).
 
 Features
 --------
 
-- Dead simple to use. No need to specify a layout container for the VideoView
+- Simple SDK to integrate, provides access to the Player API, no need to specify a layout container for the VideoView
+- The SDK is bundled with a sample application
 - Supports Android 5.0.x (API level 21) and superior
 - Fully in kotlin. If your project is still in JAVA, you will need to add the kotlin dependencies: https://developer.android.com/kotlin/add-kotlin
 
@@ -21,7 +22,7 @@ You can either import the SDK using your IDE or integrate PlayerWebView.kt in yo
 
 Using gradle, you can import the sdk with :
 ```
-implementation 'com.dailymotion.dailymotion-sdk-android:sdk:0.2.4'
+implementation 'com.dailymotion.dailymotion-sdk-android:sdk:0.2.6'
 ```
 
 The sdk will need the following permission and attributes inside your `AndroidManifest.xml`:
@@ -99,6 +100,24 @@ You have to call onPause and onResume when these events occur in your lifecycle 
     override fun onResume() {
         super.onResume()
         playerWebview.onResume()
+    }
+```
+
+### IAB TCF2
+The SDK follows the [IAB TCF2 standard](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework) to [access](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#how-do-third-party-sdks-vendors-access-the-consent-information-in-app) the stored consent string.
+In order to pass the consent string to the player, just use those lines **after the consent string was generated** by the CMP:
+
+```kotlin
+    // Instantiate the TCF2Handler
+    val tcf2Handler = TCF2Handler()
+    
+    // Make the player load the consent string stored at the location determined by IAB TCF2 Standard
+    val didLoadConsentString = tcf2Handler.loadConsentString(context = this)
+    
+    if (didLoadConsentString) {
+        // Successfully loaded the consent string
+    } else {
+        // Failed to load the consent string: check logs
     }
 ```
 
