@@ -81,11 +81,6 @@ fun Project.configureMavenPublish() {
                         }
                     }
 
-                    licenses {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                    }
-
                     developers {
                         developer {
                             id.set("Dailymotion")
