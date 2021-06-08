@@ -151,26 +151,9 @@ fun Project.getOssStagingUrl(): String {
     }
 }
 
-fun isTag(): Boolean {
-    val tag = System.getenv("BITRISE_GIT_TAG")
-    return tag.isNotBlank()
-}
-
-fun isPushMaster(): Boolean {
-    val pr = System.getenv("BITRISE_PULL_REQUEST")
-    val ref = System.getenv("BITRISE_GIT_BRANCH")
-
-    return pr.isNullOrBlank() && ref == "master"
-}
-
-tasks.register<Task>("deployArtifactsIfNeeded") {
-    if (isTag()) {
-        project.logger.lifecycle("Upload to OSSStaging needed.")
-        dependsOn("publishDefaultPublicationToOssStagingRepository")
-    } else if (isPushMaster()) {
-        project.logger.lifecycle("Upload to OSSSnapshots needed.")
-        dependsOn("publishDefaultPublicationToOssSnapshotsRepository")
-    }
+tasks.register<Task>("deployArtifacts") {
+    project.logger.lifecycle("Upload to OSSStaging needed.")
+    dependsOn("publishDefaultPublicationToOssStagingRepository")
 }
 
 task("tagAndBump"){
