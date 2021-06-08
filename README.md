@@ -20,6 +20,7 @@ How to use
 ### Add the SDK to your project
 You can either import the SDK using your IDE or integrate PlayerWebView.kt in your project.
 
+Our artefacts are hosted on `mavenCentral` <br/>
 Using gradle, you can import the sdk with :
 ```
 implementation 'com.dailymotion.dailymotion-sdk-android:sdk:0.2.6'
@@ -130,17 +131,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads-identifier:[your_play_services_version]'
 }
 ```
-
-### Publish your own sdk on Bintray
-
-Update your local.properties files with this lines and replace <user> and <api.key> values
-
-```
-bintray.user=<user>
-bintray.apikey=<api.key>
-```
-
-In your terminal call `gradlew install` then `gradlew bintrayUpload` 
 
 Faq
 ---
