@@ -64,7 +64,7 @@ fun Project.configureMavenPublish() {
                     artifactId = "sdk"
                     version = LibraryProject.libraryVersionName
                     name.set("DailymotionPlayerSDKAndroid")
-                    packaging = "jar"
+                    packaging = "aar"
                     description.set("This SDK aims at easily embedding Dailymotion videos on your Android application using WebView.")
                     url.set("https://github.com/dailymotion/dailymotion-player-sdk-android")
 
@@ -142,7 +142,7 @@ fun Project.getOssStagingUrl(): String {
     val repositoryId = runBlocking {
         client.createRepository(
             profileId = System.getenv("DAILYMOTION_STAGING_PROFILE_ID"),
-            description = "$group $name $version"
+            description = "DailymotionPlayerSDKAndroid ${LibraryProject.libraryVersionName}"
         )
     }
     println("publishing to '$repositoryId")
