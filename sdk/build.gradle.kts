@@ -54,7 +54,7 @@ fun Project.configureMavenPublish() {
     configure<PublishingExtension> {
         publications {
             create<MavenPublication>("default") {
-                from(components.findByName("java"))
+                from(components.getByName("release"))
 
                 artifact(sourcesJarTaskProvider.get())
                 artifact(javadocJarTaskProvider.get())
