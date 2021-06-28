@@ -29,6 +29,7 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.5.0")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.10")
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
 }
 
 tasks.withType<org.jetbrains.dokka.gradle.DokkaTask> {
