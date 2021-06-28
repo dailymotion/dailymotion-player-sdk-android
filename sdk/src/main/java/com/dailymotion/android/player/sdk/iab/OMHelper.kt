@@ -46,8 +46,10 @@ object OMHelper {
     internal fun onPlayerEvent(playerWebView: PlayerWebView, playerEvent: PlayerEvent) {
         when (playerEvent) {
             is AdLoadedEvent -> {
-                val data = playerEvent.payload
-                createOmidSession(playerWebView, data)
+                if(omidSession != null){
+                    endOmidSession()
+                }
+                createOmidSession(playerWebView, playerEvent.payload)
 
                 try {
                     omidAdEvents?.impressionOccurred()
