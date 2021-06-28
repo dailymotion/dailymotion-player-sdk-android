@@ -45,8 +45,23 @@ class PlayerEventFactory {
             PlayerWebView.EVENT_PAUSE -> {
                 createPauseEvent(payload)
             }
+            PlayerWebView.EVENT_AD_LOADED -> {
+                createAdLoadedEvent(payload, params)
+            }
+            PlayerWebView.EVENT_AD_BUFFER_START -> {
+                createAdBufferStartEvent(payload)
+            }
+            PlayerWebView.EVENT_AD_BUFFER_END -> {
+                createAdBufferEndEvent(payload)
+            }
+            PlayerWebView.EVENT_AD_CLICK -> {
+                createAdClickEvent(payload)
+            }
+            PlayerWebView.EVENT_AD_RESUME -> {
+                createAdResumeEvent(payload)
+            }
             PlayerWebView.EVENT_AD_START -> {
-                createAdStartEvent(payload)
+                createAdStartEvent(payload, params)
             }
             PlayerWebView.EVENT_AD_PLAY -> {
                 createAdPlayEvent(payload)
@@ -58,7 +73,7 @@ class PlayerEventFactory {
                 createAdTimeUpdateEvent(payload, params)
             }
             PlayerWebView.EVENT_AD_END -> {
-                createAdEndEvent(payload)
+                createAdEndEvent(payload, params)
             }
             PlayerWebView.EVENT_CONTROLSCHANGE -> {
                 createControlChangeEvent(payload, params)
@@ -113,6 +128,9 @@ class PlayerEventFactory {
             }
             PlayerWebView.EVENT_ERROR -> {
                 createErrorEvent(payload, params)
+            }
+            PlayerWebView.EVENT_FULLSCREENCHANGE -> {
+                createFullscreenChangeEvent(payload, params)
             }
             else -> createGenericPlayerEvent(payload)
         }
@@ -249,16 +267,40 @@ class PlayerEventFactory {
         return VideoStartEvent(payload, map["replay"])
     }
 
-    private fun createAdStartEvent(payload: String): PlayerEvent {
-        return AdStartEvent(payload)
+    private fun createAdStartEvent(payload: String, map: Map<String, String?>): PlayerEvent {
+        return AdStartEvent(payload, map["adData[adDuration]"]?.toFloatOrNull() ?: 1f)
+    }
+
+    private fun createAdResumeEvent(payload: String): PlayerEvent {
+        return AdResumeEvent(payload)
+    }
+
+    private fun createAdLoadedEvent(payload: String, params: Map<String, String?>): PlayerEvent {
+        return AdLoadedEvent(payload, params["skipOffset"]?.toFloatOrNull() ?: 0f, params["autoplay"].toBoolean(), params["position"])
+    }
+
+    private fun createAdBufferStartEvent(payload: String): PlayerEvent {
+        return AdBufferStartEvent(payload)
+    }
+
+    private fun createAdBufferEndEvent(payload: String): PlayerEvent {
+        return AdBufferEndEvent(payload)
+    }
+
+    private fun createAdClickEvent(payload: String): PlayerEvent {
+        return AdClickEvent(payload)
+    }
+
+    private fun createFullscreenChangeEvent(payload: String, params: Map<String, String?>): PlayerEvent {
+        return FullScreenChangeEvent(payload, params["fullscreen"]?.toBooleanStrictOrNull() ?: false)
     }
 
     private fun createPlayingEvent(payload: String): PlayerEvent {
         return PlayingEvent(payload)
     }
 
-    private fun createAdEndEvent(payload: String): PlayerEvent {
-        return AdEndEvent(payload)
+    private fun createAdEndEvent(payload: String, params: Map<String, String?>): PlayerEvent {
+        return AdEndEvent(payload, params["reason"], params["error"])
     }
 
     private fun createGenericPlayerEvent(payload: String): PlayerEvent {
