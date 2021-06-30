@@ -21,6 +21,7 @@ import com.dailymotion.android.BuildConfig
 import com.dailymotion.android.player.sdk.AdIdTask.AdIdTaskListener
 import com.dailymotion.android.player.sdk.events.PlayerEvent
 import com.dailymotion.android.player.sdk.events.PlayerEventFactory
+import com.dailymotion.android.player.sdk.iab.OMHelper
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.google.gson.Gson
 import timber.log.Timber
@@ -119,6 +120,7 @@ class PlayerWebView : WebView {
     @Deprecated("Use load(params: Map<String, Any?>?) instead")
     @JvmOverloads
     fun load(videoId: String?, loadParams: Map<String, Any?>? = emptyMap()) {
+        OMHelper.ensureInitialized(this@PlayerWebView.context)
         val finalParams = loadParams?.toMutableMap() ?: mutableMapOf()
         finalParams[LOAD_PARAMS_VIDEO_KEY] = videoId
         load(params = finalParams)
@@ -129,7 +131,7 @@ class PlayerWebView : WebView {
      * https://developer.dailymotion.com/player/#player-api-methods-load
      */
     fun load(params: Map<String, Any?>? = emptyMap()) {
-
+        OMHelper.ensureInitialized(this@PlayerWebView.context)
         if (!mIsInitialized) {
             val defaultQueryParameters: MutableMap<String?, String?> = HashMap()
             defaultQueryParameters["sharing-enable"] = "false"
@@ -139,6 +141,8 @@ class PlayerWebView : WebView {
             defaultQueryParameters["fullscreen-action"] = "trigger_event"
             defaultQueryParameters["locale"] = Locale.getDefault().language
             defaultQueryParameters["queue-enable"] = "false"
+            //TODO to remove once the branch "omid-integration" is ready to release
+            defaultQueryParameters["GK_PV5_OMSDK"] = "1"
 
             /* Override default values */
             if (params?.contains("queue-enable") == true) {
@@ -436,10 +440,15 @@ class PlayerWebView : WebView {
             }
         }
 
-        playerEventListener?.onEventReceived(playerEvent)
+        notifyEventReceived(playerEvent)
 
         mHandler?.removeCallbacks(mTickRunnable)
         mHandler?.post(mTickRunnable)
+    }
+
+    private fun notifyEventReceived(playerEvent: PlayerEvent) {
+        OMHelper.onPlayerEvent(this, playerEvent)
+        playerEventListener?.onEventReceived(playerEvent)
     }
 
     private fun tick() {
@@ -579,6 +588,7 @@ class PlayerWebView : WebView {
     }
 
     fun release() {
+        OMHelper.endOmidSession()
         loadUrl("about:blank")
         onPause()
     }
@@ -792,8 +802,13 @@ class PlayerWebView : WebView {
         const val EVENT_AD_START = "ad_start"
         const val EVENT_AD_PLAY = "ad_play"
         const val EVENT_AD_PAUSE = "ad_pause"
+        const val EVENT_AD_RESUME = "ad_resume"
         const val EVENT_AD_END = "ad_end"
+        const val EVENT_AD_LOADED = "ad_loaded"
         const val EVENT_AD_TIME_UPDATE = "ad_timeupdate"
+        const val EVENT_AD_BUFFER_START = "ad_bufferStart"
+        const val EVENT_AD_BUFFER_END = "ad_bufferEnd"
+        const val EVENT_AD_CLICK = "ad_click"
         const val EVENT_ADD_TO_COLLECTION_REQUESTED = "add_to_collection_requested"
         const val EVENT_LIKE_REQUESTED = "like_requested"
         const val EVENT_WATCH_LATER_REQUESTED = "watch_later_requested"
@@ -808,6 +823,7 @@ class PlayerWebView : WebView {
         const val EVENT_END = "end"
         const val EVENT_CONTROLSCHANGE = "controlschange"
         const val EVENT_VOLUMECHANGE = "volumechange"
+        const val EVENT_FULLSCREENCHANGE = "fullscreenchange"
         const val EVENT_QUALITY_CHANGE = "qualitychange"
         const val EVENT_QUALITIES_AVAILABLE = "qualitiesavailable"
         const val EVENT_PLAYBACK_READY = "playback_ready"
