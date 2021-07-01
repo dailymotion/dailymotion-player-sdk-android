@@ -120,7 +120,6 @@ class PlayerWebView : WebView {
     @Deprecated("Use load(params: Map<String, Any?>?) instead")
     @JvmOverloads
     fun load(videoId: String?, loadParams: Map<String, Any?>? = emptyMap()) {
-        OMHelper.ensureInitialized(this@PlayerWebView.context)
         val finalParams = loadParams?.toMutableMap() ?: mutableMapOf()
         finalParams[LOAD_PARAMS_VIDEO_KEY] = videoId
         load(params = finalParams)
@@ -131,7 +130,6 @@ class PlayerWebView : WebView {
      * https://developer.dailymotion.com/player/#player-api-methods-load
      */
     fun load(params: Map<String, Any?>? = emptyMap()) {
-        OMHelper.ensureInitialized(this@PlayerWebView.context)
         if (!mIsInitialized) {
             val defaultQueryParameters: MutableMap<String?, String?> = HashMap()
             defaultQueryParameters["sharing-enable"] = "false"
@@ -141,8 +139,6 @@ class PlayerWebView : WebView {
             defaultQueryParameters["fullscreen-action"] = "trigger_event"
             defaultQueryParameters["locale"] = Locale.getDefault().language
             defaultQueryParameters["queue-enable"] = "false"
-            //TODO to remove once the branch "omid-integration" is ready to release
-            defaultQueryParameters["GK_PV5_OMSDK"] = "1"
 
             /* Override default values */
             if (params?.contains("queue-enable") == true) {
@@ -155,11 +151,15 @@ class PlayerWebView : WebView {
     }
 
     fun initialize(baseUrl: String?, queryParameters: Map<String?, String?>?, httpHeaders: Map<String?, String?>?) {
+        OMHelper.ensureInitialized(this@PlayerWebView.context)
+        //TODO to remove once the branch "omid-integration" is ready to release
+        val params = queryParameters?.toMutableMap()
+        params?.put("GK_PV5_OMSDK","1")
         mIsInitialized = true
         eventFactory = PlayerEventFactory()
         AdIdTask(context, object : AdIdTaskListener {
             override fun onResult(result: AdvertisingIdClient.Info?) {
-                finishInitialization(baseUrl, queryParameters, httpHeaders, result)
+                finishInitialization(baseUrl, params, httpHeaders, result)
             }
         }).execute()
     }
