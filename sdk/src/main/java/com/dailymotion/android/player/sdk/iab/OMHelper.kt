@@ -25,12 +25,12 @@ object OMHelper {
     enum class Quartile(
         val progress: Float,
         val nextStep: Quartile? = null,
-        val action: (() -> Unit)? = null
+        val action: ((MediaEvents) -> Unit)? = null
     ) {
-        Q3(0.75f, null, { omidMediaEvents?.thirdQuartile(); logOmidAction("thirdQuartile") }),
-        Q2(0.50f, Q3, { omidMediaEvents?.midpoint(); logOmidAction("midpoint") }),
-        Q1(0.25f, Q2, { omidMediaEvents?.firstQuartile(); logOmidAction("firstQuartile") }),
-        START(0f, Q1, { omidMediaEvents?.start(adDuration, 1f); logOmidAction("start duration=$adDuration") }),
+        Q3(0.75f, null, { it.thirdQuartile(); logOmidAction("thirdQuartile") }),
+        Q2(0.50f, Q3, { it.midpoint(); logOmidAction("midpoint") }),
+        Q1(0.25f, Q2, { it.firstQuartile(); logOmidAction("firstQuartile") }),
+        START(0f, Q1, { it.start(adDuration, 1f); logOmidAction("start duration=$adDuration") }),
         INIT(0f, START)
     }
 
@@ -52,8 +52,10 @@ object OMHelper {
                 createOmidSession(playerWebView, playerEvent.payload)
 
                 try {
-                    omidAdEvents?.impressionOccurred()
-                    logOmidAction("Impression occured")
+                    omidAdEvents?.apply {
+                        impressionOccurred()
+                        logOmidAction("Impression occured")
+                    }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
                     logOmidAction("Error ${e.localizedMessage}")
@@ -75,8 +77,10 @@ object OMHelper {
                 }
 
                 try {
-                    omidAdEvents?.loaded(properties)
-                    logOmidAction("Loaded ${properties.isAutoPlay}/${properties.isSkippable}/${properties.position}/${properties.skipOffset}")
+                    omidAdEvents?.apply {
+                        loaded(properties)
+                        logOmidAction("Loaded ${properties.isAutoPlay}/${properties.isSkippable}/${properties.position}/${properties.skipOffset}")
+                    }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
                     logOmidAction("Error ${e.localizedMessage}")
@@ -90,12 +94,16 @@ object OMHelper {
                 try {
                     when (playerEvent.reason) {
                         "AD_STOPPED" -> {
-                            omidMediaEvents?.complete()
-                            logOmidAction("Complete")
+                            omidMediaEvents?.apply {
+                                complete()
+                                logOmidAction("Complete")
+                            }
                         }
                         "AD_SKIPPED" -> {
-                            omidMediaEvents?.skipped()
-                            logOmidAction("Skipped")
+                            omidMediaEvents?.apply {
+                                skipped()
+                                logOmidAction("Skipped")
+                            }
                         }
                         "AD_ERROR" -> {
                             omidSession?.error(ErrorType.VIDEO, playerEvent.error ?: "AD_ERROR")
@@ -110,8 +118,10 @@ object OMHelper {
             }
             is AdPauseEvent -> {
                 try {
-                    omidMediaEvents?.pause()
-                    logOmidAction("pause")
+                    omidMediaEvents?.apply {
+                        pause()
+                        logOmidAction("pause")
+                    }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
                     logOmidAction("Error ${e.localizedMessage}")
@@ -119,8 +129,10 @@ object OMHelper {
             }
             is AdResumeEvent -> {
                 try {
-                    omidMediaEvents?.resume()
-                    logOmidAction("resume")
+                    omidMediaEvents?.apply {
+                        resume()
+                        logOmidAction("resume")
+                    }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
                     logOmidAction("Error ${e.localizedMessage}")
@@ -128,8 +140,10 @@ object OMHelper {
             }
             is AdBufferStartEvent -> {
                 try {
-                    omidMediaEvents?.bufferStart()
-                    logOmidAction("bufferStart")
+                    omidMediaEvents?.apply {
+                        bufferStart()
+                        logOmidAction("bufferStart")
+                    }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
                     logOmidAction("Error ${e.localizedMessage}")
@@ -137,16 +151,20 @@ object OMHelper {
             }
             is AdBufferEndEvent -> {
                 try {
-                    omidMediaEvents?.bufferFinish()
-                    logOmidAction("bufferEnd")
+                    omidMediaEvents?.apply {
+                        bufferFinish()
+                        logOmidAction("bufferEnd")
+                    }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
                 }
             }
             is AdClickEvent -> {
                 try {
-                    omidMediaEvents?.adUserInteraction(InteractionType.CLICK)
-                    logOmidAction("adUserInteraction Click")
+                    omidMediaEvents?.apply {
+                        adUserInteraction(InteractionType.CLICK)
+                        logOmidAction("adUserInteraction Click")
+                    }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
                     logOmidAction("Error ${e.localizedMessage}")
@@ -154,8 +172,10 @@ object OMHelper {
             }
             is VolumeChangeEvent -> {
                 try {
-                    omidMediaEvents?.volumeChange(if (playerEvent.isMuted) 0f else 1f)
-                    logOmidAction("volumeChange ${if (playerEvent.isMuted) 0f else 1f}")
+                    omidMediaEvents?.apply {
+                        volumeChange(if (playerEvent.isMuted) 0f else 1f)
+                        logOmidAction("volumeChange ${if (playerEvent.isMuted) 0f else 1f}")
+                    }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
                     logOmidAction("Error ${e.localizedMessage}")
@@ -165,8 +185,10 @@ object OMHelper {
                 /** We might remove this step if we force the partner to implement our API
                  * to set up the player state on his own **/
                 try {
-                    omidMediaEvents?.playerStateChange(if (playerEvent.fullscreen) PlayerState.FULLSCREEN else PlayerState.NORMAL)
-                    logOmidAction("playerStateChange ${if (playerEvent.fullscreen) PlayerState.FULLSCREEN else PlayerState.NORMAL}")
+                    omidMediaEvents?.apply {
+                        playerStateChange(if (playerEvent.fullscreen) PlayerState.FULLSCREEN else PlayerState.NORMAL)
+                        logOmidAction("playerStateChange ${if (playerEvent.fullscreen) PlayerState.FULLSCREEN else PlayerState.NORMAL}")
+                    }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
                     logOmidAction("Error ${e.localizedMessage}")
@@ -178,7 +200,7 @@ object OMHelper {
                 if (progress > nextPosition.progress) {
                     omidCurrentPosition = nextPosition
                     try {
-                        omidCurrentPosition?.action?.invoke()
+                        omidMediaEvents?.let { omidCurrentPosition?.action?.invoke(it) }
                     } catch (e: Exception) {
                         omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
                         logOmidAction("Error ${e.localizedMessage}")
@@ -196,12 +218,17 @@ object OMHelper {
     private fun createOmidSession(playerWebView: PlayerWebView, payload: String?) {
 
         val verificationScriptsList = parseVerificationScriptData(payload)
-        val verificationScriptResourceList = verificationScriptsList.map {
-            VerificationScriptResource.createVerificationScriptResourceWithParameters(
-                it.vendorKey,
-                URL(it.url),
-                it.parameters
-            )
+        val verificationScriptResourceList = try {
+            verificationScriptsList.map {
+                VerificationScriptResource.createVerificationScriptResourceWithParameters(
+                    it.vendorKey,
+                    URL(it.url),
+                    it.parameters
+                )
+            }
+        }catch (e: IllegalArgumentException){
+            logError("Error while creating verificationScriptResourceList", e)
+            return
         }
 
         val partner = try {
@@ -241,8 +268,10 @@ object OMHelper {
      * End Omid session
      */
     internal fun endOmidSession() {
-        omidSession?.finish()
-        logOmidAction("Session End")
+        omidSession?.apply {
+            finish()
+            logOmidAction("Session End")
+        }
         omidSession = null
         omidAdEvents = null
         omidMediaEvents = null
@@ -254,8 +283,10 @@ object OMHelper {
      * Start Omid session
      */
     private fun startOmidSession() {
-        omidSession?.start()
-        logOmidAction("Session Start")
+        omidSession?.apply {
+            start()
+            logOmidAction("Session Start")
+        }
     }
 
     /**
@@ -283,7 +314,7 @@ object OMHelper {
     }
 
     private fun logError(error: String, exception: Exception? = null) {
-        Timber.e(exception, error)
+        Timber.e(exception, "OMSDK: ERROR : $error")
     }
 
     private fun logOmidAction(message: String) {
