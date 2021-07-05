@@ -734,6 +734,15 @@ class PlayerWebView : WebView {
     }
 
     private inner class JavascriptBridge {
+
+        @JavascriptInterface
+        fun getEmbedderProperties() = Gson().toJson(
+            mapOf(
+                "sdk" to BuildConfig.SDK_VERSION,
+                "capabilities" to mapOf( "omsdk" to OMHelper.getVersion())
+            )
+        ).toString()
+
         @JavascriptInterface
         fun triggerEvent(e: String) {
             mHandler!!.post { handleEvent(e) }

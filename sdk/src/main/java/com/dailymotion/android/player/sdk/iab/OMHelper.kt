@@ -320,4 +320,6 @@ object OMHelper {
     private fun logOmidAction(message: String) {
         Timber.d("OMSDK: $message")
     }
+
+    internal fun getVersion() = Omid.getVersion()
 }
