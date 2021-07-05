@@ -7,7 +7,7 @@ import java.io.IOException
 /**
  * OmidJsLoader - utility for loading the Omid JavaScript resource
  */
-object OmidJsLoader {
+internal object OmidJsLoader {
     /**
      * getOmidJs - gets the Omid JS resource as a string
      * @param context - used to access the JS resource
