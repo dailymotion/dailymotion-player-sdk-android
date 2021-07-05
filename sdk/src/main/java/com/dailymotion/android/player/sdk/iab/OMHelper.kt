@@ -22,7 +22,17 @@ object OMHelper {
     private var omidCurrentPosition: Quartile? = null
     private var adDuration = 1f
 
-    enum class Quartile(
+    /** Indicate the current player state. It's STRONGLY recommended to
+     *  update at all time this field if the core app has other states than NORMAL or FULLSCREEN */
+    var playerState: PlayerState? = null
+        set(value) {
+            if (value != field && value != null) {
+                onPlayerStateChanged(value)
+            }
+            field = value
+        }
+
+    private enum class Quartile(
         val progress: Float,
         val nextStep: Quartile? = null,
         val action: ((MediaEvents) -> Unit)? = null
@@ -46,7 +56,7 @@ object OMHelper {
     internal fun onPlayerEvent(playerWebView: PlayerWebView, playerEvent: PlayerEvent) {
         when (playerEvent) {
             is AdLoadedEvent -> {
-                if(omidSession != null){
+                if (omidSession != null) {
                     endOmidSession()
                 }
                 createOmidSession(playerWebView, playerEvent.payload)
@@ -182,16 +192,10 @@ object OMHelper {
                 }
             }
             is FullScreenChangeEvent -> {
-                /** We might remove this step if we force the partner to implement our API
-                 * to set up the player state on his own **/
-                try {
-                    omidMediaEvents?.apply {
-                        playerStateChange(if (playerEvent.fullscreen) PlayerState.FULLSCREEN else PlayerState.NORMAL)
-                        logOmidAction("playerStateChange ${if (playerEvent.fullscreen) PlayerState.FULLSCREEN else PlayerState.NORMAL}")
-                    }
-                } catch (e: Exception) {
-                    omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                    logOmidAction("Error ${e.localizedMessage}")
+                if (playerState == null) {
+                    /** Provided playerState is null, so we rely on events coming from player
+                     * to set the player state **/
+                    onPlayerStateChanged(if (playerEvent.fullscreen) PlayerState.FULLSCREEN else PlayerState.NORMAL)
                 }
             }
             is AdTimeUpdateEvent -> {
@@ -226,7 +230,7 @@ object OMHelper {
                     it.parameters
                 )
             }
-        }catch (e: IllegalArgumentException){
+        } catch (e: IllegalArgumentException) {
             logError("Error while creating verificationScriptResourceList", e)
             return
         }
@@ -287,6 +291,10 @@ object OMHelper {
             start()
             logOmidAction("Session Start")
         }
+        playerState?.let {
+            /** Ensure we have the right state **/
+            onPlayerStateChanged(it)
+        }
     }
 
     /**
@@ -311,6 +319,18 @@ object OMHelper {
                 )
             }
             ?: emptyList()
+    }
+
+    private fun onPlayerStateChanged(state: PlayerState) {
+        try {
+            omidMediaEvents?.apply {
+                playerStateChange(state)
+                logOmidAction("PlayerState => $state")
+            }
+        } catch (e: Exception) {
+            omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
+            logOmidAction("Error ${e.localizedMessage}")
+        }
     }
 
     private fun logError(error: String, exception: Exception? = null) {
