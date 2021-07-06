@@ -39,6 +39,10 @@ tasks.withType<org.jetbrains.dokka.gradle.DokkaTask> {
     }
 }
 
+fun isSnapshotWorkflow(): Boolean {
+    return System.getenv("BITRISE_TRIGGERED_WORKFLOW_ID")?.equals("deploySnapshot") ?: false
+}
+
 fun Project.configureMavenPublish() {
     val sourcesJarTaskProvider = tasks.register("sourcesJar", org.gradle.jvm.tasks.Jar::class.java) {
         archiveClassifier.set("sources")
@@ -62,7 +66,7 @@ fun Project.configureMavenPublish() {
                 pom {
                     groupId = "com.dailymotion.dailymotion-sdk-android"
                     artifactId = "sdk"
-                    version = LibraryProject.libraryVersionName
+                    version = LibraryProject.libraryVersionName + (if(isSnapshotWorkflow()) "-SNAPSHOT" else "")
                     name.set("DailymotionPlayerSDKAndroid")
                     packaging = "aar"
                     description.set("This SDK aims at easily embedding Dailymotion videos on your Android application using WebView.")
