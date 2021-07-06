@@ -151,9 +151,14 @@ fun Project.getOssStagingUrl(): String {
     }
 }
 
-tasks.register<Task>("deployArtifacts") {
+tasks.register<Task>("deployStaging") {
     project.logger.lifecycle("Upload to OSSStaging needed.")
     dependsOn("publishDefaultPublicationToOssStagingRepository")
+}
+
+tasks.register<Task>("deploySnapshot") {
+    project.logger.lifecycle("Upload to OSSSnapshots needed.")
+    dependsOn("publishDefaultPublicationToOssSnapshotsRepository")
 }
 
 task("tagAndBump"){
