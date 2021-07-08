@@ -811,7 +811,6 @@ class PlayerWebView : WebView {
         const val EVENT_AD_START = "ad_start"
         const val EVENT_AD_PLAY = "ad_play"
         const val EVENT_AD_PAUSE = "ad_pause"
-        const val EVENT_AD_RESUME = "ad_resume"
         const val EVENT_AD_END = "ad_end"
         const val EVENT_AD_LOADED = "ad_loaded"
         const val EVENT_AD_TIME_UPDATE = "ad_timeupdate"

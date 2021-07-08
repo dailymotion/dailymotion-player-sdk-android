@@ -21,6 +21,7 @@ object OMHelper {
     private var omidMediaEvents: MediaEvents? = null
     private var omidCurrentPosition: Quartile? = null
     private var adDuration = 1f
+    private var isAdPaused = false
 
     /** Indicate the current player state. It's STRONGLY recommended to
      *  update at all time this field if the core app has other states than NORMAL or FULLSCREEN */
@@ -98,6 +99,7 @@ object OMHelper {
             }
             is AdStartEvent -> {
                 adDuration = playerEvent.adDuration.takeIf { it != 0f } ?: 1f
+                isAdPaused = false
                 startOmidSession()
             }
             is AdEndEvent -> {
@@ -127,6 +129,7 @@ object OMHelper {
                 }
             }
             is AdPauseEvent -> {
+                isAdPaused = true
                 try {
                     omidMediaEvents?.apply {
                         pause()
@@ -137,15 +140,18 @@ object OMHelper {
                     logOmidAction("Error ${e.localizedMessage}")
                 }
             }
-            is AdResumeEvent -> {
-                try {
-                    omidMediaEvents?.apply {
-                        resume()
-                        logOmidAction("resume")
+            is AdPlayEvent -> {
+                if(isAdPaused) {
+                    isAdPaused = false
+                    try {
+                        omidMediaEvents?.apply {
+                            resume()
+                            logOmidAction("resume")
+                        }
+                    } catch (e: Exception) {
+                        omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
+                        logOmidAction("Error ${e.localizedMessage}")
                     }
-                } catch (e: Exception) {
-                    omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                    logOmidAction("Error ${e.localizedMessage}")
                 }
             }
             is AdBufferStartEvent -> {
@@ -281,6 +287,7 @@ object OMHelper {
         omidMediaEvents = null
         omidCurrentPosition = null
         adDuration = 1f
+        isAdPaused = false
     }
 
     /**
