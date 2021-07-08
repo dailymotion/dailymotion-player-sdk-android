@@ -57,9 +57,6 @@ class PlayerEventFactory {
             PlayerWebView.EVENT_AD_CLICK -> {
                 createAdClickEvent(payload)
             }
-            PlayerWebView.EVENT_AD_RESUME -> {
-                createAdResumeEvent(payload)
-            }
             PlayerWebView.EVENT_AD_START -> {
                 createAdStartEvent(payload, params)
             }
@@ -269,10 +266,6 @@ class PlayerEventFactory {
 
     private fun createAdStartEvent(payload: String, map: Map<String, String?>): PlayerEvent {
         return AdStartEvent(payload, map["adData[adDuration]"]?.toFloatOrNull() ?: 1f)
-    }
-
-    private fun createAdResumeEvent(payload: String): PlayerEvent {
-        return AdResumeEvent(payload)
     }
 
     private fun createAdLoadedEvent(payload: String, params: Map<String, String?>): PlayerEvent {

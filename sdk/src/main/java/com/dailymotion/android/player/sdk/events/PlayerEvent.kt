@@ -10,7 +10,6 @@ class AddToCollectionRequestedEvent internal constructor(override val payload: S
 class AdLoadedEvent internal constructor(override val payload: String?, val skipOffset: Float, val autoPlay: Boolean, val position: String?) : PlayerEvent(PlayerWebView.EVENT_AD_LOADED, payload)
 class AdEndEvent internal constructor(override val payload: String?, val reason: String?, val error: String?) : PlayerEvent(PlayerWebView.EVENT_AD_END, payload)
 class AdPauseEvent internal constructor(override val payload: String?) : PlayerEvent(PlayerWebView.EVENT_AD_PAUSE, payload)
-class AdResumeEvent internal constructor(override val payload: String?) : PlayerEvent(PlayerWebView.EVENT_AD_RESUME, payload)
 class AdPlayEvent internal constructor(override val payload: String?) : PlayerEvent(PlayerWebView.EVENT_AD_PLAY, payload)
 class AdStartEvent internal constructor(override val payload: String?, val adDuration: Float) : PlayerEvent(PlayerWebView.EVENT_AD_START, payload)
 class AdTimeUpdateEvent internal constructor(override val payload: String?, val time: String?) : PlayerEvent(PlayerWebView.EVENT_AD_TIME_UPDATE, payload)
