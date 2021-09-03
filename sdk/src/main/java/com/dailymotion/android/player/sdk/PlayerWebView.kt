@@ -152,14 +152,11 @@ class PlayerWebView : WebView {
 
     fun initialize(baseUrl: String?, queryParameters: Map<String?, String?>?, httpHeaders: Map<String?, String?>?) {
         OMHelper.ensureInitialized(this@PlayerWebView.context)
-        //TODO to remove once the branch "omid-integration" is ready to release
-        val params = queryParameters?.toMutableMap()
-        params?.put("GK_PV5_OMSDK","1")
         mIsInitialized = true
         eventFactory = PlayerEventFactory()
         AdIdTask(context, object : AdIdTaskListener {
             override fun onResult(result: AdvertisingIdClient.Info?) {
-                finishInitialization(baseUrl, params, httpHeaders, result)
+                finishInitialization(baseUrl, queryParameters, httpHeaders, result)
             }
         }).execute()
     }
