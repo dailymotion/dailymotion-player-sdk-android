@@ -211,7 +211,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         logScrollBottom.setOnClickListener(this@SampleActivity)
     }
 
-    private fun initializePlayer(params: Map<String, String>) {
+    private fun initializePlayer(params: Map<String, Any>) {
 
         if (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) {
             playerWebView.setIsWebContentsDebuggingEnabled(true)

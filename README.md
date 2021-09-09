@@ -104,6 +104,21 @@ You have to call onPause and onResume when these events occur in your lifecycle 
     }
 ```
 
+### OM SDK integration
+Open Measurement SDK from IAB is designed to facilitate third party viewability and verification measurement for ads served to web video and mobile app environments. See https://iabtechlab.com/standards/open-measurement-sdk/ for more details
+
+We have integrated the SDK in our Dailymotion Player SDK and it does more or less everything out of the box :
+- Ad session management
+- Ad main signals (play, buffer_start, buffer_end, pause, resume, quartiles, click)
+- Device and Player volume management
+- ⚠️ Basic Player state handling. NORMAL or FULLSCREEN based on player fullscreen state.<br/><br/>
+It's **STRONGLY** recommended to update at all time the player state if your app has more player layout variety, such as mini-player, picture-in-picture, etc...<br/>
+To do it, simply update the OMHelper `playerState` field : 
+```kotlin
+    OMHelper.playerState = PlayerState.COLLAPSED
+```
+![image](https://user-images.githubusercontent.com/6400030/125312203-5ba0c700-e334-11eb-979f-6dd7e5d924ad.png)
+
 ### IAB TCF2
 The SDK follows the [IAB TCF2 standard](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework) to [access](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#how-do-third-party-sdks-vendors-access-the-consent-information-in-app) the stored consent string.
 In order to pass the consent string to the player, just use those lines **after the consent string was generated** by the CMP:
