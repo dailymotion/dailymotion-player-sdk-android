@@ -147,7 +147,7 @@ class PlayerWebView : WebView {
 
             initialize("https://www.dailymotion.com/embed/", defaultQueryParameters, HashMap())
         }
-        queueCommand(COMMAND_LOAD, params!!)
+        queueCommand(COMMAND_LOAD, params ?: emptyMap<String, Any>())
     }
 
     fun initialize(baseUrl: String?, queryParameters: Map<String?, String?>?, httpHeaders: Map<String?, String?>?) {
@@ -170,13 +170,9 @@ class PlayerWebView : WebView {
         mWebSettings.userAgentString = mWebSettings.userAgentString + mExtraUA
         mWebSettings.pluginState = WebSettings.PluginState.ON
         setBackgroundColor(Color.BLACK)
-        if (Build.VERSION.SDK_INT >= 17) {
-            mWebSettings.mediaPlaybackRequiresUserGesture = false
-        }
+        mWebSettings.mediaPlaybackRequiresUserGesture = false
         mHandler = Handler()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            setWebContentsDebuggingEnabled(mIsWebContentsDebuggingEnabled)
-        }
+        setWebContentsDebuggingEnabled(mIsWebContentsDebuggingEnabled)
         val mChromeClient: WebChromeClient = object : WebChromeClient() {
             /**
              * The view to be displayed while the fullscreen VideoView is buffering
@@ -207,15 +203,11 @@ class PlayerWebView : WebView {
                             val inputStream = context.assets.open(asset)
                             var response: WebResourceResponse? = null
                             val encoding = "UTF-8"
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                val statusCode = 200
-                                val reasonPhase = "OK"
-                                val responseHeaders: MutableMap<String, String> = HashMap()
-                                responseHeaders["Access-Control-Allow-Origin"] = "*"
-                                response = WebResourceResponse("font/ttf", encoding, statusCode, reasonPhase, responseHeaders, inputStream)
-                            } else {
-                                response = WebResourceResponse("font/ttf", encoding, inputStream)
-                            }
+                            val statusCode = 200
+                            val reasonPhase = "OK"
+                            val responseHeaders: MutableMap<String, String> = HashMap()
+                            responseHeaders["Access-Control-Allow-Origin"] = "*"
+                            response = WebResourceResponse("font/ttf", encoding, statusCode, reasonPhase, responseHeaders, inputStream)
                             return response
                         } catch (e: IOException) {
                             e.printStackTrace()
@@ -227,7 +219,7 @@ class PlayerWebView : WebView {
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 Timber.e("webview redirect to %s", url)
-                if (overrideUrlLoadingInterceptor != null && overrideUrlLoadingInterceptor!!.intercept(url)) {
+                if (overrideUrlLoadingInterceptor?.intercept(url) == true) {
                     return true
                 }
                 try{
@@ -244,32 +236,24 @@ class PlayerWebView : WebView {
 
             override fun onReceivedError(view: WebView, errorCode: Int, description: String, failingUrl: String) {
                 super.onReceivedError(view, errorCode, description, failingUrl)
-                if (webViewErrorListener != null) {
-                    webViewErrorListener!!.onErrorReceived(view, errorCode, description, failingUrl)
-                }
+                webViewErrorListener?.onErrorReceived(view, errorCode, description, failingUrl)
             }
 
             @TargetApi(Build.VERSION_CODES.M)
             override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
                 super.onReceivedError(view, request, error)
-                if (webViewErrorListener != null) {
-                    webViewErrorListener!!.onErrorReceived(view, request, error)
-                }
+                webViewErrorListener?.onErrorReceived(view, request, error)
             }
 
             override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
                 super.onReceivedSslError(view, handler, error)
-                if (webViewErrorListener != null) {
-                    webViewErrorListener!!.onReceivedSslError(view, handler, error)
-                }
+                webViewErrorListener?.onReceivedSslError(view, handler, error)
             }
 
             @TargetApi(Build.VERSION_CODES.M)
             override fun onReceivedHttpError(view: WebView, request: WebResourceRequest, errorResponse: WebResourceResponse) {
                 super.onReceivedHttpError(view, request, errorResponse)
-                if (webViewErrorListener != null) {
-                    webViewErrorListener!!.onReceivedHttpError(view, request, errorResponse)
-                }
+                webViewErrorListener?.onReceivedHttpError(view, request, errorResponse)
             }
         }
         webChromeClient = mChromeClient
@@ -277,12 +261,10 @@ class PlayerWebView : WebView {
         // the following parameters below are compulsory, make sure they are always defined
         parameters["app"] = context.packageName
         parameters["api"] = "nativeBridge"
-        if (Utils.hasFireTV(context)) {
-            parameters["client_type"] = "firetv"
-        } else if (Utils.hasLeanback(context)) {
-            parameters["client_type"] = "androidtv"
-        } else {
-            parameters["client_type"] = "androidapp"
+        when {
+            Utils.hasFireTV(context) -> parameters["client_type"] = "firetv"
+            Utils.hasLeanback(context) -> parameters["client_type"] = "androidtv"
+            else -> parameters["client_type"] = "androidapp"
         }
         try {
             if (adInfo != null && adInfo.id != null && !adInfo.id.isEmpty()) {
@@ -303,14 +285,12 @@ class PlayerWebView : WebView {
             } else {
                 builder.append('&')
             }
-            var encodedParam: String?
-            encodedParam = try {
+            val encodedParam: String? = try {
                 URLEncoder.encode(value, "UTF-8")
             } catch (e: UnsupportedEncodingException) {
                 value
             }
-            var encodedKey: String?
-            encodedKey = try {
+            val encodedKey: String? = try {
                 URLEncoder.encode(key, "UTF-8")
             } catch (e: UnsupportedEncodingException) {
                 key
@@ -345,12 +325,10 @@ class PlayerWebView : WebView {
         val map = HashMap<String, String?>()
         for (s in p) {
             val s2 = s.split("=").toTypedArray()
-            if (s2.size == 1) {
-                map[s2[0]] = null
-            } else if (s2.size == 2) {
-                map[s2[0]] = s2[1]
-            } else {
-                Timber.e("bad param: $s")
+            when (s2.size) {
+                1 -> map[s2[0]] = null
+                2 -> map[s2[0]] = s2[1]
+                else -> Timber.e("bad param: $s")
             }
         }
         val event = map["event"]
@@ -368,20 +346,20 @@ class PlayerWebView : WebView {
             }
             EVENT_START -> {
                 isEnded = false
-                mHandler!!.removeCallbacks(mLoadCommandRunnable)
+                mHandler?.removeCallbacks(mLoadCommandRunnable)
                 mLoadCommandRunnable = null
             }
             EVENT_END -> {
                 isEnded = true
             }
             EVENT_PROGRESS -> {
-                bufferedTime = map["time"]!!.toFloat().toDouble()
+                bufferedTime = map["time"]?.toFloatOrNull()?.toDouble() ?: 0.0
             }
             EVENT_TIMEUPDATE -> {
-                mPosition = map["time"]!!.toFloat()
+                mPosition = map["time"]?.toFloatOrNull() ?: 0f
             }
             EVENT_DURATION_CHANGE -> {
-                duration = map["duration"]!!.toFloat().toDouble()
+                duration = map["duration"]?.toFloatOrNull()?.toDouble() ?: 0.0
             }
             EVENT_GESTURE_START -> {
                 mDisallowIntercept = true
@@ -410,12 +388,12 @@ class PlayerWebView : WebView {
                 mPlayWhenReady = false
             }
             EVENT_CONTROLSCHANGE -> {
-                mHandler!!.removeCallbacks(mControlsCommandRunnable)
+                mHandler?.removeCallbacks(mControlsCommandRunnable)
                 mControlsCommandRunnable = null
             }
             EVENT_VOLUMECHANGE -> {
-                mVolume = map["volume"]!!.toFloat()
-                mHandler!!.removeCallbacks(mMuteCommandRunnable)
+                mVolume = map["volume"]?.toFloatOrNull() ?: 0f
+                mHandler?.removeCallbacks(mMuteCommandRunnable)
                 mMuteCommandRunnable = null
             }
             EVENT_LOADEDMETADATA -> {
@@ -426,11 +404,11 @@ class PlayerWebView : WebView {
             }
             EVENT_SEEKED -> {
                 isSeeking = false
-                mPosition = map["time"]!!.toFloat()
+                mPosition = map["time"]?.toFloatOrNull() ?: 0f
             }
             EVENT_SEEKING -> {
                 isSeeking = true
-                mPosition = map["time"]!!.toFloat()
+                mPosition = map["time"]?.toFloatOrNull() ?: 0f
             }
             EVENT_PLAYBACK_READY -> {
                 mHasPlaybackReady = true
@@ -549,14 +527,11 @@ class PlayerWebView : WebView {
         var count = 0
         for (o in params) {
             count++
-            if (o is String) {
-                builder.append("'$o'")
-            } else if (o is Number) {
-                builder.append(o.toString())
-            } else if (o is Boolean) {
-                builder.append(o.toString())
-            } else {
-                builder.append("JSON.parse('" + mGson!!.toJson(o) + "')")
+            when (o) {
+                is String -> builder.append("'$o'")
+                is Number -> builder.append(o.toString())
+                is Boolean -> builder.append(o.toString())
+                else -> builder.append("JSON.parse('" + mGson!!.toJson(o) + "')")
             }
             if (count < params.size) {
                 builder.append(",")
@@ -742,7 +717,7 @@ class PlayerWebView : WebView {
 
         @JavascriptInterface
         fun triggerEvent(e: String) {
-            mHandler!!.post { handleEvent(e) }
+            mHandler?.post { handleEvent(e) }
         }
     }
 
