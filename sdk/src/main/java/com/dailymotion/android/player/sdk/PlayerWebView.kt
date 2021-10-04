@@ -696,6 +696,10 @@ class PlayerWebView : WebView {
         webViewErrorListener = errorListener
     }
 
+    fun setEventErrorListener(errorListener: EventErrorListener?) {
+        eventErrorListener = errorListener
+    }
+
     fun setEventListener(listener: EventListener) {
         playerEventListener = listener
     }
