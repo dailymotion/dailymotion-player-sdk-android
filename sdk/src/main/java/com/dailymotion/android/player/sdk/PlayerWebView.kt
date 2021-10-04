@@ -69,6 +69,7 @@ class PlayerWebView : WebView {
     private var webViewErrorListener: WebViewErrorListener? = null
     private var playerEventListener: EventListener? = null
     private var overrideUrlLoadingInterceptor: OverrideUrlLoadingInterceptor? = null
+    private var eventErrorListener: EventErrorListener? = null
 
     var mJavascriptBridge: Any = JavascriptBridge()
 
@@ -222,12 +223,12 @@ class PlayerWebView : WebView {
                 if (overrideUrlLoadingInterceptor?.intercept(url) == true) {
                     return true
                 }
-                try{
+                try {
                     val httpIntent = Intent(Intent.ACTION_VIEW)
                     httpIntent.data = Uri.parse(url)
                     httpIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     context.startActivity(httpIntent)
-                }catch (e: ActivityNotFoundException){
+                } catch (e: ActivityNotFoundException) {
                     Timber.e(e)
                     webViewErrorListener?.onShouldOverrideUrlLoadingFailed(e)
                 }
@@ -353,13 +354,22 @@ class PlayerWebView : WebView {
                 isEnded = true
             }
             EVENT_PROGRESS -> {
-                bufferedTime = map["time"]?.toFloatOrNull()?.toDouble() ?: 0.0
+                bufferedTime = map["time"]?.toFloatOrNull()?.toDouble() ?: run {
+                    eventErrorListener?.onError(event, "Missing parameter time", map)
+                    0.0
+                }
             }
             EVENT_TIMEUPDATE -> {
-                mPosition = map["time"]?.toFloatOrNull() ?: 0f
+                mPosition = map["time"]?.toFloatOrNull() ?: run {
+                    eventErrorListener?.onError(event, "Missing parameter time", map)
+                    0f
+                }
             }
             EVENT_DURATION_CHANGE -> {
-                duration = map["duration"]?.toFloatOrNull()?.toDouble() ?: 0.0
+                duration = map["duration"]?.toFloatOrNull()?.toDouble() ?: run {
+                    eventErrorListener?.onError(event, "Missing parameter duration", map)
+                    0.0
+                }
             }
             EVENT_GESTURE_START -> {
                 mDisallowIntercept = true
@@ -392,7 +402,10 @@ class PlayerWebView : WebView {
                 mControlsCommandRunnable = null
             }
             EVENT_VOLUMECHANGE -> {
-                mVolume = map["volume"]?.toFloatOrNull() ?: 0f
+                mVolume = map["volume"]?.toFloatOrNull() ?: run {
+                    eventErrorListener?.onError(event, "Missing parameter volume", map)
+                    0f
+                }
                 mHandler?.removeCallbacks(mMuteCommandRunnable)
                 mMuteCommandRunnable = null
             }
@@ -404,11 +417,17 @@ class PlayerWebView : WebView {
             }
             EVENT_SEEKED -> {
                 isSeeking = false
-                mPosition = map["time"]?.toFloatOrNull() ?: 0f
+                mPosition = map["time"]?.toFloatOrNull() ?: run {
+                    eventErrorListener?.onError(event, "Missing parameter time", map)
+                    0f
+                }
             }
             EVENT_SEEKING -> {
                 isSeeking = true
-                mPosition = map["time"]?.toFloatOrNull() ?: 0f
+                mPosition = map["time"]?.toFloatOrNull() ?: run {
+                    eventErrorListener?.onError(event, "Missing parameter time", map)
+                    0f
+                }
             }
             EVENT_PLAYBACK_READY -> {
                 mHasPlaybackReady = true
@@ -465,7 +484,7 @@ class PlayerWebView : WebView {
             iterator.remove()
             sendCommand(command)
         }
-        if(mCommandList.isNotEmpty()){
+        if (mCommandList.isNotEmpty()) {
             /**
              * Ensure we will tick again as some commands are waiting to be sent
              */
@@ -551,10 +570,10 @@ class PlayerWebView : WebView {
      * We override onWindowVisibilityChanged and call our owns setVisible method
      */
     override fun onWindowVisibilityChanged(visibility: Int) {
-        if (visibility == View.VISIBLE){
+        if (visibility == View.VISIBLE) {
             super.onWindowVisibilityChanged(View.VISIBLE)
             setVisible(true, false)
-        }else{
+        } else {
             setVisible(false, false)
         }
     }
@@ -709,10 +728,10 @@ class PlayerWebView : WebView {
 
         @JavascriptInterface
         fun getEmbedderProperties() = Gson().toJson(
-            mapOf(
-                "sdk" to BuildConfig.SDK_VERSION,
-                "capabilities" to mapOf( "omsdk" to OMHelper.getVersion())
-            )
+                mapOf(
+                        "sdk" to BuildConfig.SDK_VERSION,
+                        "capabilities" to mapOf("omsdk" to OMHelper.getVersion())
+                )
         ).toString()
 
         @JavascriptInterface
@@ -761,6 +780,10 @@ class PlayerWebView : WebView {
 
     interface OverrideUrlLoadingInterceptor {
         fun intercept(url: String): Boolean
+    }
+
+    interface EventErrorListener {
+        fun onError(playerEvent: String, description: String, map: Map<String, String?>)
     }
 
     companion object {
