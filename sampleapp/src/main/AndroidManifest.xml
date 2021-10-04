@@ -10,6 +10,7 @@
     <application
         android:name="com.sampleapp.dailymotion.MyApp"
         android:allowBackup="true"
+        android:fullBackupContent="false"
         android:hardwareAccelerated="true"
         android:icon="@drawable/ic_launcher"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -20,7 +21,8 @@
             android:name="com.sampleapp.dailymotion.SampleActivity"
             android:configChanges="orientation|screenSize"
             android:windowSoftInputMode="adjustPan"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
