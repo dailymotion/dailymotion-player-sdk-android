@@ -734,7 +734,11 @@ class PlayerWebView : WebView {
         fun getEmbedderProperties() = Gson().toJson(
                 mapOf(
                         "sdk" to BuildConfig.SDK_VERSION,
-                        "capabilities" to mapOf("omsdk" to OMHelper.getVersion())
+                        "capabilities" to mapOf(
+                                "omsdk" to OMHelper.getVersion(),
+                                "ompartner" to OMHelper.PARTNER_NAME,
+                                "omversion" to OMHelper.PARTNER_VERSION
+                        )
                 )
         ).toString()
 
