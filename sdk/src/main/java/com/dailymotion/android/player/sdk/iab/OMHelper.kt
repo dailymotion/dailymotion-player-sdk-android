@@ -1,7 +1,6 @@
 package com.dailymotion.android.player.sdk.iab
 
 import android.content.Context
-import com.dailymotion.android.BuildConfig
 import com.dailymotion.android.player.sdk.PlayerWebView
 import com.dailymotion.android.player.sdk.events.*
 import com.iab.omid.library.dailymotion.Omid
@@ -14,7 +13,9 @@ import java.util.regex.Pattern
 
 object OMHelper {
 
-    private const val PARTNER_NAME = "dailymotion"
+    const val PARTNER_NAME = "Dailymotion"
+    /** This represents the version of our SDK that has been validated by IAB */
+    const val PARTNER_VERSION = "0.2.8"
 
     private var omidSession: AdSession? = null
     private var omidAdEvents: AdEvents? = null
@@ -242,7 +243,7 @@ object OMHelper {
         }
 
         val partner = try {
-            Partner.createPartner(PARTNER_NAME, BuildConfig.SDK_VERSION)
+            Partner.createPartner(PARTNER_NAME, PARTNER_VERSION)
         } catch (e: java.lang.IllegalArgumentException) {
             logError("Error while creating partner", e)
             return
