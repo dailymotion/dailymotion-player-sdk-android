@@ -237,14 +237,14 @@ object OMHelper {
                     it.parameters
                 )
             }
-        } catch (e: IllegalArgumentException) {
+        } catch (e: Exception) {
             logError("Error while creating verificationScriptResourceList", e)
             return
         }
 
         val partner = try {
             Partner.createPartner(PARTNER_NAME, PARTNER_VERSION)
-        } catch (e: java.lang.IllegalArgumentException) {
+        } catch (e: Exception) {
             logError("Error while creating partner", e)
             return
         }
@@ -262,7 +262,7 @@ object OMHelper {
                 CreativeType.VIDEO, ImpressionType.ONE_PIXEL,
                 Owner.NATIVE, Owner.NATIVE, true
             )
-        } catch (e: IllegalArgumentException) {
+        } catch (e: Exception) {
             logError("Error while creating adSessionConfiguration", e)
             return
         }
