@@ -24,6 +24,8 @@ object OMHelper {
     private var adDuration = 1f
     private var isAdPaused = false
 
+    private var omErrorListener: OMErrorListener? = null
+
     /** Indicate the current player state. It's STRONGLY recommended to
      *  update at all time this field if the core app has other states than NORMAL or FULLSCREEN */
     var playerState: PlayerState? = null
@@ -70,13 +72,13 @@ object OMHelper {
                     }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                    logOmidAction("Error ${e.localizedMessage}")
+                    logError("Error with adSession : Impression", e)
                 }
 
                 val position = try {
                     Position.valueOf(playerEvent.position?.uppercase().orEmpty())
                 } catch (e: Exception) {
-                    logError("Incorrect Position")
+                    logError("Incorrect Position", e)
                     return
                 }
 
@@ -95,7 +97,7 @@ object OMHelper {
                     }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                    logOmidAction("Error ${e.localizedMessage}")
+                    logError("Error with adSession : Load Properties", e)
                 }
             }
             is AdStartEvent -> {
@@ -120,13 +122,13 @@ object OMHelper {
                         }
                         "AD_ERROR" -> {
                             omidSession?.error(ErrorType.VIDEO, playerEvent.error ?: "AD_ERROR")
-                            logOmidAction("Error ${playerEvent.error ?: "AD_ERROR"}")
+                            logError("Error with adSession : AD_ERROR", Exception("Received an AD_ERROR"))
                         }
                     }
                     endOmidSession()
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                    logOmidAction("Error ${e.localizedMessage}")
+                    logError("Error with adSession : AdEndEvent", e)
                 }
             }
             is AdPauseEvent -> {
@@ -138,7 +140,7 @@ object OMHelper {
                     }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                    logOmidAction("Error ${e.localizedMessage}")
+                    logError("Error with adSession : AdPauseEvent", e)
                 }
             }
             is AdPlayEvent -> {
@@ -151,7 +153,7 @@ object OMHelper {
                         }
                     } catch (e: Exception) {
                         omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                        logOmidAction("Error ${e.localizedMessage}")
+                        logError("Error with adSession : AdPlayEvent", e)
                     }
                 }
             }
@@ -163,7 +165,7 @@ object OMHelper {
                     }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                    logOmidAction("Error ${e.localizedMessage}")
+                    logError("Error with adSession : AdBufferStartTime", e)
                 }
             }
             is AdBufferEndEvent -> {
@@ -174,6 +176,7 @@ object OMHelper {
                     }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
+                    logError("Error with adSession : AdBufferEndEvent", e)
                 }
             }
             is AdClickEvent -> {
@@ -184,7 +187,7 @@ object OMHelper {
                     }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                    logOmidAction("Error ${e.localizedMessage}")
+                    logError("Error with adSession : AdClickEvent", e)
                 }
             }
             is VolumeChangeEvent -> {
@@ -195,7 +198,7 @@ object OMHelper {
                     }
                 } catch (e: Exception) {
                     omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                    logOmidAction("Error ${e.localizedMessage}")
+                    logError("Error with adSession : VolumeChangeEvent", e)
                 }
             }
             is FullScreenChangeEvent -> {
@@ -214,7 +217,7 @@ object OMHelper {
                         omidMediaEvents?.let { omidCurrentPosition?.action?.invoke(it) }
                     } catch (e: Exception) {
                         omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                        logOmidAction("Error ${e.localizedMessage}")
+                        logError("Error with adSession : AdTimeUpdateEvent", e)
                     }
                 }
             }
@@ -237,8 +240,8 @@ object OMHelper {
                     it.parameters
                 )
             }
-        } catch (e: IllegalArgumentException) {
-            logError("Error while creating verificationScriptResourceList", e)
+        } catch (e: Exception) {
+            logError("Error while creating verificationScriptResourceList with payload : $payload", e)
             return
         }
 
@@ -337,12 +340,13 @@ object OMHelper {
             }
         } catch (e: Exception) {
             omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-            logOmidAction("Error ${e.localizedMessage}")
+            logError("Error with adSession : PlayerState", e)
         }
     }
 
-    private fun logError(error: String, exception: Exception? = null) {
+    private fun logError(error: String, exception: Exception) {
         Timber.e(exception, "OMSDK: ERROR : $error")
+        omErrorListener?.onError(error, exception)
     }
 
     private fun logOmidAction(message: String) {
@@ -350,4 +354,12 @@ object OMHelper {
     }
 
     internal fun getVersion() = Omid.getVersion()
+
+    interface OMErrorListener {
+        fun onError(description: String, exception: Exception)
+    }
+
+    fun setOMErrorListener(errorListener: OMErrorListener?) {
+        omErrorListener = errorListener
+    }
 }
