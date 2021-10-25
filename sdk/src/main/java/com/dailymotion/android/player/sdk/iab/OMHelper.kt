@@ -241,7 +241,7 @@ object OMHelper {
                 )
             }
         } catch (e: Exception) {
-            logError("Error while creating verificationScriptResourceList with payload : $payload", e)
+            logError("Error while creating verificationScriptResourceList with payload", e, payload)
             return
         }
 
@@ -344,9 +344,9 @@ object OMHelper {
         }
     }
 
-    private fun logError(error: String, exception: Exception) {
+    private fun logError(error: String, exception: Exception, debug: String? = null) {
         Timber.e(exception, "OMSDK: ERROR : $error")
-        omErrorListener?.onOMSDKError(error, exception)
+        omErrorListener?.onOMSDKError(error, exception, debug)
     }
 
     private fun logOmidAction(message: String) {
@@ -356,7 +356,7 @@ object OMHelper {
     internal fun getVersion() = Omid.getVersion()
 
     interface OMErrorListener {
-        fun onOMSDKError(description: String, exception: Exception)
+        fun onOMSDKError(description: String, exception: Exception, debug: String?)
     }
 
     fun setOMErrorListener(errorListener: OMErrorListener?) {
