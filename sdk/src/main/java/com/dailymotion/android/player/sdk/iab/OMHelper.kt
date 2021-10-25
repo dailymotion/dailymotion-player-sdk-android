@@ -346,7 +346,7 @@ object OMHelper {
 
     private fun logError(error: String, exception: Exception) {
         Timber.e(exception, "OMSDK: ERROR : $error")
-        omErrorListener?.onError(error, exception)
+        omErrorListener?.onOMSDKError(error, exception)
     }
 
     private fun logOmidAction(message: String) {
@@ -356,7 +356,7 @@ object OMHelper {
     internal fun getVersion() = Omid.getVersion()
 
     interface OMErrorListener {
-        fun onError(description: String, exception: Exception)
+        fun onOMSDKError(description: String, exception: Exception)
     }
 
     fun setOMErrorListener(errorListener: OMErrorListener?) {
