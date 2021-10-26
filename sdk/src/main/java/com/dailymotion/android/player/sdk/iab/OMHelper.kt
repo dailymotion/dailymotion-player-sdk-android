@@ -311,22 +311,22 @@ object OMHelper {
     /**
      * Parse the verificationScriptsList from the payload of AdLoadedEvent
      */
-    private fun parseVerificationScriptData(payload: String?): List<VerificationScriptData> {
+    internal fun parseVerificationScriptData(payload: String?): List<VerificationScriptData> {
         return payload
             ?.split("&")
             ?.groupBy {
-                val m = Pattern.compile("verificationScripts\\[(.*)]\\[(.*)]=(.*)").matcher(it)
+                val m = Pattern.compile("verificationScripts\\[([0-9]*)]\\[(.*)]=(.*)").matcher(it)
                 if (m.matches()) m.group(1) else null
             }
             ?.filterKeys { it != null }
             ?.map { group ->
                 VerificationScriptData(
                     vendorKey = group.value.find { it.contains("verificationScripts[${group.key}][vendor]") }
-                        ?.split("=")?.get(1) ?: "",
+                        ?.split("=", limit = 2)?.get(1) ?: "",
                     url = group.value.find { it.contains("verificationScripts[${group.key}][resource]") }
-                        ?.split("=")?.get(1) ?: "",
+                        ?.split("=", limit = 2)?.get(1) ?: "",
                     parameters = group.value.find { it.contains("verificationScripts[${group.key}][parameters]") }
-                        ?.split("=")?.get(1) ?: ""
+                        ?.split("=", limit = 2)?.get(1) ?: ""
                 )
             }
             ?: emptyList()
