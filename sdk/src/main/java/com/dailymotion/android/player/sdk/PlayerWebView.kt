@@ -261,6 +261,7 @@ class PlayerWebView : WebView {
         val parameters: MutableMap<String?, String?> = HashMap()
         // the following parameters below are compulsory, make sure they are always defined
         parameters["app"] = context.packageName
+        parameters["sdk_version"] = BuildConfig.SDK_VERSION
         parameters["api"] = "nativeBridge"
         when {
             Utils.hasFireTV(context) -> parameters["client_type"] = "firetv"
