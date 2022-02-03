@@ -13,25 +13,29 @@ apply(plugin = "maven-publish")
 apply(plugin = "signing")
 
 android {
-    compileSdkVersion(Version.compileSdkVersion)
+    compileSdk = Version.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion(Version.minSdkVersion)
-        targetSdkVersion(Version.targetSdkVersion)
+        minSdk = Version.minSdkVersion
+        targetSdk = Version.targetSdkVersion
         buildConfigField("String", "SDK_VERSION", "\"${LibraryProject.libraryVersionName}\"")
     }
 }
 
 dependencies {
-    implementation("com.google.code.gson:gson:2.8.6")
-    implementation("com.jakewharton.timber:timber:4.7.1")
-    implementation("com.google.android.gms:play-services-ads-identifier:17.0.1")
+    implementation(Libs.gson)
+    implementation(Libs.timber)
 
-    implementation("androidx.core:core-ktx:1.5.0")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.5.10")
+    implementation(Libs.kxCoroutines)
+    implementation(Libs.kxCoroutinesAndroid)
+
+    implementation(Libs.playServicesAds)
+
+    implementation(Libs.xCore)
+    implementation(Libs.kotlin)
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar", "*.aar"))))
 
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(Libs.junit)
 }
 
 tasks.withType<org.jetbrains.dokka.gradle.DokkaTask> {
