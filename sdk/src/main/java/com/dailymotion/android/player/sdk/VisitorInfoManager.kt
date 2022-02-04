@@ -6,19 +6,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class VisitorInfoManager {
 
-    private lateinit var advertisingInfo: AdvertisingIdClient.Info
+    private var advertisingInfo: AdvertisingIdClient.Info? = null
     private val mutex = Mutex()
 
-    suspend fun getAdvertisingInfo(context: Context): AdvertisingIdClient.Info = mutex.withLock {
-        if (::advertisingInfo.isInitialized.not() || advertisingInfo.id.isNullOrBlank()) {
+    suspend fun getAdvertisingInfo(context: Context): AdvertisingIdClient.Info? = mutex.withLock {
+        if (advertisingInfo?.id.isNullOrBlank()) {
             advertisingInfo = withContext(Dispatchers.IO) {
                 try {
                     AdvertisingIdClient.getAdvertisingIdInfo(context)
                 } catch (e: Exception) {
-                    AdvertisingIdClient.Info("", false)
+                    Timber.e(e)
+                    null
                 }
             }
         }
