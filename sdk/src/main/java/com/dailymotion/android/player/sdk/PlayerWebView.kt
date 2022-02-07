@@ -18,12 +18,14 @@ import android.webkit.*
 import android.widget.ProgressBar
 import androidx.annotation.RequiresApi
 import com.dailymotion.android.BuildConfig
-import com.dailymotion.android.player.sdk.AdIdTask.AdIdTaskListener
 import com.dailymotion.android.player.sdk.events.PlayerEvent
 import com.dailymotion.android.player.sdk.events.PlayerEventFactory
 import com.dailymotion.android.player.sdk.iab.OMHelper
 import com.google.android.gms.ads.identifier.AdvertisingIdClient
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.IOException
 import java.io.UnsupportedEncodingException
@@ -35,7 +37,11 @@ import java.util.*
  * Created by hugo
  * on 6/13/17.
  */
-class PlayerWebView : WebView {
+class PlayerWebView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : WebView(context, attrs, defStyleAttr) {
 
     private val mCommandList = ArrayList<Command>()
     private val mExtraUA = ";dailymotion-player-sdk-android " + BuildConfig.SDK_VERSION
@@ -114,10 +120,6 @@ class PlayerWebView : WebView {
             updatePlayState()
         }
 
-    constructor(context: Context?) : super(context) { /* do nothing */ }
-    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) { /* do nothing */ }
-    constructor(context: Context?, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) { /* do nothing */ }
-
     @Deprecated("Use load(params: Map<String, Any?>?) instead")
     @JvmOverloads
     fun load(videoId: String?, loadParams: Map<String, Any?>? = emptyMap()) {
@@ -146,30 +148,41 @@ class PlayerWebView : WebView {
                 defaultQueryParameters["queue-enable"] = params["queue-enable"] as? String
             }
 
-            initialize("https://www.dailymotion.com/embed/", defaultQueryParameters, HashMap())
+            initialize("https://www.dailymotion.com/embed/", defaultQueryParameters)
         }
         queueCommand(COMMAND_LOAD, params ?: emptyMap<String, Any>())
     }
 
-    fun initialize(baseUrl: String?, queryParameters: Map<String?, String?>?, httpHeaders: Map<String?, String?>?) {
+    fun initialize(
+        baseUrl: String?,
+        queryParameters: Map<String?, String?>?,
+        httpHeaders: Map<String?, String?> = emptyMap()
+    ) {
         OMHelper.ensureInitialized(this@PlayerWebView.context)
         mIsInitialized = true
         eventFactory = PlayerEventFactory()
-        AdIdTask(context, object : AdIdTaskListener {
-            override fun onResult(result: AdvertisingIdClient.Info?) {
-                finishInitialization(baseUrl, queryParameters, httpHeaders, result)
-            }
-        }).execute()
+        CoroutineScope(Dispatchers.Main).launch {
+            finishInitialization(
+                baseUrl,
+                queryParameters,
+                httpHeaders,
+                PlayerSdkInitProvider.visitorInfoManager.getAdvertisingInfo(context)
+            )
+        }
     }
 
     @SuppressLint("JavascriptInterface")
-    fun finishInitialization(baseUrl: String?, queryParameters: Map<String?, String?>?, httpHeaders: Map<String?, String?>?, adInfo: AdvertisingIdClient.Info?) {
+    fun finishInitialization(
+        baseUrl: String?,
+        queryParameters: Map<String?, String?>?,
+        httpHeaders: Map<String?, String?>,
+        adInfo: AdvertisingIdClient.Info?
+    ) {
         mGson = Gson()
         val mWebSettings = settings
         mWebSettings.domStorageEnabled = true
         mWebSettings.javaScriptEnabled = true
         mWebSettings.userAgentString = mWebSettings.userAgentString + mExtraUA
-        mWebSettings.pluginState = WebSettings.PluginState.ON
         setBackgroundColor(Color.BLACK)
         mWebSettings.mediaPlaybackRequiresUserGesture = false
         mHandler = Handler()
@@ -235,24 +248,41 @@ class PlayerWebView : WebView {
                 return true
             }
 
-            override fun onReceivedError(view: WebView, errorCode: Int, description: String, failingUrl: String) {
+            override fun onReceivedError(
+                view: WebView,
+                errorCode: Int,
+                description: String,
+                failingUrl: String
+            ) {
                 super.onReceivedError(view, errorCode, description, failingUrl)
                 webViewErrorListener?.onErrorReceived(view, errorCode, description, failingUrl)
             }
 
             @TargetApi(Build.VERSION_CODES.M)
-            override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceError) {
+            override fun onReceivedError(
+                view: WebView,
+                request: WebResourceRequest,
+                error: WebResourceError
+            ) {
                 super.onReceivedError(view, request, error)
                 webViewErrorListener?.onErrorReceived(view, request, error)
             }
 
-            override fun onReceivedSslError(view: WebView, handler: SslErrorHandler, error: SslError) {
+            override fun onReceivedSslError(
+                view: WebView,
+                handler: SslErrorHandler,
+                error: SslError
+            ) {
                 super.onReceivedSslError(view, handler, error)
                 webViewErrorListener?.onReceivedSslError(view, handler, error)
             }
 
             @TargetApi(Build.VERSION_CODES.M)
-            override fun onReceivedHttpError(view: WebView, request: WebResourceRequest, errorResponse: WebResourceResponse) {
+            override fun onReceivedHttpError(
+                view: WebView,
+                request: WebResourceRequest,
+                errorResponse: WebResourceResponse
+            ) {
                 super.onReceivedHttpError(view, request, errorResponse)
                 webViewErrorListener?.onReceivedHttpError(view, request, errorResponse)
             }
@@ -269,7 +299,7 @@ class PlayerWebView : WebView {
             else -> parameters["client_type"] = "androidapp"
         }
         try {
-            if (adInfo != null && adInfo.id != null && !adInfo.id.isEmpty()) {
+            if (adInfo != null && adInfo.id.orEmpty().isNotEmpty()) {
                 parameters["ads_device_id"] = adInfo.id
                 parameters["ads_device_tracking"] = if (adInfo.isLimitAdTrackingEnabled) "0" else "1"
             }
@@ -348,7 +378,7 @@ class PlayerWebView : WebView {
             }
             EVENT_START -> {
                 isEnded = false
-                mHandler?.removeCallbacks(mLoadCommandRunnable)
+                mLoadCommandRunnable?.let { mHandler?.removeCallbacks(it) }
                 mLoadCommandRunnable = null
             }
             EVENT_END -> {
@@ -399,7 +429,7 @@ class PlayerWebView : WebView {
                 mPlayWhenReady = false
             }
             EVENT_CONTROLSCHANGE -> {
-                mHandler?.removeCallbacks(mControlsCommandRunnable)
+                mControlsCommandRunnable?.let { mHandler?.removeCallbacks(it) }
                 mControlsCommandRunnable = null
             }
             EVENT_VOLUMECHANGE -> {
@@ -407,7 +437,7 @@ class PlayerWebView : WebView {
                     eventErrorListener?.onError(event, "Missing parameter volume", map)
                     0f
                 }
-                mHandler?.removeCallbacks(mMuteCommandRunnable)
+                mMuteCommandRunnable?.let { mHandler?.removeCallbacks(it) }
                 mMuteCommandRunnable = null
             }
             EVENT_LOADEDMETADATA -> {
@@ -733,14 +763,14 @@ class PlayerWebView : WebView {
 
         @JavascriptInterface
         fun getEmbedderProperties() = Gson().toJson(
-                mapOf(
-                        "sdk" to BuildConfig.SDK_VERSION,
-                        "capabilities" to mapOf(
-                                "omsdk" to OMHelper.getVersion(),
-                                "ompartner" to OMHelper.PARTNER_NAME,
-                                "omversion" to OMHelper.PARTNER_VERSION
-                        )
+            mapOf(
+                "sdk" to BuildConfig.SDK_VERSION,
+                "capabilities" to mapOf(
+                    "omsdk" to OMHelper.getVersion(),
+                    "ompartner" to OMHelper.PARTNER_NAME,
+                    "omversion" to OMHelper.PARTNER_VERSION
                 )
+            )
         ).toString()
 
         @JavascriptInterface
@@ -749,8 +779,10 @@ class PlayerWebView : WebView {
         }
     }
 
-    internal data class Command(var methodName: String? = null,
-                                var params: Array<Any> = emptyArray()) {
+    internal data class Command(
+        var methodName: String? = null,
+        var params: Array<Any> = emptyArray()
+    ) {
 
         override fun equals(other: Any?): Boolean {
             if (this === other) return true
@@ -772,15 +804,30 @@ class PlayerWebView : WebView {
     }
 
     interface WebViewErrorListener {
-        fun onErrorReceived(webView: WebView?, errorCode: Int, description: String?, failingUrl: String?)
+        fun onErrorReceived(
+            webView: WebView?,
+            errorCode: Int,
+            description: String?,
+            failingUrl: String?
+        )
+
         fun onShouldOverrideUrlLoadingFailed(exception: Exception)
 
         @RequiresApi(Build.VERSION_CODES.M)
-        fun onErrorReceived(webView: WebView?, request: WebResourceRequest?, error: WebResourceError?)
+        fun onErrorReceived(
+            webView: WebView?,
+            request: WebResourceRequest?,
+            error: WebResourceError?
+        )
+
         fun onReceivedSslError(webView: WebView?, handler: SslErrorHandler?, error: SslError?)
 
         @RequiresApi(Build.VERSION_CODES.M)
-        fun onReceivedHttpError(webView: WebView?, request: WebResourceRequest?, errorResponse: WebResourceResponse?)
+        fun onReceivedHttpError(
+            webView: WebView?,
+            request: WebResourceRequest?,
+            errorResponse: WebResourceResponse?
+        )
     }
 
     interface EventListener {
