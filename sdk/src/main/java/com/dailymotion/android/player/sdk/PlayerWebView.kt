@@ -77,7 +77,7 @@ class PlayerWebView @JvmOverloads constructor(
     private var overrideUrlLoadingInterceptor: OverrideUrlLoadingInterceptor? = null
     private var eventErrorListener: EventErrorListener? = null
 
-    var mJavascriptBridge: Any = JavascriptBridge()
+    private var mJavascriptBridge: JavascriptBridge? = null
 
     var videoId: String? = null
         private set
@@ -207,7 +207,9 @@ class PlayerWebView @JvmOverloads constructor(
 
             override fun onHideCustomView() {}
         }
-        addJavascriptInterface(mJavascriptBridge, "dmpNativeBridge")
+        mJavascriptBridge?.let { removeJavascriptInterface(NATIVE_BRIDGE_NAME) }
+        mJavascriptBridge = JavascriptBridge(adInfo)
+        addJavascriptInterface(mJavascriptBridge!!, NATIVE_BRIDGE_NAME)
         webViewClient = object : WebViewClient() {
             override fun shouldInterceptRequest(view: WebView, url: String): WebResourceResponse? {
                 if (url.startsWith(ASSETS_SCHEME)) {
@@ -759,7 +761,7 @@ class PlayerWebView @JvmOverloads constructor(
         return super.onTouchEvent(event)
     }
 
-    private inner class JavascriptBridge {
+    private inner class JavascriptBridge(val adInfo: AdvertisingIdClient.Info?) {
 
         @JavascriptInterface
         fun getEmbedderProperties() = Gson().toJson(
@@ -768,7 +770,11 @@ class PlayerWebView @JvmOverloads constructor(
                 "capabilities" to mapOf(
                     "omsdk" to OMHelper.getVersion(),
                     "ompartner" to OMHelper.PARTNER_NAME,
-                    "omversion" to OMHelper.PARTNER_VERSION
+                    "omversion" to OMHelper.PARTNER_VERSION,
+                    "tracking" to mapOf(
+                        "reader.advertising.id" to adInfo?.id.orEmpty(),
+                        "reader.device.tracking" to (adInfo?.isLimitAdTrackingEnabled?.not() ?: false)
+                    )
                 )
             )
         ).toString()
@@ -844,6 +850,7 @@ class PlayerWebView @JvmOverloads constructor(
 
     companion object {
 
+        private const val NATIVE_BRIDGE_NAME = "dmpNativeBridge"
         private const val LOAD_PARAMS_VIDEO_KEY = "video"
         private const val LOAD_PARAMS_PLAYLIST_KEY = "playlist"
 
