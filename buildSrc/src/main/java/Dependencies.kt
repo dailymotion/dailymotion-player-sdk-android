@@ -3,7 +3,7 @@ object Version {
     val minSdkVersion = 21
     val compileSdkVersion = 31
 
-    val androidPlugin = "7.1.0"
+    val androidPlugin = "7.1.1"
     val kotlin = "1.6.10"
 }
 
