@@ -23,6 +23,7 @@ object OMHelper {
     private var omidCurrentPosition: Quartile? = null
     private var adDuration = 1f
     private var isAdPaused = false
+    private var mVolume = 1f
 
     private var omErrorListener: OMErrorListener? = null
 
@@ -104,6 +105,7 @@ object OMHelper {
                 adDuration = playerEvent.adDuration.takeIf { it != 0f } ?: 1f
                 isAdPaused = false
                 startOmidSession()
+                sendVolumeEvent()
             }
             is AdEndEvent -> {
                 try {
@@ -191,15 +193,8 @@ object OMHelper {
                 }
             }
             is VolumeChangeEvent -> {
-                try {
-                    omidMediaEvents?.apply {
-                        volumeChange(if (playerEvent.isMuted) 0f else 1f)
-                        logOmidAction("volumeChange ${if (playerEvent.isMuted) 0f else 1f}")
-                    }
-                } catch (e: Exception) {
-                    omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
-                    logError("Error with adSession : VolumeChangeEvent", e)
-                }
+                mVolume = if (playerEvent.isMuted) 0f else 1f
+                sendVolumeEvent()
             }
             is FullScreenChangeEvent -> {
                 if (playerState == null) {
@@ -221,6 +216,18 @@ object OMHelper {
                     }
                 }
             }
+        }
+    }
+
+    private fun sendVolumeEvent() {
+        try {
+            omidMediaEvents?.apply {
+                volumeChange(mVolume)
+                logOmidAction("volumeChange $mVolume")
+            }
+        } catch (e: Exception) {
+            omidSession?.error(ErrorType.GENERIC, e.localizedMessage)
+            logError("Error with adSession : VolumeChangeEvent", e)
         }
     }
 
