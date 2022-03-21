@@ -771,10 +771,8 @@ class PlayerWebView @JvmOverloads constructor(
                     "omsdk" to OMHelper.getVersion(),
                     "ompartner" to OMHelper.PARTNER_NAME,
                     "omversion" to OMHelper.PARTNER_VERSION,
-                    "tracking" to mapOf(
-                        "reader.advertising.id" to adInfo?.id.orEmpty(),
-                        "reader.lmt" to (adInfo?.isLimitAdTrackingEnabled ?: true)
-                    )
+                    "deviceId" to adInfo.id.orEmpty(),
+                    "limitAdTracking" to (adInfo?.isLimitAdTrackingEnabled ?: true)
                 )
             )
         ).toString()
