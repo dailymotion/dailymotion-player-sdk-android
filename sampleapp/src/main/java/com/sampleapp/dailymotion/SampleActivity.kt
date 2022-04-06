@@ -277,7 +277,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-        playerWebView.load(params = params)
+        playerWebView.load(loadParams = params)
     }
 
     private fun setFullScreenInternal(fullScreen: Boolean) {

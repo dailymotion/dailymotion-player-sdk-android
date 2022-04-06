@@ -120,51 +120,58 @@ class PlayerWebView @JvmOverloads constructor(
             updatePlayState()
         }
 
+    enum class PlayerDefaultParameters(val key: String, val defaultValue: String) {
+        SHARING_ENABLED("sharing-enable","false"),
+        WATCH_LATER__ENABLED("watchlater-enable","false"),
+        LIKE_ENABLED("like-enable","false"),
+        COLLECTIONS_ENABLED("collections-enable","false"),
+        FULLSCREEN_ACTION("fullscreen-action","trigger_event"),
+        LOCALE("locale", Locale.getDefault().language),
+        QUEUE_ENABLED("queue-enable", "false")
+    }
+
+    private fun getDefaultQueryParams(): Map<String, String>{
+        return PlayerDefaultParameters.values().associate { Pair(it.key, it.defaultValue) }
+    }
+
     @Deprecated("Use load(params: Map<String, Any?>?) instead")
     @JvmOverloads
     fun load(videoId: String?, loadParams: Map<String, Any?>? = emptyMap()) {
         val finalParams = loadParams?.toMutableMap() ?: mutableMapOf()
         finalParams[LOAD_PARAMS_VIDEO_KEY] = videoId
-        load(params = finalParams)
+        load(loadParams = finalParams)
     }
 
     /**
      * Load a video with a given map of params. To see a full list of supported params check:
      * https://developer.dailymotion.com/player/#player-api-methods-load
      */
-    fun load(params: Map<String, Any?>? = emptyMap()) {
+    fun load(loadParams: Map<String, Any?>? = emptyMap()) {
         if (!mIsInitialized) {
-            val defaultQueryParameters: MutableMap<String?, String?> = HashMap()
-            defaultQueryParameters["sharing-enable"] = "false"
-            defaultQueryParameters["watchlater-enable"] = "false"
-            defaultQueryParameters["like-enable"] = "false"
-            defaultQueryParameters["collections-enable"] = "false"
-            defaultQueryParameters["fullscreen-action"] = "trigger_event"
-            defaultQueryParameters["locale"] = Locale.getDefault().language
-            defaultQueryParameters["queue-enable"] = "false"
-
-            /* Override default values */
-            if (params?.contains("queue-enable") == true) {
-                defaultQueryParameters["queue-enable"] = params["queue-enable"] as? String
-            }
-
-            initialize("https://www.dailymotion.com/embed/", defaultQueryParameters)
+            initialize()
         }
-        queueCommand(COMMAND_LOAD, params ?: emptyMap<String, Any>())
+        queueCommand(COMMAND_LOAD, loadParams ?: emptyMap<String, Any>())
     }
 
     fun initialize(
-        baseUrl: String?,
-        queryParameters: Map<String?, String?>?,
-        httpHeaders: Map<String?, String?> = emptyMap()
+        baseUrl: String = "https://www.dailymotion.com/embed/",
+        defaultQueryParams: Map<String, String> = getDefaultQueryParams(),
+        overriddenQueryParams: Map<String, String> = emptyMap(),
+        httpHeaders: Map<String, String> = emptyMap()
     ) {
         OMHelper.ensureInitialized(this@PlayerWebView.context)
         mIsInitialized = true
         eventFactory = PlayerEventFactory()
+
+        val mergedQueryParams = defaultQueryParams.toMutableMap()
+
+        /* Override default values or add new player initialization params*/
+        overriddenQueryParams.forEach{ mergedQueryParams[it.key] = it.value }
+
         CoroutineScope(Dispatchers.Main).launch {
             finishInitialization(
                 baseUrl,
-                queryParameters,
+                overriddenQueryParams,
                 httpHeaders,
                 PlayerSdkInitProvider.visitorInfoManager.getAdvertisingInfo(context)
             )
@@ -174,8 +181,8 @@ class PlayerWebView @JvmOverloads constructor(
     @SuppressLint("JavascriptInterface")
     fun finishInitialization(
         baseUrl: String?,
-        queryParameters: Map<String?, String?>?,
-        httpHeaders: Map<String?, String?>,
+        queryParameters: Map<String, String>,
+        httpHeaders: Map<String, String>,
         adInfo: AdvertisingIdClient.Info?
     ) {
         mGson = Gson()
