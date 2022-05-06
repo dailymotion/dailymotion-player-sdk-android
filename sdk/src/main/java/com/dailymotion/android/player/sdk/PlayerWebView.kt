@@ -142,6 +142,7 @@ class PlayerWebView @JvmOverloads constructor(
             defaultQueryParameters["fullscreen-action"] = "trigger_event"
             defaultQueryParameters["locale"] = Locale.getDefault().language
             defaultQueryParameters["queue-enable"] = "false"
+            defaultQueryParameters["pubtool"] = "androidsdk"
 
             /* Override default values */
             if (params?.contains("queue-enable") == true) {
