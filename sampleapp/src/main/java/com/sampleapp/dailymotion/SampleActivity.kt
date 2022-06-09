@@ -62,10 +62,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         Timber.d("Successfully loaded consent string: $didLoadConsentString")
 
         initializeContentView()
-        initializePlayer(mapOf("video" to videoIdEditText.text.toString(),
-                "playlist" to playlistIdEditText.text.toString(),
-                /* Set it to true because the default value is false */
-                "queue-enable" to "true"))
+        initializePlayer()
     }
 
     override fun onClick(v: View) {
@@ -211,7 +208,7 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
         logScrollBottom.setOnClickListener(this@SampleActivity)
     }
 
-    private fun initializePlayer(params: Map<String, Any>) {
+    private fun initializePlayer() {
 
         if (applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0) {
             playerWebView.setIsWebContentsDebuggingEnabled(true)
@@ -277,7 +274,24 @@ class SampleActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
-        playerWebView.load(params = params)
+        /* Player custom initialization */
+        playerWebView.initialize(baseUrl = "https://www.dailymotion.com/embed/",
+            queryParameters = mapOf(
+                /* Hard coded parameter taken from load(...) function call */
+                "sharing-enable" to "false",
+                "watchlater-enable" to "false",
+                "like-enable" to "false",
+                "collections-enable" to "false",
+                "fullscreen-action" to "trigger_event",
+                "locale" to Locale.getDefault().language,
+                /* New parameter to customize the player */
+                "disable-queue" to "false"
+            ))
+
+        /* Play the video */
+        playerWebView.queueCommand(PlayerWebView.COMMAND_LOAD,  mapOf(
+            "video" to videoIdEditText.text.toString()
+        ))
     }
 
     private fun setFullScreenInternal(fullScreen: Boolean) {
