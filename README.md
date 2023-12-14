@@ -1,3 +1,10 @@
+[!WARNING] 
+We no longer support this SDK for Player integration on Android environments. 
+Please use the new Android SDK documented [here](https://developers.dailymotion.com/guides/getting-started-with-android-sdk/).
+
+
+===========================
+
 Dailymotion Player SDK Android
 ===========================
 [ ![Download](https://api.bintray.com/packages/dailymotion/com.dailymotion.dailymotion-sdk-android/sdk/images/download.svg) ](https://bintray.com/dailymotion/com.dailymotion.dailymotion-sdk-android/sdk/_latestVersion)
